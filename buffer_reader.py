@@ -15,7 +15,6 @@ class Buffer_reader:
         if self.buffer_pointer == self.buffer_size:
             self.refill_buffer()
 
-        print(f"pointer={self.buffer_pointer}")
         next_char=self.buffer[self.buffer_pointer]    
         self.buffer_pointer+=1
         
@@ -35,8 +34,8 @@ class Buffer_reader:
             return self.has_next()
 
 
-
-# b=Buffer_reader("input.txt",3)
-# for i in range(1,40,1):
-#     print(b.get_next_char()+"\n")
-#     print(len(b.buffer))
+if __name__=="__main__":
+    b=Buffer_reader("input.txt",3)
+    for i in range(1,40,1):
+        print(b.get_next_char()+"\n")
+        print(len(b.buffer))
