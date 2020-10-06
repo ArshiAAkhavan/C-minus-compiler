@@ -6,8 +6,7 @@ class Buffer_reader:
         self.buffer_pointer = 0
         self.buffer = []
 
-        self.path = path
-        self.input_file = open(self.path, "r")
+        self.input_file = open(path, "r")
 
         self.__refill_buffer()
 
@@ -35,7 +34,6 @@ class Buffer_reader:
             except Exception:
                 return False
             return self.has_next()
-
 
 if __name__ == "__main__":
     b = Buffer_reader("input.txt", 3)
