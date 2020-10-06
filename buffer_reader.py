@@ -10,6 +10,10 @@ class Buffer_reader:
 
         self.__refill_buffer()
 
+    def push_back(self,char):
+        # todo
+        pass
+
     def get_next_char(self):
         if self.buffer_pointer == self.buffer_size:
             self.__refill_buffer()
