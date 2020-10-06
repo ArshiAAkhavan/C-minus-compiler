@@ -53,6 +53,9 @@ class Scanner:
         self.root = root
         self.input_provider = input_provider
 
+    def can_generate_token(self):
+        return self.input_provider.has_next()
+        
     def get_next_token(self):
         current_state = self.root
         current_edge = None
@@ -95,8 +98,6 @@ class Scanner:
                     # is not a final state
                     raise TokenMissMatchException(current_lexeme)
 
-    def can_generate_token(self):
-        return self.input_provider.has_next()
             
 
 def main():
