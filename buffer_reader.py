@@ -1,18 +1,21 @@
 class Buffer_reader:
 
-    def __init__(self, path, buffer_size=100):
+    def __init__(self, path, buffer_size=100,reserved_chunk=5):
 
         self.buffer_size = buffer_size
         self.buffer_pointer = 0
         self.buffer = []
+        self.reserved_chunk=reserved_chunk
 
         self.input_file = open(path, "r")
 
         self.__refill_buffer()
 
     def push_back(self,char):
-        # todo
-        pass
+        if self.buffer_pointer>0:
+            self.buffer_pointer-=1
+        else:
+            self.buffer=[].append(char)+self.buffer
 
     def get_next_char(self):
         if self.buffer_pointer == self.buffer_size:
