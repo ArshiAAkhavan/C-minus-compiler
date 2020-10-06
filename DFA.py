@@ -25,7 +25,7 @@ class Edge:
                 return False
         return True
 
-class Node:
+class DFANode:
     def __init__(self, action=None):
         self.action = action
         self.children = []
@@ -39,5 +39,8 @@ class Node:
                 return child
         return self.action
 
-class DFA:
-    pass
+class Scanner:
+    
+    def __init__(self,root):
+        self.root=root
+
