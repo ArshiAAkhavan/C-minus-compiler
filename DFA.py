@@ -1,6 +1,6 @@
-class NoTokenMatchedError(Exception):
+class TokenMissMatchException(Exception):
     def __init__(self, token_lexeme):
-        super(NoTokenMatchedError, self).__init__(f"could not match lexeme[{token_lexeme}] with any known regular expressions...")
+        super(TokenMissMatchException, self).__init__(f"could not match lexeme[{token_lexeme}] with any known regular expressions...")
 
 class Node:
     def __init__(self,action=None):
@@ -18,6 +18,6 @@ class Node:
         try:
             return self.action(self.current_token)
         except TypeError:
-            raise NoTokenMatchedError
+            raise TokenMissMatchException
 class DFA:
     pass
