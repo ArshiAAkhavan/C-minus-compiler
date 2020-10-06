@@ -82,7 +82,21 @@ class Scanner:
                     # is not a final state
                     raise TokenMissMatchException(current_lexeme)
         if len(current_lexeme)>0:
-            raise NotEnoughCharacterException(current_lexeme)
+            try:                                                                
+                # returns an standard edge,state
+                current_edge,current_state=current_state.match("@")
+            except TypeError:
+                pass
+            finally:
+                try:
+                    # is a final state
+                    return current_state.action(current_lexeme)
+                except TypeError:
+                    # is not a final state
+                    raise TokenMissMatchException(current_lexeme)
+
+    def can_generate_token(self):
+        return self.input_provider.has_next()
             
 
 def main():
@@ -98,7 +112,7 @@ def main():
 
     sc = Scanner(number_regex, Buffer_reader("input.txt", 30))
 
-    while(True):
+    while(sc.can_generate_token()):
         try:
             sc.get_next_token()
         except TokenMissMatchException as e:
