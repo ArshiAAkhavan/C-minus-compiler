@@ -94,7 +94,7 @@ class Scanner:
                 except TypeError:
                     # is not a final state
                     raise TokenMissMatchException(current_lexeme)
-        if len(current_lexeme)>=0:
+        if len(current_lexeme)>0:
             raise NotEnoughCharacterException(current_lexeme)
             
 
