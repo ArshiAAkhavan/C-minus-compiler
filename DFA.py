@@ -41,6 +41,26 @@ class DFANode:
 
 class Scanner:
     
-    def __init__(self,root):
+    def __init__(self,root,input_provider):
         self.root=root
+        self.input_provider=input_provider
+        self.current_lexeme=""
+    
+    def get_next_token(self):
+        current_state=self.root
+        while(self.input_provider.has_next()):
+            char=self.input_provider.get_next_char()
+
+            return_value=current_state.match(char)
+            if isinstance(return_value,DFANode):
+                self.current_lexeme+=char
+                current_state=return_value
+            else:
+                try:
+                    return_value(self.current_lexeme)
+                except TypeError:
+                    raise TokenMissMatchException
+                finally:
+                    self.current_lexeme=""
+                    current_state=self.root
 
