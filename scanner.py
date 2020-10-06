@@ -53,7 +53,6 @@ class Final_state_node(DFA_node):
 
 
 class Scanner:
-
     def __init__(self, root, input_provider):
         self.root = root
         self.input_provider = input_provider
@@ -73,33 +72,17 @@ class Scanner:
             
             current_char=self.input_provider.get_next_char()
             current_lexeme+=current_char
-            try:                #returns an standard edge,state
+            try:                                                                
+                # returns an standard edge,state
                 current_edge,current_state=current_state.match(current_char)
-            except TypeError:    #returns None
+            except TypeError:                                                   
+                # returns None
                 try:
+                    # is a final state
                     return current_state.action(current_lexeme)
                 except TypeError:
+                    # is not a final state
                     raise TokenMissMatchException(current_lexeme)
-
-            
-    def get_next_token_old(self):
-        current_state = self.root
-        while(self.input_provider.has_next()):
-            char = self.input_provider.get_next_char()
-
-            return_value = current_state.match(char)
-            if isinstance(return_value, DFA_node):
-                self.current_lexeme += char
-                current_state = return_value
-            else:
-                try:
-                    return return_value(self.current_lexeme)
-                except TypeError:
-                    raise TokenMissMatchException(self.current_lexeme)
-                finally:
-                    self.current_lexeme = ""
-                    current_state = self.root
-        return None
 
 
 def main():
