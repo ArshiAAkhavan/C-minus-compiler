@@ -1,17 +1,4 @@
-class TokenMissMatchException(Exception):
-    def __init__(self, token_lexeme):
-        super(TokenMissMatchException, self).__init__(
-            f"could not match lexeme[{token_lexeme}] with any known regular expressions...")
-        self.token_lexeme=token_lexeme
-
-class NotEnoughCharacterException(Exception):
-    def __init__(self, token_lexeme):
-        super(NotEnoughCharacterException, self).__init__(
-            f"failed to generete new token due to lack of characters \
-            \nit may be that the input file ended before the we could generate a new token \
-            \nfailed lexeme: {token_lexeme}")
-        self.token_lexeme=token_lexeme
-
+from error import *
 
 class Edge:
     def __init__(self):
