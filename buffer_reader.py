@@ -1,11 +1,10 @@
 class Buffer_reader:
 
-    def __init__(self, path, buffer_size=100,reserved_chunk=5):
+    def __init__(self, path, buffer_size=100):
 
         self.buffer_size = buffer_size
         self.buffer_pointer = 0
-        self.buffer = []
-        self.reserved_chunk=reserved_chunk
+        self.buffer = ""
 
         self.input_file = open(path, "r")
 
@@ -15,10 +14,10 @@ class Buffer_reader:
         if self.buffer_pointer>0:
             self.buffer_pointer-=1
         else:
-            self.buffer=[].append(char)+self.buffer
+            self.buffer=char+self.buffer
 
     def get_next_char(self):
-        if self.buffer_pointer == self.buffer_size:
+        if self.buffer_pointer == len(self.buffer):
             self.__refill_buffer()
 
         next_char = self.buffer[self.buffer_pointer]
@@ -31,19 +30,38 @@ class Buffer_reader:
         self.buffer_pointer = 0
 
     def has_next(self):
-        if self.buffer_pointer >= len(self.buffer):
-            return False
-        elif self.buffer_pointer < self.buffer_size:
+        if self.buffer_pointer < len(self.buffer):
             return True
+        elif self.buffer_pointer > len(self.buffer):
+            return False
+        elif len(self.buffer)<self.buffer_size:
+            return False
         else:
             try:
                 self.__refill_buffer()
+                return self.has_next()
             except Exception:
                 return False
-            return self.has_next()
 
 if __name__ == "__main__":
     b = Buffer_reader("input.txt", 3)
     while(b.has_next()):
+        print(f"buffer lenght:{len(b.buffer)}")
         print(b.get_next_char()+"\n")
-        print(len(b.buffer))
+    
+    
+    b= Buffer_reader("input.txt",3)
+    b.has_next()
+
+    b.push_back("a")
+    print(f"buffer length:{len(b.buffer)}")
+    print(b.get_next_char()+"\n")
+    b.push_back("a")
+    print(b.get_next_char()+"\n")
+    b.push_back("a")
+    print(b.get_next_char()+"\n")
+    b.push_back("a")
+    print(b.get_next_char()+"\n")
+    b.push_back("a")
+    print(b.get_next_char()+"\n")
+    b.push_back("a")
