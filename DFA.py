@@ -16,12 +16,12 @@ class Edge:
         self.exclude_ranges.append((start, end))
 
     def __contains__(self,char):
-        for r in self.exclude_ranges:
-            if r[0]<=char and char<=r[1]:
+        for (start,end),_ in self.exclude_ranges:
+            if start<=char and char<=end:
                 return False
         
-        for r in self.include_ranges:
-            if char<r[0] or r[1]<char:
+        for (start,end),_ in self.include_ranges:
+            if char<start or end<char:
                 return False
         return True
 
@@ -29,8 +29,7 @@ class Node:
     def __init__(self, action=None):
         self.action = action
         self.children = []
-        self.current_token = ""
-
+    
     def append(self, edge, child):
         self.children.append((edge, child))
 
@@ -38,11 +37,7 @@ class Node:
         for (edge, child), _ in self.children:
             if char in edge:
                 return child
-        try:
-            return self.action(self.current_token)
-        except TypeError:
-            raise TokenMissMatchException
-
+        return self.action
 
 class DFA:
     pass
