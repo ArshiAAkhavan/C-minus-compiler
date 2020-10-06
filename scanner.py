@@ -2,6 +2,15 @@ class TokenMissMatchException(Exception):
     def __init__(self, token_lexeme):
         super(TokenMissMatchException, self).__init__(
             f"could not match lexeme[{token_lexeme}] with any known regular expressions...")
+        self.token_lexeme=token_lexeme
+
+class NotEnoughCharacterException(Exception):
+    def __init__(self, token_lexeme):
+        super(NotEnoughCharacterException, self).__init__(
+            f"failed to generete new token due to lack of characters \
+            \nit may be that the input file ended before the we could generate a new token \
+            \nfailed lexeme: {token_lexeme}")
+        self.token_lexeme=token_lexeme
 
 
 class Edge:
@@ -62,7 +71,7 @@ class Scanner:
         current_edge = None
         current_lexeme = ""
         current_char = ''
-        while(self.input_provider.has_next()):
+        while(True):
             if isinstance(current_edge, Other_edge):
                 self.input_provider.push_back(current_char)
                 current_lexeme = current_lexeme[:-1]
@@ -70,6 +79,8 @@ class Scanner:
             if isinstance(current_state, Final_state_node):
                 return current_state.action(current_lexeme)
             
+            if not self.input_provider.has_next():
+                break
             current_char=self.input_provider.get_next_char()
             current_lexeme+=current_char
             try:                                                                
@@ -83,7 +94,9 @@ class Scanner:
                 except TypeError:
                     # is not a final state
                     raise TokenMissMatchException(current_lexeme)
-
+        if len(current_lexeme)>=0:
+            raise NotEnoughCharacterException(current_lexeme)
+            
 
 def main():
     from buffer_reader import Buffer_reader
@@ -103,6 +116,9 @@ def main():
             sc.get_next_token()
         except TokenMissMatchException as e:
             print(e)
+        except NotEnoughCharacterException as e:
+            print(e)
+            break
 
 
 if __name__ == "__main__":
