@@ -1,6 +1,6 @@
 class Buffer_reader:
 
-    def __init__(self, path, buffer_size):
+    def __init__(self, path, buffer_size=100):
 
         self.buffer_size = buffer_size
         self.buffer_pointer = 0

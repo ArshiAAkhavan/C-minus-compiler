@@ -11,16 +11,18 @@ class Edge:
 
     def include(self, start, end):
         self.include_ranges.append((start, end))
+        return self
 
     def exclude(self, start, end):
         self.exclude_ranges.append((start, end))
+        return self
 
     def __contains__(self,char):
-        for (start,end),_ in self.exclude_ranges:
+        for start,end in self.exclude_ranges:
             if start<=char and char<=end:
                 return False
         
-        for (start,end),_ in self.include_ranges:
+        for start,end in self.include_ranges:
             if char<start or end<char:
                 return False
         return True
@@ -32,9 +34,11 @@ class DFANode:
     
     def append(self, edge, child):
         self.children.append((edge, child))
+        return self
 
+        # for (edge, chDild), _ in self.children:
     def match(self, char):
-        for (edge, child), _ in self.children:
+        for edge,child in self.children:
             if char in edge:
                 return child
         return self.action
@@ -57,10 +61,33 @@ class Scanner:
                 current_state=return_value
             else:
                 try:
-                    return_value(self.current_lexeme)
+                    return return_value(self.current_lexeme)
                 except TypeError:
-                    raise TokenMissMatchException
+                    raise TokenMissMatchException(self.current_lexeme)
                 finally:
                     self.current_lexeme=""
                     current_state=self.root
+        return None
 
+def main():
+    from buffer_reader import Buffer_reader
+    number_regx=DFANode()
+    middle_state=DFANode()
+    final_state=DFANode(lambda lexeme: print(f"lexeme is {lexeme}"))
+    middle_state.append(Edge().include("0","9"),middle_state).append(Edge().exclude("0","9"),final_state)
+    number_regx.append(Edge().include("0","9"),middle_state)
+
+    sc= Scanner(number_regx,Buffer_reader("input.txt",30))
+    
+    
+    while(True):
+        try:
+            sc.get_next_token()
+        except TokenMissMatchException as e:
+            print(e)
+
+
+
+
+if __name__=="__main__":
+    main()
