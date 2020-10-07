@@ -28,6 +28,7 @@ class SymbolTable:
     def add_symbol(self, string):
         if string not in self.keyword + self.id:
             self.id.append(string)
+        return self
 
     def end(self):
         file = open("symbol_table.txt", "w")
@@ -49,11 +50,4 @@ if __name__ == "__main__":
     # e.add_lexical_error(err3)
     # e.end()
     s = SymbolTable()
-    s.add_symbol("if")
-    s.add_symbol("dob")
-    s.add_symbol("return")
-    s.add_symbol("if")
-    s.add_symbol("f7")
-    s.add_symbol("uio")
-    s.add_symbol("f7")
-    s.end()
+    s.add_symbol("if").add_symbol("dob").add_symbol("return").add_symbol("if").add_symbol("f7").add_symbol("uio").add_symbol("f7").end()
