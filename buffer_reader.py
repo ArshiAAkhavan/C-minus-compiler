@@ -1,4 +1,4 @@
-class Buffer_reader:
+class BufferReader:
 
     def __init__(self, path, buffer_size=100):
 
@@ -44,13 +44,13 @@ class Buffer_reader:
                 return False
 
 if __name__ == "__main__":
-    b = Buffer_reader("input.txt", 3)
+    b = BufferReader("input.txt", 3)
     while(b.has_next()):
         print(f"buffer lenght:{len(b.buffer)}")
         print(b.get_next_char()+"\n")
     
     
-    b= Buffer_reader("input.txt",3)
+    b= BufferReader("input.txt",3)
     b.has_next()
 
     b.push_back("a")
