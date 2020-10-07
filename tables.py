@@ -27,6 +27,7 @@ class SymbolTable:
     def add_symbol(self, string):
         if string not in self.symbols:
             self.symbols.append(string)
+        if string not in self.symbols[0:10]:
             return False
         return True
 
