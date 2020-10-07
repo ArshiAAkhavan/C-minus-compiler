@@ -22,19 +22,17 @@ class ErrorTable:
 
 class SymbolTable:
     def __init__(self):
-        self.symbols = ["if", "else", "void", "int", "while", "break", "continue", "switch", "default", "case", "return"]
+        self.keyword = ["if", "else", "void", "int", "while", "break", "continue", "switch", "default", "case", "return"]
+        self.id = []
 
     def add_symbol(self, string):
-        if string not in self.symbols:
-            self.symbols.append(string)
-        if string not in self.symbols[0:10]:
-            return False
-        return True
+        if string not in self.keyword + self.id:
+            self.id.append(string)
 
     def end(self):
         file = open("symbol_table.txt", "w")
         i = 1
-        for e in self.symbols:
+        for e in self.keyword + self.id:
             s = str(i) + ".\t" + str(e) + "\n"
             file.write(s)
             i += 1
