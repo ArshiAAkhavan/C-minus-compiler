@@ -22,23 +22,13 @@ class ErrorTable:
 
 class SymbolTable:
     def __init__(self):
-        self.symbols = []
+        self.symbols = ["if", "else", "void", "int", "while", "break", "continue", "switch", "default", "case", "return"]
 
     def add_symbol(self, string):
         if string not in self.symbols:
             self.symbols.append(string)
-        return {
-            'if': True,
-            'else': True,
-            'void': True,
-            'int': True,
-            'while': True,
-            'break': True,
-            'switch': True,
-            'default': True,
-            'case': True,
-            'return': True
-        }.get(string, False)
+            return False
+        return True
 
     def end(self):
         file = open("symbol_table.txt", "w")
@@ -60,8 +50,11 @@ if __name__ == "__main__":
     # e.add_lexical_error(err3)
     # e.end()
     s = SymbolTable()
-    print(s.add_symbol("if"))
-    print(s.add_symbol("dob"))
-    print(s.add_symbol("return"))
-    print(s.add_symbol("if"))
+    s.add_symbol("if")
+    s.add_symbol("dob")
+    s.add_symbol("return")
+    s.add_symbol("if")
+    s.add_symbol("f7")
+    s.add_symbol("uio")
+    s.add_symbol("f7")
     s.end()
