@@ -1,6 +1,6 @@
-from buffer_reader import Buffer_reader
+from buffer_reader import BufferReader
 
-reader=Buffer_reader("input.txt",100)
+reader=BufferReader("input.txt",100)
 i=0
 while (reader.has_next()):
     print(f"char {i} is: {reader.get_next_char()}")

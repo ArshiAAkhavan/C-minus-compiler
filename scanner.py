@@ -24,11 +24,11 @@ class Edge:
         return True
 
 
-class Other_edge(Edge):
+class OtherEdge(Edge):
     pass
 
 
-class DFA_node:
+class DFANode:
     def __init__(self, action=None):
         self.action = action
         self.children = []
@@ -44,7 +44,7 @@ class DFA_node:
         return None
 
 
-class Final_state_node(DFA_node):
+class FinalStateNode(DFANode):
     pass
 
 
@@ -62,11 +62,11 @@ class Scanner:
         current_lexeme = ""
         current_char = ''
         while(True):
-            if isinstance(current_edge, Other_edge):
+            if isinstance(current_edge, OtherEdge):
                 self.input_provider.push_back(current_char)
                 current_lexeme = current_lexeme[:-1]
 
-            if isinstance(current_state, Final_state_node):
+            if isinstance(current_state, FinalStateNode):
                 return current_state.action(current_lexeme)
             
             if not self.input_provider.has_next():
@@ -104,14 +104,14 @@ def main():
     from buffer_reader import Buffer_reader
 
     # implementing number regex
-    number_regex = DFA_node()
-    middle_state = DFA_node()
-    final_state = Final_state_node(lambda lexeme: print(f"lexeme is {lexeme}"))
+    number_regex = DFANode()
+    middle_state = DFANode()
+    final_state = FinalStateNode(lambda lexeme: print(f"lexeme is {lexeme}"))
     middle_state.append(Edge().include("0", "9"), middle_state).append(
-        Other_edge().exclude("0", "9"), final_state)
+        OtherEdge().exclude("0", "9"), final_state)
     number_regex.append(Edge().include("0", "9"), middle_state)
 
-    sc = Scanner(number_regex, Buffer_reader("input.txt", 30))
+    sc = Scanner(number_regex, BufferReader("input.txt", 30))
 
     while(sc.can_generate_token()):
         try:
