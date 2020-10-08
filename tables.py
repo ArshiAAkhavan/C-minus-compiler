@@ -24,12 +24,14 @@ class __SymbolTable:
     keyword = ["if", "else", "void", "int", "while", "break", "continue", "switch", "default", "case", "return"]
     def __init__(self):
         self.ids = []
-        self.keywords = []
 
-    def add_symbol(self, line_no,token):
-        (self.ids,self.keywords)[token.type.__name__ in __SymbolTable.keyword].append((line_no,token))
-        return self
-
+    def add_symbol(self,token):
+        if token.lexeme in __SymbolTable.keyword:
+            token.type=TokenType.KEY_WORD
+        else:
+            self.ids.append(token)
+        return token    
+        
     def end(self):
         file = open("symbol_table.txt", "w")
         i = 1
@@ -44,7 +46,7 @@ class __TokenTable:
         self.tokes=[]
 
     def add_token(self,line_no,token):
-        self.tokes.append((line_no))
+        self.tokes.append((line_no,token))
 
     def __str__(self):
         #todo

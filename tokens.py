@@ -7,8 +7,8 @@ class TokenType(Enum):
     ID=1                        # 0000001       abcd...xyz
     KEY_WORD=1                  # 0000001       abcd...xyz
     NUM=2                       # 0000010       0123456789
-    WS=3                        # 0000011       \n\t\r\v\f 
-    COM=4                       # 0000100       // /**/
+    WHITE_SPACE=3               # 0000011       \n\t\r\v\f 
+    COMMENT=4                   # 0000100       // /**/
     
     SYMBOL_LT=60                # 0111100       <
     SYMBOL_AS=61                # 0111101       =
