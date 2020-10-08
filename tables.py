@@ -39,6 +39,17 @@ class SymbolTable:
             i += 1
         file.close()
 
+class TokenTable:
+    def __init__(self):
+        self.tokes=[]
+
+    def add_token(self,line_no,token):
+        self.tokes.append((line_no))
+
+    def __str__(self):
+        #todo
+        super().__str__(self)
+
 
 if __name__ == "__main__":
     # e = ErrorTable()

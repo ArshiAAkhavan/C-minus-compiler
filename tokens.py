@@ -31,14 +31,3 @@ class Token_type(Enum):
 
 Token = namedtuple('Token', 'type lexeme')
 
-class TokenTable:
-    def __init__(self):
-        self.tokes=[]
-
-    def add_token(self,line_no,token):
-        self.tokes.append((line_no))
-
-    def __str__(self):
-        #todo
-        super().__str__(self)
-
