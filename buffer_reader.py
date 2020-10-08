@@ -46,7 +46,7 @@ class BufferReader:
 if __name__ == "__main__":
     b = BufferReader("input.txt", 3)
     while(b.has_next()):
-        print(f"buffer lenght:{len(b.buffer)}")
+        print(f"buffer length:{len(b.buffer)}")
         print(b.get_next_char()+"\n")
     
     
