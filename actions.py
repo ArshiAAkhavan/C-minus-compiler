@@ -1,17 +1,14 @@
 from tables import *
+from tokens import *
 
-def error_gen(lexeme){
+def error_gen(lexeme):
+    pass
 
-}
+def number_token_gen(lexeme):
+    pass
 
-def number_token_gen(lexeme){
+def id_token_gen(lexeme):
+    pass
 
-}
-
-def id_token_gen(lexeme){
-
-}
-
-def symbol_token_gen(lexeme){
-
-}
+def symbol_token_gen(lexeme):
+    pass

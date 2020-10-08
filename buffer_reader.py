@@ -27,6 +27,8 @@ class BufferReader:
 
     def __refill_buffer(self):
         self.buffer = self.input_file.read(self.buffer_size)
+        if len(self.buffer)<self.buffer_size:
+            self.buffer+=chr(26)
         self.buffer_pointer = 0
 
     def has_next(self):
