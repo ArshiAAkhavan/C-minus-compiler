@@ -1,5 +1,6 @@
 from tokens import Token
 from tokens import TokenType
+from errors import TokenMissMatchException
 import tables 
 
 def num_token_gen(line_no,lexeme): 
@@ -21,4 +22,4 @@ def comment_token_gen(line_no,lexeme):return Token(TokenType.COMMENT, lexeme)
 def whitespace_token_gen(line_no,lexeme): return Token(TokenType.WHITE_SPACE, lexeme)
 
 def error_gen(line_no,lexeme):
-    pass
+    print(TokenMissMatchException(lexeme))

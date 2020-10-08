@@ -1,5 +1,5 @@
-from error import *
-
+from errors import *
+import actions
 
 class Edge:
     def __init__(self):
@@ -62,14 +62,13 @@ class Scanner:
         state = self.root
         lexeme = ""
         while(True):
-
             if isinstance(state, FinalStateNode):
                 if state.should_push_back():
                     self.input_provider.push_back(lexeme[-1])
                     lexeme = lexeme[:-1]
-                return state.action(lexeme)
+                return state.action(1,lexeme)
             elif not isinstance(state, DFANode):
-                return state(lexeme)
+                return state(1,lexeme)
 
             if not self.input_provider.has_next():
                 break
@@ -81,14 +80,10 @@ def main():
     from buffer_reader import BufferReader
 
     # implementing number regex
-    number_regex = DFANode(lambda lexeme: print(
-        TokenMissMatchException(lexeme)))
-    middle_state = DFANode(lambda lexeme: print(
-        TokenMissMatchException(lexeme)))
-    final_state = FinalStateNode(
-        lambda lexeme: print(f"lexeme is {lexeme}"), True)
-    middle_state.append(Edge().include("0", "9"), middle_state).append(
-        Edge().exclude("0", "9"), final_state)
+    number_regex = DFANode(actions.error_gen)
+    middle_state = DFANode(actions.error_gen)
+    final_state = FinalStateNode(actions.num_token_gen, True)
+    middle_state.append(Edge().include("0", "9"), middle_state).append(Edge().exclude("0", "9"), final_state)
     number_regex.append(Edge().include("0", "9"), middle_state)
 
     sc = Scanner(number_regex, BufferReader("input.txt", 30))
@@ -101,6 +96,9 @@ def main():
         except NotEnoughCharacterException as e:
             print(e)
             break
+    import tables
+    tables.get_token_table().__str__()
+    
 
 
 if __name__ == "__main__":

@@ -43,14 +43,15 @@ class __SymbolTable:
 
 class __TokenTable:
     def __init__(self):
-        self.tokes=[]
+        self.tokens=[]
 
     def add_token(self,line_no,token):
-        self.tokes.append((line_no,token))
+        self.tokens.append((line_no,token))
 
     def __str__(self):
         #todo
-        super().__str__(self)
+        super().__str__()
+        print(self.tokens)
 
 
 symbol_table=__SymbolTable()
