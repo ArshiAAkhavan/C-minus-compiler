@@ -1,3 +1,4 @@
+from tokens import *
 class Error:
     def __init__(self, lineno, characters, error_type):
         self.lineno = lineno
@@ -5,7 +6,7 @@ class Error:
         self.error_type = error_type
 
 
-class _ErrorTable:
+class __ErrorTable:
     def __init__(self):
         self.lexical_errors = []
 
@@ -19,26 +20,26 @@ class _ErrorTable:
             file.write(s)
         file.close()
 
-class _SymbolTable:
+class __SymbolTable:
+    keyword = ["if", "else", "void", "int", "while", "break", "continue", "switch", "default", "case", "return"]
     def __init__(self):
-        self.keyword = ["if", "else", "void", "int", "while", "break", "continue", "switch", "default", "case", "return"]
-        self.id = []
+        self.ids = []
+        self.keywords = []
 
-    def add_symbol(self, string):
-        if string not in self.keyword + self.id:
-            self.id.append(string)
+    def add_symbol(self, line_no,token):
+        (self.ids,self.keywords)[token.type.__name__ in __SymbolTable.keyword].append((line_no,token))
         return self
 
     def end(self):
         file = open("symbol_table.txt", "w")
         i = 1
-        for e in self.keyword + self.id:
+        for e in self.keyword + self.ids:
             s = str(i) + ".\t" + str(e) + "\n"
             file.write(s)
             i += 1
         file.close()
 
-class _TokenTable:
+class __TokenTable:
     def __init__(self):
         self.tokes=[]
 
@@ -50,16 +51,16 @@ class _TokenTable:
         super().__str__(self)
 
 
-symbol_table=_SymbolTable()
-error_table =_ErrorTable()
-token_table =_TokenTable()
+symbol_table=__SymbolTable()
+error_table =__ErrorTable()
+token_table =__TokenTable()
 
 def get_symbol_table():return symbol_table
 def get_token_table():return token_table
 def get_error_table(): return error_table
 
 if __name__ == "__main__":
-    # e = _ErrorTable()
+    # e = __ErrorTable()
     # err1 = Error(3, "an@", "Invalid Input")
     # err2 = Error(5, "so!", "Invalid Input")
     # err3 = Error(6, "3d", "Invalid number")
