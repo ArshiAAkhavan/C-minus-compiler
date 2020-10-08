@@ -2,32 +2,32 @@
 from collections import namedtuple
 from enum import Enum
 
-class Token_type(Enum):
-    NULL=0                      # 000000        Null
-    ID=1                        # 000001        abcd...xyz
-    KEY_WORD=1                  # 000001        abcd...xyz
-    NUM=2                       # 000010        0123456789
-    WHITE_SPACE=3               # 000011        \n\t\r\v\f 
-    COMMENT=4                   # 000100        // /**/
+class TokenType(Enum):
+    NULL=0                      # 0000000       Null
+    ID=1                        # 0000001       abcd...xyz
+    KEY_WORD=1                  # 0000001       abcd...xyz
+    NUM=2                       # 0000010       0123456789
+    WS=3                        # 0000011       \n\t\r\v\f 
+    COM=4                       # 0000100       // /**/
     
-    SYMBOL_EQ=64                # 100000        ==
-    SYMBOL_LT=65                # 100001        <
-    SYMBOL_AS=66                # 100010        =
-    
-    SYMBOL_MUL=68               # 100100        *
-    SYMBOL_ADD=69               # 100101        +
-    SYMBOL_SUB=70               # 100110        -
+    SYMBOL_LT=60                # 0111100       <
+    SYMBOL_AS=61                # 0111101       =
+    SYMBOL_EQ=120               # 1111000       ==
 
-    SYMBOL_SEMI_COLON=72        # 101000        ;
-    SYMBOL_COLON=73             # 101001        :
-    SYMBOL_COMMA=74             # 101010        ,
+    SYMBOL_MUL=42               # 0101010       *
+    SYMBOL_ADD=43               # 0101011       +
+    SYMBOL_SUB=45               # 0101111       -
 
-    SYMBOL_BRACKET_O=96         # 110000        [
-    SYMBOL_BRACKET_C=97         # 110001        ]
-    SYMBOL_PARENTHESIS_O=98     # 110010        (
-    SYMBOL_PARENTHESIS_C=99     # 110011        )
-    SYMBOL_CURLY_BRACKET_O=100  # 110100        {
-    SYMBOL_CURLY_BRACKET_C=101  # 110101        }
+    SYMBOL_COMMA=44             # 0101110       ,
+    SYMBOL_COLON=58             # 0111010       :
+    SYMBOL_SEMI_COLON=59        # 0111011       ;
+
+    SYMBOL_BRACKET_O=91         # 1011011       [
+    SYMBOL_BRACKET_C=93         # 1011101       ]
+    SYMBOL_PARENTHESIS_O=40     # 0101000       (
+    SYMBOL_PARENTHESIS_C=41     # 0101001       )
+    SYMBOL_CURLY_BRACKET_O=123  # 1111011       {
+    SYMBOL_CURLY_BRACKET_C=125  # 1111101       }
 
 Token = namedtuple('Token', 'type lexeme')
 
