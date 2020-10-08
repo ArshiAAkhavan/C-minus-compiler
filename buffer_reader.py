@@ -8,7 +8,7 @@ class BufferReader:
 
         self.input_file = open(path, "r")
 
-        self.__refill_buffer()
+        self._refill_buffer()
 
     def push_back(self,char):
         if self.buffer_pointer>0:
@@ -18,14 +18,14 @@ class BufferReader:
 
     def get_next_char(self):
         if self.buffer_pointer == len(self.buffer):
-            self.__refill_buffer()
+            self._refill_buffer()
 
         next_char = self.buffer[self.buffer_pointer]
         self.buffer_pointer += 1
 
         return next_char
 
-    def __refill_buffer(self):
+    def _refill_buffer(self):
         self.buffer = self.input_file.read(self.buffer_size)
         if len(self.buffer)<self.buffer_size:
             self.buffer+=chr(26)
@@ -40,7 +40,7 @@ class BufferReader:
             return False
         else:
             try:
-                self.__refill_buffer()
+                self._refill_buffer()
                 return self.has_next()
             except Exception:
                 return False

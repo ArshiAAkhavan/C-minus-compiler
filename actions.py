@@ -1,12 +1,16 @@
 from tokens import Token
 from tokens import TokenType
+from Tables import SymbolTable
 
+def num_token_gen(lexeme): return Token(TokenType.NUM, lexeme)
+def id_token_gen(lexeme): 
+    token=Token(TokenType.ID, lexeme)
+    SymbolTable.append(token)
 
-num_token_gen       = lambda lexeme:Token(TokenType.NUM,lexeme)
-id_token_gen        = lambda lexeme:Token(TokenType.ID ,lexeme)    
-comment_token_gen   = lambda lexeme:Token(TokenType.COM,lexeme)    
-whitespace_token_gen= lambda lexeme:Token(TokenType.WS ,lexeme)
-symbol_token_gen    = lambda lexeme:Token(TokenType(sum(ord(c) for c in lexeme)),lexeme)
+def comment_token_gen(lexeme): return Token(TokenType.COM, lexeme)
+def whitespace_token_gen(lexeme): return Token(TokenType.WS, lexeme)
+def symbol_token_gen(lexeme): return Token(TokenType(sum(ord(c) for c in lexeme)), lexeme)
+
 
 def error_gen(lexeme):
     pass
