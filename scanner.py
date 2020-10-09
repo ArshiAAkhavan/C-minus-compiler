@@ -101,6 +101,5 @@ def main():
     print(tables.get_token_table())
     
 
-
 if __name__ == "__main__":
     main()
