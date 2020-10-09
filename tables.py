@@ -51,7 +51,6 @@ class __TokenTable:
 
     def add_token(self,line_no,token):
         self.tokens.append((line_no,token))
-        print("adding tokens")
 
     def __str__(self):
         s=""

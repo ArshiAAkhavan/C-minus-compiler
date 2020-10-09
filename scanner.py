@@ -90,10 +90,10 @@ def main():
 
     start = DFANode(actions.error_gen)
     # implementing number regex
-    # num_middle_state = DFANode(actions.error_gen)
-    # num_final_state = FinalStateNode(actions.num_token_gen, True)
-    # num_middle_state.append(Edge().include("0", "9"), num_middle_state).append(Edge().exclude("0", "9").exclude("a","z").exclude("A","Z"), num_final_state)
-    # start.append(Edge().include("0", "9"), num_middle_state)
+    num_middle_state = DFANode(actions.error_gen)
+    num_final_state = FinalStateNode(actions.num_token_gen, True)
+    num_middle_state.append(Edge().include("0", "9"), num_middle_state).append(Edge().exclude("0", "9").exclude("a","z").exclude("A","Z"), num_final_state)
+    start.append(Edge().include("0", "9"), num_middle_state)
 
     # implementing id/keyword
     id_middle_state = DFANode(actions.error_gen)

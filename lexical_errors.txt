@@ -1,37 +1,11 @@
 1.	( , Invalid input)
+1.	( , Invalid input)
+1.	( , Invalid input)
 1.	(
 , Invalid input)
+2.	( , Invalid input)
+2.	( , Invalid input)
 2.	(
 , Invalid input)
-3.	(
-, Invalid input)
-4.	(
-, Invalid input)
-5.	(1, Invalid input)
-5.	(!, Invalid input)
-5.	(1, Invalid input)
-5.	(
-, Invalid input)
-6.	(2, Invalid input)
-6.	(2, Invalid input)
-6.	(@, Invalid input)
-6.	(@, Invalid input)
-6.	(2, Invalid input)
-6.	(2, Invalid input)
-6.	(
-, Invalid input)
-7.	(6, Invalid input)
-7.	(
-, Invalid input)
-8.	(3, Invalid input)
-8.	(3, Invalid input)
-8.	(3, Invalid input)
-8.	(#, Invalid input)
-8.	(#, Invalid input)
-8.	(#, Invalid input)
-8.	(3, Invalid input)
-8.	(3, Invalid input)
-8.	(3, Invalid input)
-8.	(
-, Invalid input)
-9.	(, Invalid input)
+3.	(2222b, Invalid number)
+3.	(, Invalid input)
