@@ -9,10 +9,10 @@ class TokenType(Enum):
     NUM=2                       # 0000010       0123456789
     WHITE_SPACE=3               # 0000011       \n\t\r\v\f 
     COMMENT=4                   # 0000100       // /**/
-    
+
     SYMBOL_LT=60                # 0111100       <
     SYMBOL_AS=61                # 0111101       =
-    SYMBOL_EQ=120               # 1111000       ==
+    SYMBOL_EQ=122               # 1111000       ==
 
     SYMBOL_MUL=42               # 0101010       *
     SYMBOL_ADD=43               # 0101011       +
