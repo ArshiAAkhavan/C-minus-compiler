@@ -1,6 +1,6 @@
 from tokens import Token
 from tokens import TokenType
-from errors import TokenMissMatchException
+from errors import *
 import tables 
 
 def num_token_gen(line_no,lexeme): 
@@ -22,4 +22,16 @@ def comment_token_gen(line_no,lexeme):return Token(TokenType.COMMENT, lexeme)
 def whitespace_token_gen(line_no,lexeme): return Token(TokenType.WHITE_SPACE, lexeme)
 
 def error_gen(line_no,lexeme):
-    print(TokenMissMatchException(lexeme))
+    if lexeme.startswith(r"\*"):
+        if len(lexeme) < 8:
+            error = tables.Error(line_no, lexeme, "Unclosed comment")
+        else:
+            error = tables.Error(line_no, lexeme[0:6], "Unclosed comment")
+        tables.get_error_table().add_lexical_error(error)
+    elif lexeme == "*/":
+        error = tables.Error(line_no, lexeme, "Unmatched */")
+        tables.get_error_table().add_lexical_error(error)
+    else:
+        error = tables.Error(line_no, lexeme, "Invalid input")
+        tables.get_error_table().add_lexical_error(error)
+    # I am not sure how to add invalid number

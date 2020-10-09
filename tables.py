@@ -15,13 +15,17 @@ class __ErrorTable:
 
     def end(self):
         file = open("lexical_errors.txt", "w")
-        for e in self.lexical_errors:
-            s = str(e.lineno) + ".\t(" + str(e.characters) + ", " + str(e.error_type) + ")\n"
-            file.write(s)
+        if not self.lexical_errors:
+            file.write("There is no lexical error.")
+        else:
+            for e in self.lexical_errors:
+                s = str(e.lineno) + ".\t(" + str(e.characters) + ", " + str(e.error_type) + ")\n"
+                file.write(s)
         file.close()
 
 class __SymbolTable:
     keyword = ["if", "else", "void", "int", "while", "break", "continue", "switch", "default", "case", "return"]
+
     def __init__(self):
         self.ids = []
 
