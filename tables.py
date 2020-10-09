@@ -31,9 +31,9 @@ class __SymbolTable:
 
     def add_symbol(self,token):
         if token.lexeme in self.keyword:
-            token.type=TokenType.KEY_WORD
+            token.type = TokenType.KEY_WORD
         else:
-            self.ids.append(token)
+            self.ids.append(token.lexeme)
         return token    
         
     def end(self):
