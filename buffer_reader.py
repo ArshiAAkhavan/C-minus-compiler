@@ -12,6 +12,8 @@ class BufferReader:
         self.__refill_buffer()
 
     def push_back(self,char):
+        if char=='\n':
+            self.line_no-=1
         if self.buffer_pointer>0:
             self.buffer_pointer-=1
         else:
