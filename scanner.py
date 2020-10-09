@@ -86,13 +86,13 @@ def main():
     num_final_state = FinalStateNode(actions.num_token_gen, True)
     num_middle_state.append(Edge().include("0", "9"), num_middle_state).append(Edge().exclude("0", "9").exclude("a","z").exclude("A","Z"), num_final_state)
     start.append(Edge().include("0", "9"), num_middle_state)
+
     # implementing id/keyword
     id_middle_state = DFANode(actions.error_gen)
     id_final_state = FinalStateNode(actions.id_token_gen, True)
-    id_middle_state.append(Edge().include("0", "9"), id_middle_state).append(Edge().include("a", "z"), id_middle_state)\
-        .append(Edge().include("A", "Z"), id_middle_state).append(Edge().exclude("0", "9"), id_final_state)\
-        .append(Edge().exclude("a", "z"), id_final_state).append(Edge().exclude("A", "Z"), id_final_state)
-    start.append(Edge().include("a", "z"), id_middle_state).append(Edge().include("A", "Z"), id_middle_state)
+    id_middle_state.append(Edge().include("0", "9").include("a", "z").include("A", "Z"), id_middle_state)\
+        .append(Edge().exclude("0", "9").exclude("a", "z").exclude("A", "Z"), id_final_state)
+    start.append(Edge().include("a", "z").include("A", "Z"), id_middle_state)
 
 
     sc = Scanner(start, BufferReader("input.txt", 30))
