@@ -99,7 +99,8 @@ def main():
     import tables
 
     print(tables.get_token_table())
-    
+    tables.get_error_table().end()
+
 
 if __name__ == "__main__":
     main()
