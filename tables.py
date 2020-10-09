@@ -49,9 +49,10 @@ class __TokenTable:
         self.tokens.append((line_no,token))
 
     def __str__(self):
-        pass    
-        # print(f"{r[0]}: <{r[1].type.__name__},{r[1].lexeme}>\n") for r in self.tokens
-
+        s=""
+        for line_no,token in self.tokens:
+            s+=f"{line_no}:\t\t<{token.type.name},{token.lexeme}>\n"
+        return s
 
 symbol_table=__SymbolTable()
 error_table =__ErrorTable()

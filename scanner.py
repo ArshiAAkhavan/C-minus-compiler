@@ -97,8 +97,8 @@ def main():
             print(e)
             break
     import tables
-    [(i for i in tables.get_token_table().tokens)]
-    # print(tables.get_token_table())
+
+    print(tables.get_token_table())
     
 
 
