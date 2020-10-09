@@ -1,3 +1,6 @@
-if 123 then 456
-else if 1111
-2222b
+if a == b:
+    c=10
+else:
+    d=20
+
+print((a+b)*c-v[0])

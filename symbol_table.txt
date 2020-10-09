@@ -9,4 +9,12 @@
 9.	default
 10.	case
 11.	return
-12.	then
+12.	a
+13.	b
+14.	c
+15.	d
+16.	print
+17.	a
+18.	b
+19.	c
+20.	v

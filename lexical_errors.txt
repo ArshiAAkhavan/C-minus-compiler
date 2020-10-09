@@ -5,7 +5,18 @@
 , Invalid input)
 2.	( , Invalid input)
 2.	( , Invalid input)
+2.	( , Invalid input)
+2.	( , Invalid input)
 2.	(
 , Invalid input)
-3.	(2222b, Invalid number)
-3.	(, Invalid input)
+3.	(
+, Invalid input)
+4.	( , Invalid input)
+4.	( , Invalid input)
+4.	( , Invalid input)
+4.	( , Invalid input)
+4.	(
+, Invalid input)
+5.	(
+, Invalid input)
+6.	(, Invalid input)
