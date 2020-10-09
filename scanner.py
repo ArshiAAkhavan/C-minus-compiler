@@ -79,14 +79,23 @@ class Scanner:
 def main():
     from buffer_reader import BufferReader
 
+    start = DFANode(actions.error_gen)
     # implementing number regex
-    number_regex = DFANode(actions.error_gen)
-    middle_state = DFANode(actions.error_gen)
-    final_state = FinalStateNode(actions.num_token_gen, True)
-    middle_state.append(Edge().include("0", "9"), middle_state).append(Edge().exclude("0", "9"), final_state)
-    number_regex.append(Edge().include("0", "9"), middle_state)
+    num_middle_state = DFANode(actions.error_gen)
+    num_final_state = FinalStateNode(actions.num_token_gen, True)
+    num_middle_state.append(Edge().include("0", "9"), num_middle_state).append(Edge().exclude("0", "9"), num_final_state)\
+        .append(Edge().exclude("a", "z"), num_final_state).append(Edge().exclude("A", "Z"), num_final_state)
+    start.append(Edge().include("0", "9"), num_middle_state)
+    # implementing id/keyword
+    id_middle_state = DFANode(actions.error_gen)
+    id_final_state = FinalStateNode(actions.id_token_gen, True)
+    id_middle_state.append(Edge().include("0", "9"), id_middle_state).append(Edge().include("a", "z"), id_middle_state)\
+        .append(Edge().include("A", "Z"), id_middle_state).append(Edge().exclude("0", "9"), id_final_state)\
+        .append(Edge().exclude("a", "z"), id_final_state).append(Edge().exclude("A", "Z"), id_final_state)
+    start.append(Edge().include("a", "z"), id_middle_state).append(Edge().include("A", "Z"), id_middle_state)
 
-    sc = Scanner(number_regex, BufferReader("input.txt", 30))
+
+    sc = Scanner(start, BufferReader("input.txt", 30))
 
     while(sc.can_generate_token()):
         try:
