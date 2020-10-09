@@ -95,6 +95,7 @@ def main():
     start.append(Edge().include("a", "z"), id_middle_state).append(Edge().include("A", "Z"), id_middle_state)
 
 
+
     sc = Scanner(start, BufferReader("input.txt", 30))
 
     while(sc.can_generate_token()):
@@ -109,6 +110,7 @@ def main():
 
     print(tables.get_token_table())
     tables.get_error_table().end()
+    tables.get_symbol_table().end()
 
 
 if __name__ == "__main__":
