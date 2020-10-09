@@ -31,10 +31,10 @@ class __SymbolTable:
 
     def add_symbol(self,token):
         if token.lexeme in self.keyword:
-            token.type = TokenType.KEY_WORD
+            return Token(TokenType.KEYWORD,token.lexeme)
         else:
             self.ids.append(token.lexeme)
-        return token    
+            return token    
         
     def end(self):
         file = open("symbol_table.txt", "w")
@@ -51,6 +51,7 @@ class __TokenTable:
 
     def add_token(self,line_no,token):
         self.tokens.append((line_no,token))
+        print("adding tokens")
 
     def __str__(self):
         s=""
