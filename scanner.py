@@ -66,9 +66,9 @@ class Scanner:
                 if state.should_push_back():
                     self.input_provider.push_back(lexeme[-1])
                     lexeme = lexeme[:-1]
-                return state.action(1,lexeme)
+                return state.action(self.input_provider.get_line_no(),lexeme)
             elif not isinstance(state, DFANode):
-                return state(1,lexeme)
+                return state(self.input_provider.get_line_no(),lexeme)
 
             if not self.input_provider.has_next():
                 break
@@ -97,7 +97,8 @@ def main():
             print(e)
             break
     import tables
-    tables.get_token_table().__str__()
+    [(i for i in tables.get_token_table().tokens)]
+    # print(tables.get_token_table())
     
 
 

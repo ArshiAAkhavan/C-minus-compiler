@@ -5,6 +5,7 @@ class BufferReader:
         self.buffer_size = buffer_size
         self.buffer_pointer = 0
         self.buffer = ""
+        self.line_no=1
 
         self.input_file = open(path, "r")
 
@@ -16,6 +17,9 @@ class BufferReader:
         else:
             self.buffer=char+self.buffer
 
+    def get_line_no(self):
+        return self.line_no
+
     def get_next_char(self):
         if self.buffer_pointer == len(self.buffer):
             self.__refill_buffer()
@@ -23,6 +27,8 @@ class BufferReader:
         next_char = self.buffer[self.buffer_pointer]
         self.buffer_pointer += 1
 
+        if next_char=='\n':
+            self.line_no+=1
         return next_char
 
     def __refill_buffer(self):

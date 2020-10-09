@@ -49,9 +49,8 @@ class __TokenTable:
         self.tokens.append((line_no,token))
 
     def __str__(self):
-        #todo
-        super().__str__()
-        print(self.tokens)
+        pass    
+        # print(f"{r[0]}: <{r[1].type.__name__},{r[1].lexeme}>\n") for r in self.tokens
 
 
 symbol_table=__SymbolTable()
