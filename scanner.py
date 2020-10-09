@@ -16,7 +16,7 @@ class Edge:
 
     def __contains__(self, char):
         for start, end in self.exclude_ranges:
-            if start <= char and char <= end:
+            if start <= char <= end:
                 return False
 
         for start, end in self.include_ranges:
@@ -61,14 +61,15 @@ class Scanner:
     def get_next_token(self):
         state = self.root
         lexeme = ""
+        line_no=self.input_provider.get_line_no()
         while(True):
             if isinstance(state, FinalStateNode):
                 if state.should_push_back():
                     self.input_provider.push_back(lexeme[-1])
                     lexeme = lexeme[:-1]
-                return state.action(self.input_provider.get_line_no(),lexeme)
+                return state.action(line_no,lexeme)
             elif not isinstance(state, DFANode):
-                return state(self.input_provider.get_line_no(),lexeme)
+                return state(line_no,lexeme)
 
             if not self.input_provider.has_next():
                 break
@@ -83,8 +84,7 @@ def main():
     # implementing number regex
     num_middle_state = DFANode(actions.error_gen)
     num_final_state = FinalStateNode(actions.num_token_gen, True)
-    num_middle_state.append(Edge().include("0", "9"), num_middle_state).append(Edge().exclude("0", "9"), num_final_state)\
-        .append(Edge().exclude("a", "z"), num_final_state).append(Edge().exclude("A", "Z"), num_final_state)
+    num_middle_state.append(Edge().include("0", "9"), num_middle_state).append(Edge().exclude("0", "9").exclude("a","z").exclude("A","Z"), num_final_state)
     start.append(Edge().include("0", "9"), num_middle_state)
     # implementing id/keyword
     id_middle_state = DFANode(actions.error_gen)
