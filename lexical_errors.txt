@@ -5,7 +5,7 @@
 2.	(@, Invalid input)
 2.	(
 , Invalid input)
-3.	(t, Invalid input)
+3.	(6t, Invalid number)
 3.	(
 , Invalid input)
 4.	(#, Invalid input)
