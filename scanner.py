@@ -6,11 +6,13 @@ class Edge:
         self.include_ranges = []
         self.exclude_ranges = []
 
-    def include(self, start, end):
+    def include(self, start, end=None):
+        if not end: end=start
         self.include_ranges.append((start, end))
         return self
 
-    def exclude(self, start, end):
+    def exclude(self, start, end=None):
+        if not end: end=start
         self.exclude_ranges.append((start, end))
         return self
 
