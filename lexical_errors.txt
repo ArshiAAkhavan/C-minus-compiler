@@ -1,27 +1,5 @@
-1.	( , Invalid input)
-1.	( , Invalid input)
-1.	( , Invalid input)
-1.	(
-, Invalid input)
-2.	( , Invalid input)
-2.	( , Invalid input)
-2.	( , Invalid input)
-2.	( , Invalid input)
-2.	(
-, Invalid input)
-3.	(
-, Invalid input)
-4.	( , Invalid input)
-4.	( , Invalid input)
-4.	( , Invalid input)
-4.	( , Invalid input)
-4.	(
-, Invalid input)
-5.	(
-, Invalid input)
-6.	(
-, Invalid input)
-7.	(
-, Invalid input)
-8.	(1c, Invalid number)
-8.	(, Invalid input)
+7.	(3d, Invalid number)
+9.	(!, Invalid input)
+11.	(*/, Unmatched */)
+14.	(@, Invalid input)
+16.	(/* comm..., Unclosed comment)

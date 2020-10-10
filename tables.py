@@ -20,9 +20,7 @@ class __ErrorTable:
         if not self.lexical_errors:
             file.write("There is no lexical error.")
         else:
-            for e in self.lexical_errors:
-                s=f"{e.lineno}.\t({e.characters}, {e.error_type})\n"
-                file.write(s)
+            [file.write(f"{e.lineno}.\t({e.characters}, {e.error_type})\n") for e in self.lexical_errors]
         file.close()
 
 
@@ -47,9 +45,7 @@ class __SymbolTable:
 
     def export(self,path):
         file = open(path, "w")
-        for i, e in enumerate(self.keyword + self.ids):
-            s = f"{i+1}.\t{e}\n"
-            file.write(s)
+        [file.write(f"{i+1}.\t{e}\n") for i, e in enumerate(self.keyword + self.ids)]
         file.close()
 
 
@@ -61,10 +57,16 @@ class __TokenTable:
         self.tokens.append((line_no, token))
 
     def export(self,path):
-        # file= open(path,"w")
-        # self.tokens.sort(lambda row: row[0])
-        # print(self.tokens)
-        pass
+        file= open(path,"w")
+        current_line_no=-1
+        for line_no,token in self.tokens:
+            if current_line_no != line_no:
+                current_line_no=line_no
+                file.write(f"\n{line_no}")
+            index=token.type.name.find("_")
+            token_type=(token.type.name[:index],token.type.name)[index==-1]
+            file.write(f"({token_type}, {token.lexeme}) ")
+
     def __str__(self):
         return "\n".join([f"{line_no}:\t\t<{token.type.name},{token.lexeme}>" for line_no,token in self.tokens])
 
@@ -72,29 +74,7 @@ class __TokenTable:
 symbol_table = __SymbolTable()
 error_table = __ErrorTable()
 token_table = __TokenTable()
-
-
 def get_symbol_table(): return symbol_table
-
-
 def get_token_table(): return token_table
-
-
 def get_error_table(): return error_table
 
-
-if __name__ == "__main__":
-
-    # e = __ErrorTable()
-    # err1 = Error(3, "an@", "Invalid Input")
-    # err2 = Error(5, "so!", "Invalid Input")
-    # err3 = Error(6, "3d", "Invalid number")
-    # e.add_lexical_error(err1)
-    # e.add_lexical_error(err2)
-    # e.add_lexical_error(err3)
-    # e.end()
-    s = get_symbol_table()
-    s.add_symbol(Token(TokenType.ID, "heshmat"))
-    print(get_symbol_table())
-    s.add_symbol("if").add_symbol("dob").add_symbol("return").add_symbol(
-        "if").add_symbol("f7").add_symbol("uio").add_symbol("f7").end()

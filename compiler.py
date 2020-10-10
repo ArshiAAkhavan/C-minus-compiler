@@ -76,6 +76,7 @@ while(sc.can_generate_token()):
 import tables
 tables.get_error_table().export("lexical_errors.txt")
 tables.get_symbol_table().export("symbol_table.txt")
+tables.get_token_table().export("tokens.txt")
 print(tables.get_token_table())
 
 
