@@ -33,24 +33,6 @@ class __ErrorTable:
             file.write(f"({e.characters}, {e.error_type})")
         file.close()
 
-    def exportold(self,path):
-        file = open(path, "w")
-        if not self.lexical_errors:
-            file.write("There is no lexical error.")
-        else:
-            last_line_no = -1
-            for i, e in enumerate(self.lexical_errors):
-                if e.lineno != last_line_no:
-                    file.write(f"{e.lineno}.\t")
-                else:
-                    file.write(' ')
-                file.write(f"({e.characters}, {e.error_type})")
-                if i < len(self.lexical_errors) - 1:
-                    file.write('\n')
-                last_line_no = e.lineno
-        file.close()
-
-
 class __SymbolTable:
     keyword = ["if", "else", "void", "int", "while", "break", "switch", "default", "case", "return"]
 
