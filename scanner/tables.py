@@ -1,5 +1,4 @@
-from tokens import *
-
+from scanner.tokens import Token,TokenType
 
 class Error:
     def __init__(self, lineno, characters, error_type):

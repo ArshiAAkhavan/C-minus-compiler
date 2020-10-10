@@ -1,6 +1,8 @@
-import tables
-from buffer_reader import BufferReader
-from scanner import *
+from scanner import tables
+from scanner import actions
+from scanner.buffer_reader import BufferReader
+from scanner.scanner import Scanner
+from scanner.lang import DFANode,FinalStateNode,Edge
 
 
 def number_regex(start):
@@ -11,7 +13,6 @@ def number_regex(start):
         Edge().exclude("0", "9").exclude("a", "z").exclude("A", "Z"), num_final_state)
     start.append(Edge().include("0", "9"), num_middle_state)
 
-
 def id_regex(start):
     # implementing id/keyword
     id_middle_state = DFANode(actions.error_gen)
@@ -19,7 +20,6 @@ def id_regex(start):
     id_middle_state.append(Edge().include("0", "9").include("a", "z").include("A", "Z"), id_middle_state)\
         .append(Edge().exclude("0", "9").exclude("a", "z").exclude("A", "Z"), id_final_state)
     start.append(Edge().include("a", "z").include("A", "Z"), id_middle_state)
-
 
 def symbol_regex(start):
     # implementing symbols
@@ -38,7 +38,6 @@ def symbol_regex(start):
         Edge().exclude("="), assign_star_final_state)
     star_middle_state.append(Edge().exclude("/"), assign_star_final_state)
 
-
 def comment_regex(start):
     # implementing comments
     comment_start_state = DFANode(actions.error_gen)  # a
@@ -56,7 +55,6 @@ def comment_regex(start):
     long_comment_end_state.append(Edge().exclude("*").exclude("/").exclude(chr(26)), long_comment_start_state)\
         .append(Edge().include("*"), long_comment_end_state).append(Edge().include("/"), comment_final_state)
 
-
 def whitespace_regex(start):
     # implementing whitespace
     whitespace_final_state = FinalStateNode(
@@ -71,19 +69,18 @@ symbol_regex(start)
 comment_regex(start)
 whitespace_regex(start)
 
-language=Edge().include('0','9').include('a','z').include('A','Z').include('/').include('*') \
+language=Edge().include('0','9').include('a','z').include('A','Z')\
+        .include('/').include('*') \
         .include(':','<').include(',').include('(',')').include('[').include(']').include('{').include('}') \
-            .include('+').include('-').include('=').include('*').include('\t', '\r').include(' ').include(chr(26))
+        .include('+').include('-').include('=')\
+        .include('\t', '\r').include(' ').include(chr(26))
 sc = Scanner(start, BufferReader("input.txt", 30),language)
 
 while(sc.can_generate_token()):
     try:
         sc.get_next_token()
-    except TokenMissMatchException as e:
+    except Exception as e:
         print(e)
-    except NotEnoughCharacterException as e:
-        print(e)
-        break
 
 tables.get_error_table().export("lexical_errors.txt")
 tables.get_symbol_table().export("symbol_table.txt")

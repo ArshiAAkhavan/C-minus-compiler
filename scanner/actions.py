@@ -1,7 +1,5 @@
-from tokens import Token
-from tokens import TokenType
-from errors import *
-import tables 
+from scanner.tokens import Token,TokenType
+from scanner import tables 
 
 def num_token_gen(line_no,lexeme): 
     token=Token(TokenType.NUM, lexeme)
