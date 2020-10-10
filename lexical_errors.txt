@@ -1,2 +1,1 @@
-1.	({, Invalid input)
-1.	(, Invalid input)
+There is no lexical error.

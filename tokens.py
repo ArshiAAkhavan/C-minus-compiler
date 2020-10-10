@@ -5,10 +5,10 @@ from enum import Enum
 class TokenType(Enum):
     NULL=0                      # 0000000       Null
     ID=1                        # 0000001       abcd...xyz
-    KEY_WORD=1                  # 0000001       abcd...xyz
-    NUM=2                       # 0000010       0123456789
-    WHITE_SPACE=3               # 0000011       \n\t\r\v\f 
-    COMMENT=4                   # 0000100       // /**/
+    KEYWORD=2                  # 0000001       abcd...xyz
+    NUM=3                       # 0000010       0123456789
+    WHITE_SPACE=4               # 0000011       \n\t\r\v\f 
+    COMMENT=5                   # 0000100       // /**/
 
     SYMBOL_LT=60                # 0111100       <
     SYMBOL_AS=61                # 0111101       =
