@@ -1,1 +1,2 @@
-There is no lexical error.
+4.	(1g, Invalid number)
+7.	(out$, Invalid input) (put£, Invalid input)

@@ -16,6 +16,24 @@ class __ErrorTable:
         self.lexical_errors.append(error)
 
     def export(self,path):
+        file= open(path,"w")
+        if not self.lexical_errors:
+            file.write("There is no lexical error.")
+            file.close
+            return 
+        
+        current_line_no=-1
+        for e in self.lexical_errors:
+            if current_line_no != e.lineno:
+                if current_line_no!= -1:file.write("\n")
+                current_line_no=e.lineno
+                file.write(f"{e.lineno}.\t")
+            else:
+                file.write(" ")
+            file.write(f"({e.characters}, {e.error_type})")
+        file.close()
+
+    def exportold(self,path):
         file = open(path, "w")
         if not self.lexical_errors:
             file.write("There is no lexical error.")
@@ -71,23 +89,17 @@ class __TokenTable:
     def export(self,path):
         file= open(path,"w")
         current_line_no=-1
-        just_changed = False
-        anything_written = False
         for line_no,token in self.tokens:
             if current_line_no != line_no:
+                if current_line_no!= -1:file.write("\n")
                 current_line_no=line_no
-                just_changed = True
-                if anything_written:
-                    file.write("\n")
                 file.write(f"{line_no}.\t")
-                anything_written = True
+            else:
+                file.write(" ")
             index=token.type.name.find("_")
             token_type=(token.type.name[:index],token.type.name)[index==-1]
-            if just_changed:
-                file.write(f"({token_type}, {token.lexeme})")
-                just_changed = False
-            else:
-                file.write(f" ({token_type}, {token.lexeme})")
+            file.write(f"({token_type}, {token.lexeme})")
+        file.close()
 
     def __str__(self):
         return "\n".join([f"{line_no}:\t\t<{token.type.name},{token.lexeme}>" for line_no,token in self.tokens])
