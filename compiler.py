@@ -49,8 +49,8 @@ def comment_regex(start):
     start.append(Edge().include("/"), comment_start_state)
     comment_start_state.append(Edge().include("/"), short_comment_middle_state).append(Edge().include("*"),
                                                                                             long_comment_start_state)
-    short_comment_middle_state.append(Edge().include('\n', '\n'), comment_final_state).append(
-        Edge().exclude('\n', '\n'), short_comment_middle_state)
+    short_comment_middle_state.append(Edge().include('\n'), comment_final_state).append(
+        Edge().exclude('\n'), short_comment_middle_state)
     long_comment_start_state.append(Edge().include("*"), long_comment_end_state).append(Edge().exclude("*")
                                                                                              .exclude(chr(26)), long_comment_start_state)
     long_comment_end_state.append(Edge().exclude("*").exclude("/").exclude(chr(26)), long_comment_start_state)\
@@ -61,8 +61,7 @@ def whitespace_regex(start):
     # implementing whitespace
     whitespace_final_state = FinalStateNode(
         actions.whitespace_token_gen, False)
-    start.append(Edge().include('\t', '\r').include(
-        ' ', ' ').include(chr(26), chr(26)), whitespace_final_state)
+    start.append(Edge().include('\t', '\r').include(' ').include(chr(26)), whitespace_final_state)
 
 
 start = DFANode(actions.error_gen)
@@ -72,7 +71,10 @@ symbol_regex(start)
 comment_regex(start)
 whitespace_regex(start)
 
-sc = Scanner(start, BufferReader("input.txt", 30))
+language=Edge().include('0','9').include('a','z').include('A','Z').include('/').include('*') \
+        .include(':','<').include(',').include('(',')').include('[').include(']').include('{').include('}') \
+            .include('+').include('-').include('=').include('*').include('\t', '\r').include(' ').include(chr(26))
+sc = Scanner(start, BufferReader("input.txt", 30),language)
 
 while(sc.can_generate_token()):
     try:

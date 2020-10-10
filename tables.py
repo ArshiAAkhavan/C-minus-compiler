@@ -62,7 +62,7 @@ class __TokenTable:
         for line_no,token in self.tokens:
             if current_line_no != line_no:
                 current_line_no=line_no
-                file.write(f"\n{line_no}")
+                file.write(f"\n{line_no}.\t")
             index=token.type.name.find("_")
             token_type=(token.type.name[:index],token.type.name)[index==-1]
             file.write(f"({token_type}, {token.lexeme}) ")

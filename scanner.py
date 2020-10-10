@@ -61,9 +61,10 @@ class FinalStateNode(DFANode):
 
 
 class Scanner:
-    def __init__(self, root, input_provider):
+    def __init__(self, root, input_provider,language):
         self.root = root
         self.input_provider = input_provider
+        self.language=language
 
     def can_generate_token(self):
         return self.input_provider.has_next()
@@ -84,6 +85,8 @@ class Scanner:
             if not self.input_provider.has_next():
                 break
             lexeme += self.input_provider.get_next_char()
+            if lexeme[-1] not in self.language:
+                return state.action(line_no,lexeme)
             state = state.match(lexeme[-1])
 
 
