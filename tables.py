@@ -61,11 +61,13 @@ class __TokenTable:
     def add_token(self, line_no, token):
         self.tokens.append((line_no, token))
 
+    def export(self,path):
+        # file= open(path,"w")
+        # self.tokens.sort(lambda row: row[0])
+        # print(self.tokens)
+        pass
     def __str__(self):
-        s = ""
-        for line_no, token in self.tokens:
-            s += f"{line_no}:\t\t<{token.type.name},{token.lexeme}>\n"
-        return s
+        return "\n".join([f"{line_no}:\t\t<{token.type.name},{token.lexeme}>" for line_no,token in self.tokens])
 
 
 symbol_table = __SymbolTable()
