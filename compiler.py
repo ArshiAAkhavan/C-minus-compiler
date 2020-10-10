@@ -46,15 +46,15 @@ def comment_regex(start):
     comment_final_state = FinalStateNode(actions.comment_token_gen, False)  # c
     long_comment_start_state = DFANode(actions.error_gen)  # d
     long_comment_end_state = DFANode(actions.error_gen)  # e
-    start.append(Edge().include("/", "/"), comment_start_state)
-    comment_start_state.append(Edge().include("/", "/"), short_comment_middle_state).append(Edge().include("*", "*"),
+    start.append(Edge().include("/"), comment_start_state)
+    comment_start_state.append(Edge().include("/"), short_comment_middle_state).append(Edge().include("*"),
                                                                                             long_comment_start_state)
     short_comment_middle_state.append(Edge().include('\n', '\n'), comment_final_state).append(
         Edge().exclude('\n', '\n'), short_comment_middle_state)
-    long_comment_start_state.append(Edge().include("*", "*"), long_comment_end_state).append(Edge().exclude("*", "*")
-                                                                                             .exclude(chr(26), chr(26)), long_comment_start_state)
-    long_comment_end_state.append(Edge().exclude("*", "*").exclude("/", "/"), long_comment_start_state)\
-        .append(Edge().include("*", "*"), long_comment_end_state).append(Edge().include("/", "/"), comment_final_state)
+    long_comment_start_state.append(Edge().include("*"), long_comment_end_state).append(Edge().exclude("*")
+                                                                                             .exclude(chr(26)), long_comment_start_state)
+    long_comment_end_state.append(Edge().exclude("*").exclude("/").exclude(chr(26)), long_comment_start_state)\
+        .append(Edge().include("*"), long_comment_end_state).append(Edge().include("/"), comment_final_state)
 
 
 def whitespace_regex(start):
@@ -86,4 +86,3 @@ while(sc.can_generate_token()):
 tables.get_error_table().export("lexical_errors.txt")
 tables.get_symbol_table().export("symbol_table.txt")
 tables.get_token_table().export("tokens.txt")
-print(tables.get_token_table())

@@ -13,5 +13,4 @@ void main (void) {
         b = a < cde;
         {cde = @2;
     }}
-    return; /* comment 3
-}
+    return; /* comment 3****
