@@ -1,8 +1,8 @@
-if a == b:
-    c=10
-else:
-    d=20
-
-print((a+b)*c-v[0])
-
-1chertopert
+1c
+c = 453
+if else no
+@
+//I see
+/* no proap399^&((#@@ } */
+/* this shouldn't **************
+1c 1c @ no?

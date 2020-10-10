@@ -31,11 +31,36 @@ def symbol_regex(start):
     assign_middle_state.append(Edge().include("=", "="), equals_final_state).append(Edge().exclude("=", "="), assign_star_final_state)
     star_middle_state.append(Edge().exclude("/", "/"), assign_star_final_state)
 
+def comment_regex(start):
+    # implementing comments
+    comment_start_state = DFANode(actions.error_gen) # a
+    short_comment_middle_state = DFANode(actions.error_gen) # b
+    comment_final_state = FinalStateNode(actions.comment_token_gen, False) # c
+    long_comment_start_state = DFANode(actions.error_gen) # d
+    long_comment_end_state = DFANode(actions.error_gen) # e
+    start.append(Edge().include("/", "/"), comment_start_state)
+    comment_start_state.append(Edge().include("/", "/"), short_comment_middle_state).append(Edge().include("*", "*"),
+                                                                                            long_comment_start_state)
+    short_comment_middle_state.append(Edge().include('\n', '\n'), comment_final_state).append(Edge().exclude('\n', '\n')
+                                                                                        , short_comment_middle_state)
+    long_comment_start_state.append(Edge().include("*", "*"), long_comment_end_state).append(Edge().exclude("*", "*")
+                                                                                             .exclude(chr(26), chr(26))
+                                                                                             , long_comment_start_state)
+    long_comment_end_state.append(Edge().exclude("*", "*").exclude("/", "/"), long_comment_start_state)\
+        .append(Edge().include("*", "*"), long_comment_end_state).append(Edge().include("/", "/"), comment_final_state)
+
+def whitespace_regex(start):
+    # implementing whitespace
+    whitespace_final_state = FinalStateNode(actions.whitespace_token_gen, False)
+    start.append(Edge().include('\t', '\r').include(' ', ' ').include(chr(26), chr(26)), whitespace_final_state)
+
+
 start = DFANode(actions.error_gen)
 number_regex(start)
 id_regex(start)
 symbol_regex(start)
-
+comment_regex(start)
+whitespace_regex(start)
 
 sc = Scanner(start, BufferReader("input.txt", 30))
 

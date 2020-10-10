@@ -27,8 +27,7 @@ class __ErrorTable:
 
 
 class __SymbolTable:
-    keyword = ["if", "else", "void", "int", "while", "break",
-               "continue", "switch", "default", "case", "return"]
+    keyword = ["if", "else", "void", "int", "while", "break", "switch", "default", "case", "return"]
 
     def __init__(self):
         self.ids = []
@@ -36,9 +35,9 @@ class __SymbolTable:
     def add_symbol(self, token):
         if token.lexeme in self.keyword:
             return Token(TokenType.KEYWORD, token.lexeme)
-        else:
+        elif token.lexeme not in self.ids:
             self.ids.append(token.lexeme)
-            return token
+        return token
 
     def __str__(self):
         s = ""
