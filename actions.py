@@ -25,11 +25,11 @@ def error_gen(line_no,lexeme):
     if 57 >= ord(lexeme[0]) >= 48 and (91 > ord(lexeme[len(lexeme) - 1]) > 64 or 123 > ord(lexeme[len(lexeme) - 1]) > 96):
         error = tables.Error(line_no, lexeme, "Invalid number")
         tables.get_error_table().add_lexical_error(error)
-    elif lexeme.startswith(r"\*"):
+    elif lexeme.startswith("/*"):
         if len(lexeme) < 8:
             error = tables.Error(line_no, lexeme, "Unclosed comment")
         else:
-            error = tables.Error(line_no, lexeme[0:6], "Unclosed comment")
+            error = tables.Error(line_no, lexeme[0:7] + "...", "Unclosed comment")
         tables.get_error_table().add_lexical_error(error)
     elif lexeme == "*/":
         error = tables.Error(line_no, lexeme, "Unmatched */")
