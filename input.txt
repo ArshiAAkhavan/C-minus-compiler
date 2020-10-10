@@ -4,3 +4,5 @@ else:
     d=20
 
 print((a+b)*c-v[0])
+
+1chertopert

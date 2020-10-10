@@ -49,8 +49,8 @@ while(sc.can_generate_token()):
         break
 
 import tables
+tables.get_error_table().export("lexical_errors.txt")
+tables.get_symbol_table().export("symbol_table.txt")
 print(tables.get_token_table())
-tables.get_error_table().end()
-tables.get_symbol_table().end()
 
 
