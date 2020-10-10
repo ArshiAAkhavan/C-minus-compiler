@@ -20,7 +20,10 @@ class __ErrorTable:
         if not self.lexical_errors:
             file.write("There is no lexical error.")
         else:
-            [file.write(f"{e.lineno}.\t({e.characters}, {e.error_type})\n") for e in self.lexical_errors]
+            for i, e in enumerate(self.lexical_errors):
+                file.write(f"{e.lineno}.\t({e.characters}, {e.error_type})")
+                if i < len(self.lexical_errors) - 1:
+                    file.write('\n')
         file.close()
 
 
@@ -45,7 +48,10 @@ class __SymbolTable:
 
     def export(self,path):
         file = open(path, "w")
-        [file.write(f"{i+1}.\t{e}\n") for i, e in enumerate(self.keyword + self.ids)]
+        for i, e in enumerate(self.keyword + self.ids):
+            file.write(f"{i + 1}.\t{e}")
+            if i < len(self.keyword + self.ids) - 1:
+                file.write("\n")
         file.close()
 
 
@@ -59,13 +65,21 @@ class __TokenTable:
     def export(self,path):
         file= open(path,"w")
         current_line_no=-1
+        just_changed = False
         for line_no,token in self.tokens:
             if current_line_no != line_no:
                 current_line_no=line_no
-                file.write(f"\n{line_no}.\t")
+                just_changed = True
+                if current_line_no != 1:
+                    file.write("\n")
+                file.write(f"{line_no}.\t")
             index=token.type.name.find("_")
             token_type=(token.type.name[:index],token.type.name)[index==-1]
-            file.write(f"({token_type}, {token.lexeme}) ")
+            if just_changed:
+                file.write(f"({token_type}, {token.lexeme})")
+                just_changed = False
+            else:
+                file.write(f" ({token_type}, {token.lexeme})")
 
     def __str__(self):
         return "\n".join([f"{line_no}:\t\t<{token.type.name},{token.lexeme}>" for line_no,token in self.tokens])

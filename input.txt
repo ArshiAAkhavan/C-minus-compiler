@@ -1,4 +1,4 @@
-void main (void) {
+void main ( void ) {
     int a = 0;
     // comment1
     a = 2 + 2;
@@ -13,4 +13,5 @@ void main (void) {
         b = a < cde;
         {cde = @2;
     }}
-    return; /* comment 3****
+    return;/* comment 3
+}
