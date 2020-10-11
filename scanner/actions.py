@@ -33,7 +33,5 @@ def error_gen(line_no,lexeme):
         error = tables.Error(line_no, lexeme, "Unmatched comment")
         tables.get_error_table().add_lexical_error(error)
     else:
-        if lexeme.endswith('\n'):
-            lexeme = lexeme[:-1]
         error = tables.Error(line_no, lexeme, "Invalid input")
         tables.get_error_table().add_lexical_error(error)
