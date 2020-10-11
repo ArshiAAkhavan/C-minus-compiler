@@ -8,10 +8,6 @@
 8.	default
 9.	case
 10.	return
-11.	f
+11.	c5
 12.	a
-13.	g
-14.	b
-15.	output
-16.	h
-17.	main
+13.	b
