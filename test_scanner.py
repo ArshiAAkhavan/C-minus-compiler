@@ -80,11 +80,11 @@ def generate_new_scanner(input_path):
 
 
 def main():
+    number_of_tests=10
     
     logger=logging.getLogger() 
     logger.setLevel(logging.INFO) 
-    for i in range(1,11,1):
-        # 'Formatted String : {0:05d}'.format(integervalue)
+    for i in range(1,number_of_tests+1,1):
         prefix="samples/T{0:02d}/".format(i)
         sc=generate_new_scanner(f"{prefix}input.txt")    
 
