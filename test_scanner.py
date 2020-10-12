@@ -86,7 +86,12 @@ def main():
     logger.setLevel(logging.INFO) 
     for i in range(1,number_of_tests+1,1):
         prefix="samples/T{0:02d}/".format(i)
+
         sc=generate_new_scanner(f"{prefix}input.txt")    
+
+        tables.get_token_table().tokens=[]
+        tables.get_symbol_table().ids=[]
+        tables.get_error_table().lexical_errors=[]
 
         while(sc.can_generate_token()):
             try:
@@ -103,9 +108,6 @@ def main():
         logger.warning(f"\tsymbol_table.txt:\t{open('symbol_table.txt').read().strip() == open(f'{prefix}symbol_table.txt').read().strip()}")
         logger.warning(f"\ttokens.txt:\t\t{open('tokens.txt').read().strip() == open(f'{prefix}tokens.txt').read().strip()}")
 
-        tables.get_token_table().tokens=[]
-        tables.get_symbol_table().ids=[]
-        tables.get_error_table().lexical_errors=[]
 
 if __name__=="__main__":
     main()
