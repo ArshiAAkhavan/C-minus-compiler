@@ -1,0 +1,19 @@
+int f(int a) {
+    void g(int b) {
+        output(b);
+        f(b - 1gh);
+    }
+    if (a == 1) {
+        out$put£(a);
+        return 0;
+    } else {
+        g(a);
+    }
+
+
+}
+
+
+void main(void) {
+    f(10);
+}

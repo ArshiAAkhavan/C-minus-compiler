@@ -177,4 +177,7 @@ dmypy.json
 
 
 # local data
-*.txt
+tokens.txt
+symbol_table.txt
+input.txt
+lexical_errors.txt

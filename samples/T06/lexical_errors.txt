@@ -1,0 +1,2 @@
+4.	(*/, Unmatched comment)
+13.	(/*this ..., Unclosed comment)
