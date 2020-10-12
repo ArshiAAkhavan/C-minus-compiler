@@ -83,8 +83,9 @@ def main():
     
     logger=logging.getLogger() 
     logger.setLevel(logging.INFO) 
-    for i in range(1,10,1):
-        prefix=f"samples/T0{i}/"
+    for i in range(1,11,1):
+        # 'Formatted String : {0:05d}'.format(integervalue)
+        prefix="samples/T{0:02d}/".format(i)
         sc=generate_new_scanner(f"{prefix}input.txt")    
 
         while(sc.can_generate_token()):
