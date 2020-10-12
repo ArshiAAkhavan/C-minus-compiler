@@ -1,7 +1,0 @@
-/* just checking if
-a few lines
-is counted correctly
-right*/
-/
-c5
-a == b

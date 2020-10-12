@@ -1,2 +1,0 @@
-6.	(ID, c5)
-7.	(ID, a) (SYMBOL, ==) (ID, b)
