@@ -80,9 +80,6 @@ def generate_new_scanner(input_path):
 
 
 def main():
-    
-
-
     number_of_tests=10
     test_passes=True
     logger=logging.getLogger() 

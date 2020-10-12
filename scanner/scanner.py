@@ -24,7 +24,8 @@ class Scanner:
 
             if not self.input_provider.has_next():
                 break
+            
             lexeme += self.input_provider.get_next_char()
-            if lexeme[-1] not in self.language:
+            if lexeme[-1] not in self.language and not state.is_universal() :
                 return state.action(line_no,lexeme)
             state = state.match(lexeme[-1])

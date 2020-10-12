@@ -33,9 +33,10 @@ class Edge:
         else:
             return self.contains_in_includes(char) or self.contains_in_excludes(char)
 class DFANode:
-    def __init__(self, action=None):
+    def __init__(self, action=None,supports_all_langs=False):
         self.action = action
         self.children = []
+        self.supports_all_langs=supports_all_langs
 
     def append(self, edge, child):
         self.children.append((edge, child))
@@ -47,10 +48,13 @@ class DFANode:
                 return child
         return self.action
 
+    def is_universal(self):
+        return self.supports_all_langs
+
 
 class FinalStateNode(DFANode):
-    def __init__(self, action, push_back_mode):
-        super().__init__(action)
+    def __init__(self, action,push_back_mode,supports_all_langs=True):
+        super().__init__(action,supports_all_langs)
         self.push_back_mode = push_back_mode
 
     def should_push_back(self):
