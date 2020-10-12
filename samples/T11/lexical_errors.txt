@@ -1,0 +1,2 @@
+5.	(>, Invalid input)
+6.	(87t, Invalid number)

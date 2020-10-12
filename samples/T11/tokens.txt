@@ -1,0 +1,2 @@
+5.	(ID, a) (SYMBOL, ==) (ID, b) (KEYWORD, if) (KEYWORD, else) (NUM, 3)
+6.	(ID, nf)
