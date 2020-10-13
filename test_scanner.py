@@ -80,8 +80,9 @@ def generate_new_scanner(input_path):
 
 
 def main():
-    number_of_tests=10
+    number_of_tests=11
     test_passes=True
+    status=""
     logger=logging.getLogger() 
     logger.setLevel(logging.INFO) 
     for i in range(1,number_of_tests+1,1):
@@ -108,11 +109,15 @@ def main():
         logger.warning(f"\tsymbol_table.txt:\t{open('symbol_table.txt').read().strip() == open(f'{prefix}symbol_table.txt').read().strip()}")
         logger.warning(f"\ttokens.txt:\t\t{open('tokens.txt').read().strip() == open(f'{prefix}tokens.txt').read().strip()}")
 
-        test_passes= test_passes and \
-            open('lexical_errors.txt').read().strip() == open(f'{prefix}lexical_errors.txt').read().strip() and \
+        
+        test_status=open('lexical_errors.txt').read().strip() == open(f'{prefix}lexical_errors.txt').read().strip() and \
             open('symbol_table.txt').read().strip() == open(f'{prefix}symbol_table.txt').read().strip() and \
             open('tokens.txt').read().strip() == open(f'{prefix}tokens.txt').read().strip()
+        test_passes= test_passes and test_status
+        status+=("F",".")[test_status]
 
+    logger.warning("".ljust(60,"="))
+    logger.warning(status)
     logger.warning(("test failed","test was successful!")[test_passes])
 if __name__=="__main__":
     main()
