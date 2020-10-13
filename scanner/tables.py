@@ -18,8 +18,7 @@ class __ErrorTable:
         file= open(path,"w")
         if not self.lexical_errors:
             file.write("There is no lexical error.")
-            file.close
-            return 
+            return
         
         current_line_no=-1
         for e in self.lexical_errors:
