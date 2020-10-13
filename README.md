@@ -19,9 +19,9 @@ Scanner is the part of the compiler that reads the input file character by chara
 
 In this project, the preassumption is that a file called "input.txt" contains the code and is in the same directory as compiler.py.
 
-In this phase, there is a while in compiler.py that calls a function in Scanner/Scanner.py (get_next_token()) to read the next character from input file; in future phases this function will be called by parser. The line number of the input file is also tracked ,for reporting errors and tokens, by counting the number of "\n"'s in the file.
+In this phase, there is a while in compiler.py that calls a function in Scanner/Scanner.py (get_next_token()) to read the next character from input file; in future phases this function will be called by parser. get_next_token() function does this by the help of buffer_reader.py; buffer_reader inputs a file and returns its characters one by one. The line number of the input file is also tracked ,for reporting errors and tokens, by counting the number of "\n"'s in the file.
 
-This scanner recognizes tokens by a structure defined in lang.py. Basically, this structure is a dfa in code; each state is either a middle or final state and has some edges which if the current character is in (include function) or is not in (exclude function) the state is changed to the next defined state. Each state also takes one of the functions in action.py as input; if the state is a final state upon entering the state the function is called and if it's a normal state, if the current character can not move to another state by the edges the function is triggered. The functions in action.py either recognize a token in final state cases or generate an error. In the case of final state, the node can push back the last character if needed.
+This scanner recognizes tokens by a structure defined in lang.py. Basically, this structure is a dfa in code; each state is either a middle or final state and has some edges which if the current character is in (include function) or is not in (exclude function) the state is changed to the next defined state. Each state also takes a function as input; if the state is a final state upon entering the state the function is called and if it's a normal state, if the current character can not move to another state by the edges the function is triggered. In this project the functions in action.py are used as input functions; these functions either recognize a token in final state cases or generate an error. In the case of final state, the node can push back the last character if needed.
 
 The dfa for this compiler is defined in multiple functions in compiler.py, by passing them the start node of dfa they all become a connected dfa that recognizes the tokens we need.
 
@@ -39,3 +39,6 @@ Symbol table is another singleton class in tables.py with entries from action.py
 
 ## Test Scanner
 The file test_scanner.py uses the samples folder to see if the expected outputs are generated from each input and reports the results in log.
+### How to Use
+If you have a dfa, you can make a scanner by using this project. Scanner inputs are the root of your dfa, a buffer_reader and your language. Buffer reader inputs are the path of your input file and the size of your buffer.
+You can create your dfa the same way that we have in compiler.py
