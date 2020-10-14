@@ -39,6 +39,13 @@ Symbol table is another singleton class in tables.py with entries from action.py
 
 ## Test Scanner
 The file test_scanner.py uses the samples folder to see if the expected outputs are generated from each input and reports the results in log.
-### How to Use
+## How to Use
 If you have a dfa, you can make a scanner by using this project. Scanner inputs are the root of your dfa, a buffer_reader and your language. Buffer reader inputs are the path of your input file and the size of your buffer.
-You can create your dfa the same way that we have in compiler.py
+
+You can create your dfa the same way that we have in compiler.py or you can use or modify what we already have. The same goes for functions in action.py; you can use what we already have or you can add your own functions as long as they have the same 2 inputs line number and lexeme.
+
+An example of dfa to code:
+
+Here is the example dfa that is for positive integer numbers:
+
+![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "NUMBER DFA")
