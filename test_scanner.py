@@ -80,7 +80,7 @@ def generate_new_scanner(input_path):
 
 
 def main():
-    number_of_tests=11
+    number_of_tests=12
     test_passes=True
     status=""
     logger=logging.getLogger() 
