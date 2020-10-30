@@ -4,7 +4,7 @@ from enum import Enum
 class TokenType(Enum):
     NULL=0                      # 0000000       Null
     ID=1                        # 0000001       abcd...xyz
-    KEYWORD=2                  # 0000001       abcd...xyz
+    KEYWORD=2                   # 0000001       abcd...xyz
     NUM=3                       # 0000010       0123456789
     WHITE_SPACE=4               # 0000011       \n\t\r\v\f 
     COMMENT=5                   # 0000100       // /**/

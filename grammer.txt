@@ -1,0 +1,92 @@
+Program -> DeclarationList $
+DeclarationList -> Declaration DeclarationList
+DeclarationList -> ε
+Declaration -> DeclarationInitial DeclarationPrime
+DeclarationInitial -> TypeSpecifier ID
+DeclarationPrime -> FunDeclarationPrime
+DeclarationPrime -> VarDeclarationPrime
+VarDeclarationPrime -> ;
+VarDeclarationPrime -> [ NUM ] ;
+FunDeclarationPrime -> ( Params ) CompoundStmt
+TypeSpecifier -> int
+TypeSpecifier -> void
+Params -> int ID ParamPrime ParamList
+Params -> void ParamListVoidAbtar
+ParamListVoidAbtar -> ID ParamPrime ParamList
+ParamListVoidAbtar -> ε
+ParamList -> , Param ParamList
+ParamList -> ε
+Param -> DeclarationInitial ParamPrime
+ParamPrime -> [ ]
+ParamPrime -> ε
+CompoundStmt -> { DeclarationList StatementList }
+StatementList -> Statement StatementList
+StatementList -> ε
+Statement -> ExpressionStmt
+Statement -> CompoundStmt
+Statement -> SelectionStmt
+Statement -> IterationStmt
+Statement -> ReturnStmt
+Statement -> SwitchStmt
+ExpressionStmt -> Expression ;
+ExpressionStmt -> break ;
+ExpressionStmt -> ;
+SelectionStmt -> if ( Expression ) Statement else Statement
+IterationStmt -> while ( Expression ) Statement
+ReturnStmt -> return ReturnStmtPrime
+ReturnStmtPrime -> ;
+ReturnStmtPrime -> Expression ;
+SwitchStmt -> switch ( Expression ) { CaseStmts DefaultStmt }
+CaseStmts -> CaseStmt CaseStmts
+CaseStmts -> ε
+CaseStmt -> case NUM : StatementList
+DefaultStmt -> default : StatementList
+DefaultStmt -> ε
+Expression -> SimpleExpressionZegond
+Expression -> ID B
+B -> = Expression
+B -> [ Expression ] H
+B -> SimpleExpressionPrime
+H -> = Expression
+H -> G D C
+SimpleExpressionZegond -> AdditiveExpressionZegond C
+SimpleExpressionPrime -> AdditiveExpressionPrime C
+C -> Relop AdditiveExpression
+C -> ε
+Relop -> <
+Relop -> ==
+AdditiveExpression -> Term D
+AdditiveExpressionPrime -> TermPrime D
+AdditiveExpressionZegond -> TermZegond D
+D -> Addop Term D
+D -> ε
+Addop -> +
+Addop -> -
+Term -> SignedFactor G
+TermPrime -> SignedFactorPrime G
+TermZegond -> SignedFactorZegond G
+G -> * SignedFactor G
+G -> ε
+SignedFactor -> + Factor
+SignedFactor -> - Factor
+SignedFactor -> Factor
+SignedFactorPrime -> FactorPrime
+SignedFactorZegond -> + Factor
+SignedFactorZegond -> - Factor
+SignedFactorZegond -> FactorZegond
+Factor -> ( Expression )
+Factor -> ID VarCallPrime
+Factor -> NUM
+VarCallPrime -> ( Args )
+VarCallPrime -> VarPrime
+VarPrime -> [ Expression ]
+VarPrime -> ε
+FactorPrime -> ( Args )
+FactorPrime -> ε
+FactorZegond -> ( Expression )
+FactorZegond -> NUM
+Args -> ArgList
+Args -> ε
+ArgList -> Expression ArgListPrime
+ArgListPrime -> , Expression ArgListPrime
+ArgListPrime -> ε
