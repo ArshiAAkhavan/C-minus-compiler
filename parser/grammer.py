@@ -63,3 +63,22 @@ def init_terminals():
                  Terminal('='), Terminal('<'), Terminal('=='), Terminal('+'), Terminal('-'), Terminal('*')]
     return terminals
 
+
+def init_non_terminals():
+    non_terminals = [NoneTerminal('Program'), NoneTerminal('DeclarationList'), NoneTerminal('Declaration'),
+                     NoneTerminal('DeclarationInitial'), NoneTerminal('DeclarationPrime'), NoneTerminal('VarDeclarationPrime'),
+                     NoneTerminal('FunDeclarationPrime'), NoneTerminal('TypeSpecifier'), NoneTerminal('Params'),
+                     NoneTerminal('ParamListVoidAbtar'), NoneTerminal('ParamList'), NoneTerminal('Param'),
+                     NoneTerminal('ParamPrime'), NoneTerminal('CompoundStmt'), NoneTerminal('StatementList'),
+                     NoneTerminal('Statement'), NoneTerminal('ExpressionStmt'), NoneTerminal('SelectionStmt'),
+                     NoneTerminal('IterationStmt'), NoneTerminal('ReturnStmt'), NoneTerminal('ReturnStmtPrime'),
+                     NoneTerminal('SwitchStmt'), NoneTerminal('CaseStmts'), NoneTerminal('CaseStmt'),
+                     NoneTerminal('DefaultStmt'), NoneTerminal('Expression'), NoneTerminal('B'), NoneTerminal('H'),
+                     NoneTerminal('SimpleExpressionZegond'), NoneTerminal('SimpleExpressionPrime'), NoneTerminal('C'),
+                     NoneTerminal('Relop'), NoneTerminal('AdditiveExpression'), NoneTerminal('AdditiveExpressionPrime'),
+                     NoneTerminal('AdditiveExpressionZegond'), NoneTerminal('D'), NoneTerminal('Addop'), NoneTerminal('Term')
+                     , NoneTerminal('TermPrime'), NoneTerminal('TermZegond'), NoneTerminal('G'), NoneTerminal('SignedFactor'),
+                     NoneTerminal('SignedFactorPrime'), NoneTerminal('SignedFactorZegond'), NoneTerminal('Factor'),
+                     NoneTerminal('VarCallPrime'), NoneTerminal('VarPrime'), NoneTerminal('FactorPrime'),
+                     NoneTerminal('FactorZegond'), NoneTerminal('Args'), NoneTerminal('ArgList'), NoneTerminal('ArgListPrime')]
+    return non_terminals
