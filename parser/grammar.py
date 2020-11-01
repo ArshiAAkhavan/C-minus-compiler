@@ -35,7 +35,7 @@ class Grammar:
         self.rules.append(rule)
 
     def import_rules(self, path):
-        with open(path) as f:
+        with open(path, encoding='utf-8') as f:
             for line in f.readlines():
                 raw_rule = line.split("->")
                 raw_rule[1].strip('\n')
@@ -45,11 +45,9 @@ class Grammar:
                         right.append(self.get_element_by_id(e.rstrip()))
                 left = self.get_element_by_id(raw_rule[0].rstrip())
                 self.add_rule(Rule(left, right))
-                # for e in right:
-                #     print(e)
 
     def import_firsts(self, path):
-        with open(path) as f:
+        with open(path, encoding='utf-8') as f:
             for line in f.readlines():
                 first = line.split(" ")
                 nt = self.get_element_by_id(first[0])
@@ -92,12 +90,11 @@ def init_non_terminals():
                      NoneTerminal('SimpleExpressionZegond'), NoneTerminal('SimpleExpressionPrime'), NoneTerminal('C'),
                      NoneTerminal('Relop'), NoneTerminal('AdditiveExpression'), NoneTerminal('AdditiveExpressionPrime'),
                      NoneTerminal('AdditiveExpressionZegond'), NoneTerminal('D'), NoneTerminal('Addop'),
-                     NoneTerminal('Term')
-        , NoneTerminal('TermPrime'), NoneTerminal('TermZegond'), NoneTerminal('G'), NoneTerminal('SignedFactor'),
-                     NoneTerminal('SignedFactorPrime'), NoneTerminal('SignedFactorZegond'), NoneTerminal('Factor'),
-                     NoneTerminal('VarCallPrime'), NoneTerminal('VarPrime'), NoneTerminal('FactorPrime'),
-                     NoneTerminal('FactorZegond'), NoneTerminal('Args'), NoneTerminal('ArgList'),
-                     NoneTerminal('ArgListPrime')]
+                     NoneTerminal('Term'), NoneTerminal('TermPrime'), NoneTerminal('TermZegond'), NoneTerminal('G'),
+                     NoneTerminal('SignedFactor'), NoneTerminal('SignedFactorPrime'), NoneTerminal('SignedFactorZegond'),
+                     NoneTerminal('Factor'), NoneTerminal('VarCallPrime'), NoneTerminal('VarPrime'),
+                     NoneTerminal('FactorPrime'), NoneTerminal('FactorZegond'), NoneTerminal('Args'),
+                     NoneTerminal('ArgList'), NoneTerminal('ArgListPrime')]
     return non_terminals
 
 
