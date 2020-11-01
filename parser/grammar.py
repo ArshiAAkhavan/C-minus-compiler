@@ -53,14 +53,14 @@ class Grammar:
             for line in f.readlines():
                 first = line.split(" ")
                 nt = self.get_element_by_id(first[0])
-                nt.first = [self.get_element_by_id(e) for e in first[1:]]
+                nt.first = [self.get_element_by_id(e.rstrip()) for e in first[1:]]
 
     def import_follows(self, path):
         with open(path) as f:
             for line in f.readlines():
                 follow = line.split(" ")
                 nt = self.get_element_by_id(follow[0])
-                nt.follow = [self.get_element_by_id(e) for e in follow[1:]]
+                nt.follow = [self.get_element_by_id(e.rstrip()) for e in follow[1:]]
 
     def get_element_by_id(self, name):
         for nt in self.none_terminals:
