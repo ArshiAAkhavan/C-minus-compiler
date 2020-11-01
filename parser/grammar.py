@@ -30,6 +30,7 @@ class Grammar:
         self.none_terminals = none_terminals
         self.terminals = terminals
         self.rules = []
+        self.predict_sets = []
 
     def add_rule(self, rule):
         self.rules.append(rule)
@@ -59,6 +60,12 @@ class Grammar:
                 follow = line.split(" ")
                 nt = self.get_element_by_id(follow[0])
                 nt.follow = [self.get_element_by_id(e.rstrip()) for e in follow[1:]]
+
+    def import_predict_sets(self, path):
+        with open(path) as f:
+            for line in f.readlines():
+                predict_set = line.split(" ")
+                self.predict_sets.append([self.get_element_by_id(e.rstrip()) for e in predict_set[0:]])
 
     def get_element_by_id(self, name):
         for nt in self.none_terminals:
@@ -103,6 +110,7 @@ def init_grammar():
     grammar.import_firsts("Firsts.csv")
     grammar.import_follows("Follows.csv")
     grammar.import_rules("grammer.txt")
+    grammar.import_predict_sets("Predicts.csv")
     return grammar
 
 
