@@ -61,3 +61,5 @@ def init_terminals():
                  Terminal('{'), Terminal('}'), Terminal('break'), Terminal('if'), Terminal('else'), Terminal('while'),
                  Terminal('return'), Terminal('switch'), Terminal('case'), Terminal('default'), Terminal(':'),
                  Terminal('='), Terminal('<'), Terminal('=='), Terminal('+'), Terminal('-'), Terminal('*')]
+    return terminals
+
