@@ -1,3 +1,1 @@
-2.	(2x, Invalid number)
-3.	(2a, Invalid number)
-10.	(#, Invalid input)
+There is no lexical error.
