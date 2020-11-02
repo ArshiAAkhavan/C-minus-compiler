@@ -8,7 +8,7 @@ class Terminal:
         return s
 
 
-class NoneTerminal(Terminal):
+class NonTerminal(Terminal):
     def __init__(self, name, first=[], follow=[]):
         self.name = name
         self.first = first
@@ -26,8 +26,8 @@ class Rule:
 
 
 class Grammar:
-    def __init__(self, none_terminals, terminals):
-        self.none_terminals = none_terminals
+    def __init__(self, non_terminals, terminals):
+        self.non_terminals = non_terminals
         self.terminals = terminals
         self.rules = []
         self.predict_sets = []
@@ -68,7 +68,7 @@ class Grammar:
                 self.predict_sets.append([self.get_element_by_id(e.rstrip()) for e in predict_set[0:]])
 
     def get_element_by_id(self, name):
-        for nt in self.none_terminals:
+        for nt in self.non_terminals:
             if nt.name == name: return nt
         for t in self.terminals:
             if t.name == name: return t
@@ -84,24 +84,24 @@ def init_terminals():
 
 
 def init_non_terminals():
-    non_terminals = [NoneTerminal('Program'), NoneTerminal('DeclarationList'), NoneTerminal('Declaration'),
-                     NoneTerminal('DeclarationInitial'), NoneTerminal('DeclarationPrime'),
-                     NoneTerminal('VarDeclarationPrime'),
-                     NoneTerminal('FunDeclarationPrime'), NoneTerminal('TypeSpecifier'), NoneTerminal('Params'),
-                     NoneTerminal('ParamListVoidAbtar'), NoneTerminal('ParamList'), NoneTerminal('Param'),
-                     NoneTerminal('ParamPrime'), NoneTerminal('CompoundStmt'), NoneTerminal('StatementList'),
-                     NoneTerminal('Statement'), NoneTerminal('ExpressionStmt'), NoneTerminal('SelectionStmt'),
-                     NoneTerminal('IterationStmt'), NoneTerminal('ReturnStmt'), NoneTerminal('ReturnStmtPrime'),
-                     NoneTerminal('SwitchStmt'), NoneTerminal('CaseStmts'), NoneTerminal('CaseStmt'),
-                     NoneTerminal('DefaultStmt'), NoneTerminal('Expression'), NoneTerminal('B'), NoneTerminal('H'),
-                     NoneTerminal('SimpleExpressionZegond'), NoneTerminal('SimpleExpressionPrime'), NoneTerminal('C'),
-                     NoneTerminal('Relop'), NoneTerminal('AdditiveExpression'), NoneTerminal('AdditiveExpressionPrime'),
-                     NoneTerminal('AdditiveExpressionZegond'), NoneTerminal('D'), NoneTerminal('Addop'),
-                     NoneTerminal('Term'), NoneTerminal('TermPrime'), NoneTerminal('TermZegond'), NoneTerminal('G'),
-                     NoneTerminal('SignedFactor'), NoneTerminal('SignedFactorPrime'), NoneTerminal('SignedFactorZegond'),
-                     NoneTerminal('Factor'), NoneTerminal('VarCallPrime'), NoneTerminal('VarPrime'),
-                     NoneTerminal('FactorPrime'), NoneTerminal('FactorZegond'), NoneTerminal('Args'),
-                     NoneTerminal('ArgList'), NoneTerminal('ArgListPrime')]
+    non_terminals = [NonTerminal('Program'), NonTerminal('DeclarationList'), NonTerminal('Declaration'),
+                     NonTerminal('DeclarationInitial'), NonTerminal('DeclarationPrime'),
+                     NonTerminal('VarDeclarationPrime'),
+                     NonTerminal('FunDeclarationPrime'), NonTerminal('TypeSpecifier'), NonTerminal('Params'),
+                     NonTerminal('ParamListVoidAbtar'), NonTerminal('ParamList'), NonTerminal('Param'),
+                     NonTerminal('ParamPrime'), NonTerminal('CompoundStmt'), NonTerminal('StatementList'),
+                     NonTerminal('Statement'), NonTerminal('ExpressionStmt'), NonTerminal('SelectionStmt'),
+                     NonTerminal('IterationStmt'), NonTerminal('ReturnStmt'), NonTerminal('ReturnStmtPrime'),
+                     NonTerminal('SwitchStmt'), NonTerminal('CaseStmts'), NonTerminal('CaseStmt'),
+                     NonTerminal('DefaultStmt'), NonTerminal('Expression'), NonTerminal('B'), NonTerminal('H'),
+                     NonTerminal('SimpleExpressionZegond'), NonTerminal('SimpleExpressionPrime'), NonTerminal('C'),
+                     NonTerminal('Relop'), NonTerminal('AdditiveExpression'), NonTerminal('AdditiveExpressionPrime'),
+                     NonTerminal('AdditiveExpressionZegond'), NonTerminal('D'), NonTerminal('Addop'),
+                     NonTerminal('Term'), NonTerminal('TermPrime'), NonTerminal('TermZegond'), NonTerminal('G'),
+                     NonTerminal('SignedFactor'), NonTerminal('SignedFactorPrime'), NonTerminal('SignedFactorZegond'),
+                     NonTerminal('Factor'), NonTerminal('VarCallPrime'), NonTerminal('VarPrime'),
+                     NonTerminal('FactorPrime'), NonTerminal('FactorZegond'), NonTerminal('Args'),
+                     NonTerminal('ArgList'), NonTerminal('ArgListPrime')]
     return non_terminals
 
 
