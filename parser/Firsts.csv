@@ -1,0 +1,52 @@
+Program $ int void
+DeclarationList ε int void
+Declaration int void
+DeclarationInitial int void
+DeclarationPrime ( ; [
+VarDeclarationPrime ; [
+FunDeclarationPrime (
+TypeSpecifier int void
+Params int void
+ParamListVoidAbtar ID ε
+ParamList , ε
+Param int void
+ParamPrime [ ε
+CompoundStmt {
+StatementList ε { break ; if while return switch ID + - ( NUM
+Statement { break ; if while return switch ID + - ( NUM
+ExpressionStmt break ; ID + - ( NUM
+SelectionStmt if
+IterationStmt while
+ReturnStmt return
+ReturnStmtPrime ; ID + - ( NUM
+SwitchStmt switch
+CaseStmts ε case
+CaseStmt case
+DefaultStmt default ε
+Expression ID + - ( NUM
+B = [ ( * + - < == ε
+H = * ε + - < ==
+SimpleExpressionZegond + - ( NUM
+SimpleExpressionPrime ( * + - < == ε
+C ε < ==
+Relop < ==
+AdditiveExpression + - ( ID NUM
+AdditiveExpressionPrime ( * + - ε
+AdditiveExpressionZegond + - ( NUM
+D ε + -
+Addop + -
+Term + - ( ID NUM
+TermPrime ( * ε
+TermZegond + - ( NUM
+G * ε
+SignedFactor + - ( ID NUM
+SignedFactorPrime ( ε
+SignedFactorZegond + - ( NUM
+Factor ( ID NUM
+VarCallPrime ( [ ε
+VarPrime [ ε
+FactorPrime ( ε
+FactorZegond ( NUM
+Args ε ID + - ( NUM
+ArgList ID + - ( NUM
+ArgListPrime , ε

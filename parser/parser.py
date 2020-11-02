@@ -7,4 +7,3 @@ class LL1:
 
     def create_parse_table(self):
         for nt in self.grammer.none_terminals:
-            

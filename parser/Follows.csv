@@ -1,0 +1,52 @@
+Program 
+DeclarationList $ { break ; if while return switch ID + - ( NUM }
+Declaration int void $ { break ; if while return switch ID + - ( NUM }
+DeclarationInitial ( ; [ , )
+DeclarationPrime int void $ { break ; if while return switch ID + - ( NUM }
+VarDeclarationPrime int void $ { break ; if while return switch ID + - ( NUM }
+FunDeclarationPrime int void $ { break ; if while return switch ID + - ( NUM }
+TypeSpecifier ID
+Params )
+ParamListVoidAbtar )
+ParamList )
+Param , )
+ParamPrime , )
+CompoundStmt int void $ { break ; if while return switch ID + - ( NUM } else case default
+StatementList } case default
+Statement { break ; if while return switch ID + - ( NUM } else case default
+ExpressionStmt { break ; if while return switch ID + - ( NUM } else case default
+SelectionStmt { break ; if while return switch ID + - ( NUM } else case default
+IterationStmt { break ; if while return switch ID + - ( NUM } else case default
+ReturnStmt { break ; if while return switch ID + - ( NUM } else case default
+ReturnStmtPrime { break ; if while return switch ID + - ( NUM } else case default
+SwitchStmt { break ; if while return switch ID + - ( NUM } else case default
+CaseStmts default }
+CaseStmt case default }
+DefaultStmt }
+Expression ; ) ] ,
+B ; ) ] ,
+H ; ) ] ,
+SimpleExpressionZegond ; ) ] ,
+SimpleExpressionPrime ; ) ] ,
+C ; ) ] ,
+Relop + - ( ID NUM
+AdditiveExpression ; ) ] ,
+AdditiveExpressionPrime < == ; ) ] ,
+AdditiveExpressionZegond < == ; ) ] ,
+D < == ; ) ] ,
+Addop + - ( ID NUM
+Term + - ; ) < == ] ,
+TermPrime + - < == ; ) ] ,
+TermZegond + - < == ; ) ] ,
+G + - < == ; ) ] ,
+SignedFactor * + - ; ) < == ] ,
+SignedFactorPrime * + - < == ; ) ] ,
+SignedFactorZegond * + - < == ; ) ] ,
+Factor * + - ; ) < == ] ,
+VarCallPrime * + - ; ) < == ] ,
+VarPrime * + - ; ) < == ] ,
+FactorPrime * + - < == ; ) ] ,
+FactorZegond * + - < == ; ) ] ,
+Args )
+ArgList )
+ArgListPrime )
