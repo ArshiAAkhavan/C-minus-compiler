@@ -8,7 +8,7 @@
 8.	default
 9.	case
 10.	return
-11.	f
+11.	main
 12.	a
-13.	main
+13.	cde
 14.	b

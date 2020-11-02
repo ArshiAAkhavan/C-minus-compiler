@@ -8,7 +8,11 @@
 8.	default
 9.	case
 10.	return
-11.	f
-12.	a
-13.	main
+11.	min
+12.	arr
+13.	g
 14.	b
+15.	x
+16.	u
+17.	bar
+18.	then

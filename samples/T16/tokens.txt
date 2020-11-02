@@ -4,7 +4,7 @@
 4.	(KEYWORD, void) (ID, main) (SYMBOL, () (KEYWORD, void) (SYMBOL, )) (SYMBOL, {)
 5.	(KEYWORD, int) (ID, a) (SYMBOL, ;)
 6.	(KEYWORD, int) (ID, b) (SYMBOL, ;)
-7.	(ID, a) (SYMBOL, =) (NUM, 8)
+7.	(ID, a) (SYMBOL, =) (NUM, 8) (SYMBOL, ;)
 8.	(KEYWORD, if) (SYMBOL, () (ID, b) (SYMBOL, <) (NUM, 5) (SYMBOL, )) (SYMBOL, {)
 9.	(ID, a) (SYMBOL, =) (ID, f) (SYMBOL, () (ID, a) (SYMBOL, )) (SYMBOL, ;)
 10.	(SYMBOL, })

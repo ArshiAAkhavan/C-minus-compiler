@@ -1,0 +1,2 @@
+7.	(/, Invalid input)
+7.	(3d, Invalid number)

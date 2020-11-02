@@ -8,7 +8,7 @@
 8.	default
 9.	case
 10.	return
-11.	f
-12.	a
-13.	main
-14.	b
+11.	main
+12.	prod
+13.	i
+14.	output
