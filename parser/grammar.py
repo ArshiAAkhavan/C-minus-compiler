@@ -20,9 +20,13 @@ class NonTerminal(Terminal):
 
 
 class Rule:
-    def __init__(self, left, right):
+    def __init__(self, left, right,predict_set=None):
         self.left = left
         self.right = right
+        self.predict_set=([],predict_set)[predict_set == None]
+
+    def add_predict(self,*args):
+        self.predict_set.extend(args)
 
 
 class Grammar:
@@ -63,8 +67,10 @@ class Grammar:
 
     def import_predict_sets(self, path):
         with open(path) as f:
-            for line in f.readlines():
+            for i,line in enumerate(f.readlines()):
                 predict_set = line.split(" ")
+                self.rules[i].add_predict(predict_set)
+                # todo: i think it should be removed
                 self.predict_sets.append([self.get_element_by_id(e.rstrip()) for e in predict_set[0:]])
 
     def get_element_by_id(self, name):
@@ -73,6 +79,11 @@ class Grammar:
         for t in self.terminals:
             if t.name == name: return t
 
+    def is_terminal(self,name):
+        for t in self.terminals:
+            if t.name==name:return True
+        return False
+    
 
 def init_terminals():
     terminals = [Terminal('$'), Terminal('ε'), Terminal('ID'), Terminal(';'), Terminal('['), Terminal('NUM'),
