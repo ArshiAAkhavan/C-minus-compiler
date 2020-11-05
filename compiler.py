@@ -1,5 +1,5 @@
-from LL1 import init_grammar
-from LL1.parser import LL1
+from parser import init_grammar
+from parser.parser import LL1
 from scanner import tables
 from scanner import actions
 from scanner.buffer_reader import BufferReader

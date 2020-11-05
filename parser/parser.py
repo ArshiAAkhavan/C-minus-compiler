@@ -12,7 +12,7 @@ class LL1:
         for rule in self.grammer.rules:
             for predict in rule.predict_set:
                 self.p_table[(rule.left, predict)] = rule.right
-        for nt in self.grammar.non_terminals:
+        for nt in self.grammer.non_terminals:
             for item in nt.follow:
                 if (nt, item) not in self.p_table:
                     self.p_table[(nt, item)] = "synch"
