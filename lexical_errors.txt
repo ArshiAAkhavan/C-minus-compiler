@@ -1,2 +1,2 @@
-2.	(*#, Invalid input)
-7.	(/;, Invalid input)
+5.	(/ , Invalid input)
+8.	(=$, Invalid input)
