@@ -1,3 +1,5 @@
+from LL1 import init_grammar
+from LL1.parser import LL1
 from scanner import tables
 from scanner import actions
 from scanner.buffer_reader import BufferReader
@@ -85,12 +87,14 @@ language = Edge().include('0', '9').include('a', 'z').include('A', 'Z') \
     .include('+').include('-').include('=') \
     .include('\t', '\r').include(' ').include(chr(26))
 sc = Scanner(start, BufferReader("input.txt", 30), language)
+g = init_grammar()
+LL1(sc, g)
 
-while sc.can_generate_token():
-    try:
-        sc.get_next_token()
-    except Exception as e:
-        print(e)
+# while sc.can_generate_token():
+#     try:
+#         sc.get_next_token()
+#     except Exception as e:
+#         print(e)
 
 tables.get_error_table().export("lexical_errors.txt")
 tables.get_symbol_table().export("symbol_table.txt")

@@ -63,15 +63,17 @@ class Grammar:
             for line in f.readlines():
                 follow = line.split(" ")
                 nt = self.get_element_by_id(follow[0])
-                nt.follow = [self.get_element_by_id(e.rstrip()) for e in follow[1:]]
+                if follow[1].rstrip() != "":
+                    nt.follow = [self.get_element_by_id(e.rstrip()) for e in follow[1:]]
 
     def import_predict_sets(self, path):
         with open(path) as f:
             for i, line in enumerate(f.readlines()):
                 predict_set = line.split(" ")
-                self.rules[i].add_predict(predict_set)
-                # todo: i think it should be removed
+                #self.rules[i].add_predict(predict_set)
+                # todo: nonetype object has no attribute 'extend'
                 self.predict_sets.append([self.get_element_by_id(e.rstrip()) for e in predict_set[0:]])
+                self.rules[i].predict_set = [self.get_element_by_id(e.rstrip()) for e in predict_set[0:]]
 
     def get_element_by_id(self, name):
         for nt in self.non_terminals:
@@ -116,10 +118,10 @@ def init_non_terminals():
 
 def init_grammar():
     grammar = Grammar(init_non_terminals(), init_terminals())
-    grammar.import_firsts("data/Firsts.csv")
-    grammar.import_follows("data/Follows.csv")
-    grammar.import_rules("data/grammer.txt")
-    grammar.import_predict_sets("data/Predicts.csv")
+    grammar.import_firsts("LL1/data/Firsts.csv")
+    grammar.import_follows("LL1/data/Follows.csv")
+    grammar.import_rules("LL1/data/grammer.txt")
+    grammar.import_predict_sets("LL1/data/Predicts.csv")
     return grammar
 
 
