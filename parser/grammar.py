@@ -10,6 +10,7 @@ class Terminal:
 
 class NonTerminal(Terminal):
     def __init__(self, name, first=[], follow=[]):
+        super().__init__(name)
         self.name = name
         self.first = first
         self.follow = follow
@@ -23,7 +24,7 @@ class Rule:
     def __init__(self, left, right, predict_set=None):
         self.left = left
         self.right = right
-        self.predict_set = ([], predict_set)[predict_set == None]
+        self.predict_set = ([], predict_set)[predict_set is None]
 
     def add_predict(self, *args):
         self.predict_set.extend(args)

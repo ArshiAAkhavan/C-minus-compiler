@@ -1,3 +1,6 @@
+from parser.tree import PTNode
+
+
 class LL1:
     def __init__(self, token_generator, grammer):
         self.token_generator = token_generator
@@ -11,7 +14,10 @@ class LL1:
                 self.p_table[(rule.left, predict)] = rule.right
 
     def generate_parse_tree(self):
-        stack = [self.grammer.rules[0].left, "$"]
 
+        stack = [PTNode("$"), PTNode(self.grammer.rules[0].left)]
         while len(stack) and self.token_generator.can_generate_token():
-            pass
+            token = self.token_generator.get_next_token()
+            # todo @ghazal baraye grammer unit ye Sm e behtar peyda kon
+            grammer_unit = stack.pop()
+            productions=self.p_table[(grammer_unit,token.vlaue.lexeme)]
