@@ -20,12 +20,12 @@ class NonTerminal(Terminal):
 
 
 class Rule:
-    def __init__(self, left, right,predict_set=None):
+    def __init__(self, left, right, predict_set=None):
         self.left = left
         self.right = right
-        self.predict_set=([],predict_set)[predict_set == None]
+        self.predict_set = ([], predict_set)[predict_set == None]
 
-    def add_predict(self,*args):
+    def add_predict(self, *args):
         self.predict_set.extend(args)
 
 
@@ -67,7 +67,7 @@ class Grammar:
 
     def import_predict_sets(self, path):
         with open(path) as f:
-            for i,line in enumerate(f.readlines()):
+            for i, line in enumerate(f.readlines()):
                 predict_set = line.split(" ")
                 self.rules[i].add_predict(predict_set)
                 # todo: i think it should be removed
@@ -79,49 +79,47 @@ class Grammar:
         for t in self.terminals:
             if t.name == name: return t
 
-    def is_terminal(self,name):
+    def is_terminal(self, name):
         for t in self.terminals:
-            if t.name==name:return True
+            if t.name == name: return True
         return False
-    
+
 
 def init_terminals():
-    terminals = [Terminal('$'), Terminal('ε'), Terminal('ID'), Terminal(';'), Terminal('['), Terminal('NUM'),
-                 Terminal(']'), Terminal('('), Terminal(')'), Terminal('int'), Terminal('void'), Terminal(','),
-                 Terminal('{'), Terminal('}'), Terminal('break'), Terminal('if'), Terminal('else'), Terminal('while'),
-                 Terminal('return'), Terminal('switch'), Terminal('case'), Terminal('default'), Terminal(':'),
-                 Terminal('='), Terminal('<'), Terminal('=='), Terminal('+'), Terminal('-'), Terminal('*')]
-    return terminals
+    return [Terminal('$'), Terminal('ε'), Terminal('ID'), Terminal(';'), Terminal('['), Terminal('NUM'),
+            Terminal(']'), Terminal('('), Terminal(')'), Terminal('int'), Terminal('void'), Terminal(','),
+            Terminal('{'), Terminal('}'), Terminal('break'), Terminal('if'), Terminal('else'), Terminal('while'),
+            Terminal('return'), Terminal('switch'), Terminal('case'), Terminal('default'), Terminal(':'),
+            Terminal('='), Terminal('<'), Terminal('=='), Terminal('+'), Terminal('-'), Terminal('*')]
 
 
 def init_non_terminals():
-    non_terminals = [NonTerminal('Program'), NonTerminal('DeclarationList'), NonTerminal('Declaration'),
-                     NonTerminal('DeclarationInitial'), NonTerminal('DeclarationPrime'),
-                     NonTerminal('VarDeclarationPrime'),
-                     NonTerminal('FunDeclarationPrime'), NonTerminal('TypeSpecifier'), NonTerminal('Params'),
-                     NonTerminal('ParamListVoidAbtar'), NonTerminal('ParamList'), NonTerminal('Param'),
-                     NonTerminal('ParamPrime'), NonTerminal('CompoundStmt'), NonTerminal('StatementList'),
-                     NonTerminal('Statement'), NonTerminal('ExpressionStmt'), NonTerminal('SelectionStmt'),
-                     NonTerminal('IterationStmt'), NonTerminal('ReturnStmt'), NonTerminal('ReturnStmtPrime'),
-                     NonTerminal('SwitchStmt'), NonTerminal('CaseStmts'), NonTerminal('CaseStmt'),
-                     NonTerminal('DefaultStmt'), NonTerminal('Expression'), NonTerminal('B'), NonTerminal('H'),
-                     NonTerminal('SimpleExpressionZegond'), NonTerminal('SimpleExpressionPrime'), NonTerminal('C'),
-                     NonTerminal('Relop'), NonTerminal('AdditiveExpression'), NonTerminal('AdditiveExpressionPrime'),
-                     NonTerminal('AdditiveExpressionZegond'), NonTerminal('D'), NonTerminal('Addop'),
-                     NonTerminal('Term'), NonTerminal('TermPrime'), NonTerminal('TermZegond'), NonTerminal('G'),
-                     NonTerminal('SignedFactor'), NonTerminal('SignedFactorPrime'), NonTerminal('SignedFactorZegond'),
-                     NonTerminal('Factor'), NonTerminal('VarCallPrime'), NonTerminal('VarPrime'),
-                     NonTerminal('FactorPrime'), NonTerminal('FactorZegond'), NonTerminal('Args'),
-                     NonTerminal('ArgList'), NonTerminal('ArgListPrime')]
-    return non_terminals
+    return [NonTerminal('Program'), NonTerminal('DeclarationList'), NonTerminal('Declaration'),
+            NonTerminal('DeclarationInitial'), NonTerminal('DeclarationPrime'),
+            NonTerminal('VarDeclarationPrime'),
+            NonTerminal('FunDeclarationPrime'), NonTerminal('TypeSpecifier'), NonTerminal('Params'),
+            NonTerminal('ParamListVoidAbtar'), NonTerminal('ParamList'), NonTerminal('Param'),
+            NonTerminal('ParamPrime'), NonTerminal('CompoundStmt'), NonTerminal('StatementList'),
+            NonTerminal('Statement'), NonTerminal('ExpressionStmt'), NonTerminal('SelectionStmt'),
+            NonTerminal('IterationStmt'), NonTerminal('ReturnStmt'), NonTerminal('ReturnStmtPrime'),
+            NonTerminal('SwitchStmt'), NonTerminal('CaseStmts'), NonTerminal('CaseStmt'),
+            NonTerminal('DefaultStmt'), NonTerminal('Expression'), NonTerminal('B'), NonTerminal('H'),
+            NonTerminal('SimpleExpressionZegond'), NonTerminal('SimpleExpressionPrime'), NonTerminal('C'),
+            NonTerminal('Relop'), NonTerminal('AdditiveExpression'), NonTerminal('AdditiveExpressionPrime'),
+            NonTerminal('AdditiveExpressionZegond'), NonTerminal('D'), NonTerminal('Addop'),
+            NonTerminal('Term'), NonTerminal('TermPrime'), NonTerminal('TermZegond'), NonTerminal('G'),
+            NonTerminal('SignedFactor'), NonTerminal('SignedFactorPrime'), NonTerminal('SignedFactorZegond'),
+            NonTerminal('Factor'), NonTerminal('VarCallPrime'), NonTerminal('VarPrime'),
+            NonTerminal('FactorPrime'), NonTerminal('FactorZegond'), NonTerminal('Args'),
+            NonTerminal('ArgList'), NonTerminal('ArgListPrime')]
 
 
 def init_grammar():
     grammar = Grammar(init_non_terminals(), init_terminals())
-    grammar.import_firsts("Firsts.csv")
-    grammar.import_follows("Follows.csv")
-    grammar.import_rules("grammer.txt")
-    grammar.import_predict_sets("Predicts.csv")
+    grammar.import_firsts("data/Firsts.csv")
+    grammar.import_follows("data/Follows.csv")
+    grammar.import_rules("data/grammer.txt")
+    grammar.import_predict_sets("data/Predicts.csv")
     return grammar
 
 
