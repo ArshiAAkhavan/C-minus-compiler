@@ -1,4 +1,5 @@
 from parser.tree import PTNode
+from parser.grammer import Terminal
 
 
 class LL1:
@@ -22,5 +23,13 @@ class LL1:
         while len(stack) and self.token_generator.can_generate_token():
             token = self.token_generator.get_next_token()
             # todo @ghazal baraye grammer unit ye Sm e behtar peyda kon
-            grammer_unit = stack.pop()
-            productions=self.p_table[(grammer_unit,token.vlaue.lexeme)]
+            grammer_node = stack.pop()
+            if isinstance(self.grammer.get_element_by_id(grammer_node.name), Terminal):
+                if grammer_node.name != token.lexeme:
+                    raise Exception(f"expected {grammer_node.name}!")
+            else:
+                try:
+                    new_units = [PTNode(g) for g in self.p_table[(grammer_node.name, token.lexeme)]]
+                    stack.extend([n.name for n in new_units][::-1])
+                except Exception as e:
+                    pass
