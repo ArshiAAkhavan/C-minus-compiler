@@ -24,12 +24,17 @@ class LL1:
             token = self.token_generator.get_next_token()
             # todo @ghazal baraye grammer unit ye Sm e behtar peyda kon
             grammer_node = stack.pop()
+            ### terminal
             if isinstance(self.grammer.get_element_by_id(grammer_node.name), Terminal):
+                ### not matching
                 if grammer_node.name != token.lexeme:
                     raise Exception(f"expected {grammer_node.name}!")
+            ### none_terminal
             else:
+                ### matching
                 try:
                     new_units = [PTNode(g) for g in self.p_table[(grammer_node.name, token.lexeme)]]
                     stack.extend([n.name for n in new_units][::-1])
+                ### panicing
                 except Exception as e:
                     pass
