@@ -9,6 +9,5 @@
 9.	case
 10.	return
 11.	main
-12.	prod
-13.	i
-14.	output
+12.	a
+13.	b

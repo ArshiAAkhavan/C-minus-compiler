@@ -22,7 +22,7 @@ class LL1:
 
     def get_next_valid_token(self):
         token = self.token_generator.get_next_token()
-        while token.type == TokenType.COMMENT or token.type == TokenType.WHITE_SPACE:
+        while token.type == TokenType.COMMENT or (token.type == TokenType.WHITE_SPACE and token.lexeme != chr(26)):#EOF
             token = self.token_generator.get_next_token()
         return token
 
@@ -60,3 +60,4 @@ class LL1:
                         key = (
                             grammer_node.name,
                             (token.lexeme, token.type.name)[token.type in [TokenType.NUM, TokenType.ID]])
+        return root

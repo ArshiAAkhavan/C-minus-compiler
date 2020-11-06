@@ -1,3 +1,5 @@
+from anytree import RenderTree
+
 from parser import init_grammar
 from parser.parser import LL1
 from scanner import tables
@@ -96,10 +98,13 @@ def build_scanner():
 
 
 parser = LL1(build_scanner(), init_grammar())
-tree = parser.generate_parse_tree()
+root = parser.generate_parse_tree()
+for pre, fill, node in RenderTree(root):
+    print("%s%s" % (pre, node.name))
+# sc=build_scanner()
 # while sc.can_generate_token():
 #     try:
-#         sc.get_next_token()
+#         a=sc.get_next_token()
 #     except Exception as e:
 #         print(e)
 
