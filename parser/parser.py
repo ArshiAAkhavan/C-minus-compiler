@@ -8,6 +8,7 @@ class LL1:
         self.token_generator = token_generator
         self.grammer = grammer
         self.p_table = {}
+        self.stack = []
         self.create_parse_table()
 
     def create_parse_table(self):
@@ -19,28 +20,43 @@ class LL1:
                 if (nt, item) not in self.p_table:
                     self.p_table[(nt.name, item)] = "synch"
 
-    def generate_parse_tree(self):
-        root=Node(self.grammer.rules[0].left.name)
-        stack = [root]
-        while len(stack) and self.token_generator.can_generate_token():
+    def get_next_valid_token(self):
+        token = self.token_generator.get_next_token()
+        while token.type == TokenType.COMMENT or token.type == TokenType.WHITE_SPACE:
             token = self.token_generator.get_next_token()
-            if token.type == TokenType.COMMENT or token.type == TokenType.WHITE_SPACE: continue
-            # todo @ghazal baraye grammer unit ye Sm e behtar peyda kon
-            grammer_node = stack.pop()
+        return token
+
+    def get_next_valid_grammer_node(self):
+        grammer_node = self.stack.pop()
+        while grammer_node.name == "ε":
+            grammer_node = self.stack.pop()
+        return grammer_node
+
+    def generate_parse_tree(self):
+        root = Node(self.grammer.rules[0].left.name)
+        self.stack = [root]
+        token = self.get_next_valid_token()
+        while len(self.stack) and self.token_generator.can_generate_token():
+            # todo @ghazal baraye grammer node ye Sm e behtar peyda kon
+            grammer_node = self.get_next_valid_grammer_node()
             ### terminal
             if isinstance(self.grammer.get_element_by_id(grammer_node.name), Terminal):
                 ### not matching
-                if grammer_node.name != token.lexeme:
+                if grammer_node.name != (token.lexeme, token.type.name)[token.type in [TokenType.NUM, TokenType.ID]]:
                     raise Exception(f"expected {grammer_node.name}!")
+                token = self.get_next_valid_token()
             ### none_terminal
             else:
                 ### matching
-                if (grammer_node.name, token.lexeme) in self.p_table and self.p_table[(grammer_node.name, token.lexeme)] != "synch":
-
-                    new_units = [Node(g,parent=grammer_node) for g in self.p_table[(grammer_node.name, token.lexeme)]]
-                    stack.extend([n for n in new_units][::-1])
+                key = (grammer_node.name, (token.lexeme, token.type.name)[token.type in [TokenType.NUM, TokenType.ID]])
+                if key in self.p_table and self.p_table[key] != "synch":
+                    new_units = [Node(g, parent=grammer_node) for g in self.p_table[key]]
+                    self.stack.extend([n for n in new_units][::-1])
                 ### panicing
                 else:
                     ### synch
-                    while (grammer_node.name, token.lexeme) not in self.p_table:
-                        token = self.token_generator.get_next_token()
+                    while key not in self.p_table:
+                        token = self.get_next_valid_token()
+                        key = (
+                            grammer_node.name,
+                            (token.lexeme, token.type.name)[token.type in [TokenType.NUM, TokenType.ID]])
