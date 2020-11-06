@@ -1,92 +1,92 @@
-Program -> Declaration-list $
-Declaration-list -> Declaration Declaration-list
-Declaration-list -> ε
-Declaration -> Declaration-initial Declaration-prime
-Declaration-initial -> Type-specifier ID
-Declaration-prime -> Fun-declaration-prime
-Declaration-prime -> Var-declaration-prime
-Var-declaration-prime -> ;
-Var-declaration-prime -> [ NUM ] ;
-Fun-declaration-prime -> ( Params ) Compound-stmt
-Type-specifier -> int
-Type-specifier -> void
-Params -> int ID Param-prime Param-list
-Params -> void Param-list-void-abtar
-Param-list-void-abtar -> ID Param-prime Param-list
-Param-list-void-abtar -> ε
-Param-list -> , Param Param-list
-Param-list -> ε
-Param -> Declaration-initial Param-prime
-Param-prime -> [ ]
-Param-prime -> ε
-Compound-stmt -> { Declaration-list Statement-list }
-Statement-list -> Statement Statement-list
-Statement-list -> ε
-Statement -> Expression-stmt
-Statement -> Compound-stmt
-Statement -> Selection-stmt
-Statement -> Iteration-stmt
-Statement -> Return-stmt
-Statement -> Switch-stmt
-Expression-stmt -> Expression ;
-Expression-stmt -> break ;
-Expression-stmt -> ;
-Selection-stmt -> if ( Expression ) Statement else Statement
-Iteration-stmt -> while ( Expression ) Statement
-Return-stmt -> return Return-stmt-prime
-Return-stmt-prime -> ;
-Return-stmt-prime -> Expression ;
-Switch-stmt -> switch ( Expression ) { Case-stmts Default-stmt }
-Case-stmts -> Case-stmt Case-stmts
-Case-stmts -> ε
-Case-stmt -> case NUM : Statement-list
-Default-stmt -> default : Statement-list
-Default-stmt -> ε
-Expression -> Simple-expression-zegond
+Program -> DeclarationList $
+DeclarationList -> Declaration DeclarationList
+DeclarationList -> ε
+Declaration -> DeclarationInitial DeclarationPrime
+DeclarationInitial -> TypeSpecifier ID
+DeclarationPrime -> FunDeclarationPrime
+DeclarationPrime -> VarDeclarationPrime
+VarDeclarationPrime -> ;
+VarDeclarationPrime -> [ NUM ] ;
+FunDeclarationPrime -> ( Params ) CompoundStmt
+TypeSpecifier -> int
+TypeSpecifier -> void
+Params -> int ID ParamPrime ParamList
+Params -> void ParamListVoidAbtar
+ParamListVoidAbtar -> ID ParamPrime ParamList
+ParamListVoidAbtar -> ε
+ParamList -> , Param ParamList
+ParamList -> ε
+Param -> DeclarationInitial ParamPrime
+ParamPrime -> [ ]
+ParamPrime -> ε
+CompoundStmt -> { DeclarationList StatementList }
+StatementList -> Statement StatementList
+StatementList -> ε
+Statement -> ExpressionStmt
+Statement -> CompoundStmt
+Statement -> SelectionStmt
+Statement -> IterationStmt
+Statement -> ReturnStmt
+Statement -> SwitchStmt
+ExpressionStmt -> Expression ;
+ExpressionStmt -> break ;
+ExpressionStmt -> ;
+SelectionStmt -> if ( Expression ) Statement else Statement
+IterationStmt -> while ( Expression ) Statement
+ReturnStmt -> return ReturnStmtPrime
+ReturnStmtPrime -> ;
+ReturnStmtPrime -> Expression ;
+SwitchStmt -> switch ( Expression ) { CaseStmts DefaultStmt }
+CaseStmts -> CaseStmt CaseStmts
+CaseStmts -> ε
+CaseStmt -> case NUM : StatementList
+DefaultStmt -> default : StatementList
+DefaultStmt -> ε
+Expression -> SimpleExpressionZegond
 Expression -> ID B
 B -> = Expression
 B -> [ Expression ] H
-B -> Simple-expression-prime
+B -> SimpleExpressionPrime
 H -> = Expression
 H -> G D C
-Simple-expression-zegond -> Additive-expression-zegond C
-Simple-expression-prime -> Additive-expression-prime C
-C -> Relop Additive-expression
+SimpleExpressionZegond -> AdditiveExpressionZegond C
+SimpleExpressionPrime -> AdditiveExpressionPrime C
+C -> Relop AdditiveExpression
 C -> ε
 Relop -> <
 Relop -> ==
-Additive-expression -> Term D
-Additive-expression-prime -> Term-prime D
-Additive-expression-zegond -> Term-zegond D
+AdditiveExpression -> Term D
+AdditiveExpressionPrime -> TermPrime D
+AdditiveExpressionZegond -> TermZegond D
 D -> Addop Term D
 D -> ε
 Addop -> +
 Addop -> -
-Term -> Signed-factor G
-Term-prime -> Signed-factor-prime G
-Term-zegond -> Signed-factor-zegond G
-G -> * Signed-factor G
+Term -> SignedFactor G
+TermPrime -> SignedFactorPrime G
+TermZegond -> SignedFactorZegond G
+G -> * SignedFactor G
 G -> ε
-Signed-factor -> + Factor
-Signed-factor -> - Factor
-Signed-factor -> Factor
-Signed-factor-prime -> Factor-prime
-Signed-factor-zegond -> + Factor
-Signed-factor-zegond -> - Factor
-Signed-factor-zegond -> Factor-zegond
+SignedFactor -> + Factor
+SignedFactor -> - Factor
+SignedFactor -> Factor
+SignedFactorPrime -> FactorPrime
+SignedFactorZegond -> + Factor
+SignedFactorZegond -> - Factor
+SignedFactorZegond -> FactorZegond
 Factor -> ( Expression )
-Factor -> ID Var-call-prime
+Factor -> ID VarCallPrime
 Factor -> NUM
-Var-call-prime -> ( Args )
-Var-call-prime -> Var-prime
-Var-prime -> [ Expression ]
-Var-prime -> ε
-Factor-prime -> ( Args )
-Factor-prime -> ε
-Factor-zegond -> ( Expression )
-Factor-zegond -> NUM
-Args -> Arg-list
+VarCallPrime -> ( Args )
+VarCallPrime -> VarPrime
+VarPrime -> [ Expression ]
+VarPrime -> ε
+FactorPrime -> ( Args )
+FactorPrime -> ε
+FactorZegond -> ( Expression )
+FactorZegond -> NUM
+Args -> ArgList
 Args -> ε
-Arg-list -> Expression Arg-list-prime
-Arg-list-prime -> , Expression Arg-list-prime
-Arg-list-prime -> ε
+ArgList -> Expression ArgListPrime
+ArgListPrime -> , Expression ArgListPrime
+ArgListPrime -> ε

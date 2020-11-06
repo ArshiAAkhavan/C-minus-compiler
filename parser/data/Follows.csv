@@ -1,52 +1,52 @@
 Program 
-Declaration-list $ { break ; if while return switch ID + - ( NUM }
+DeclarationList $ { break ; if while return switch ID + - ( NUM }
 Declaration int void $ { break ; if while return switch ID + - ( NUM }
-Declaration-initial ( ; [ , )
-Declaration-prime int void $ { break ; if while return switch ID + - ( NUM }
-Var-declaration-prime int void $ { break ; if while return switch ID + - ( NUM }
-Fun-declaration-prime int void $ { break ; if while return switch ID + - ( NUM }
-Type-specifier ID
+DeclarationInitial ( ; [ , )
+DeclarationPrime int void $ { break ; if while return switch ID + - ( NUM }
+VarDeclarationPrime int void $ { break ; if while return switch ID + - ( NUM }
+FunDeclarationPrime int void $ { break ; if while return switch ID + - ( NUM }
+TypeSpecifier ID
 Params )
-Param-list-void-abtar )
-Param-list )
+ParamListVoidAbtar )
+ParamList )
 Param , )
-Param-prime , )
-Compound-stmt int void $ { break ; if while return switch ID + - ( NUM } else case default
-Statement-list } case default
+ParamPrime , )
+CompoundStmt int void $ { break ; if while return switch ID + - ( NUM } else case default
+StatementList } case default
 Statement { break ; if while return switch ID + - ( NUM } else case default
-Expression-stmt { break ; if while return switch ID + - ( NUM } else case default
-Selection-stmt { break ; if while return switch ID + - ( NUM } else case default
-Iteration-stmt { break ; if while return switch ID + - ( NUM } else case default
-Return-stmt { break ; if while return switch ID + - ( NUM } else case default
-Return-stmt-prime { break ; if while return switch ID + - ( NUM } else case default
-Switch-stmt { break ; if while return switch ID + - ( NUM } else case default
-Case-stmts default }
-Case-stmt case default }
-Default-stmt }
+ExpressionStmt { break ; if while return switch ID + - ( NUM } else case default
+SelectionStmt { break ; if while return switch ID + - ( NUM } else case default
+IterationStmt { break ; if while return switch ID + - ( NUM } else case default
+ReturnStmt { break ; if while return switch ID + - ( NUM } else case default
+ReturnStmtPrime { break ; if while return switch ID + - ( NUM } else case default
+SwitchStmt { break ; if while return switch ID + - ( NUM } else case default
+CaseStmts default }
+CaseStmt case default }
+DefaultStmt }
 Expression ; ) ] ,
 B ; ) ] ,
 H ; ) ] ,
-Simple-expression-zegond ; ) ] ,
-Simple-expression-prime ; ) ] ,
+SimpleExpressionZegond ; ) ] ,
+SimpleExpressionPrime ; ) ] ,
 C ; ) ] ,
 Relop + - ( ID NUM
-Additive-expression ; ) ] ,
-Additive-expression-prime < == ; ) ] ,
-Additive-expression-zegond < == ; ) ] ,
+AdditiveExpression ; ) ] ,
+AdditiveExpressionPrime < == ; ) ] ,
+AdditiveExpressionZegond < == ; ) ] ,
 D < == ; ) ] ,
 Addop + - ( ID NUM
 Term + - ; ) < == ] ,
-Term-prime + - < == ; ) ] ,
-Term-zegond + - < == ; ) ] ,
+TermPrime + - < == ; ) ] ,
+TermZegond + - < == ; ) ] ,
 G + - < == ; ) ] ,
-Signed-factor * + - ; ) < == ] ,
-Signed-factor-prime * + - < == ; ) ] ,
-Signed-factor-zegond * + - < == ; ) ] ,
+SignedFactor * + - ; ) < == ] ,
+SignedFactorPrime * + - < == ; ) ] ,
+SignedFactorZegond * + - < == ; ) ] ,
 Factor * + - ; ) < == ] ,
-Var-call-prime * + - ; ) < == ] ,
-Var-prime * + - ; ) < == ] ,
-Factor-prime * + - < == ; ) ] ,
-Factor-zegond * + - < == ; ) ] ,
+VarCallPrime * + - ; ) < == ] ,
+VarPrime * + - ; ) < == ] ,
+FactorPrime * + - < == ; ) ] ,
+FactorZegond * + - < == ; ) ] ,
 Args )
-Arg-list )
-Arg-list-prime )
+ArgList )
+ArgListPrime )
