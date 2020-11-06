@@ -1,52 +1,52 @@
 Program $ int void
-DeclarationList ε int void
+Declaration-list ε int void
 Declaration int void
-DeclarationInitial int void
-DeclarationPrime ( ; [
-VarDeclarationPrime ; [
-FunDeclarationPrime (
-TypeSpecifier int void
+Declaration-initial int void
+Declaration-prime ( ; [
+Var-declaration-prime ; [
+Fun-declaration-prime (
+Type-specifier int void
 Params int void
-ParamListVoidAbtar ID ε
-ParamList , ε
+Param-list-void-abtar ID ε
+Param-list , ε
 Param int void
-ParamPrime [ ε
-CompoundStmt {
-StatementList ε { break ; if while return switch ID + - ( NUM
+Param-prime [ ε
+Compound-stmt {
+Statement-list ε { break ; if while return switch ID + - ( NUM
 Statement { break ; if while return switch ID + - ( NUM
-ExpressionStmt break ; ID + - ( NUM
-SelectionStmt if
-IterationStmt while
-ReturnStmt return
-ReturnStmtPrime ; ID + - ( NUM
-SwitchStmt switch
-CaseStmts ε case
-CaseStmt case
-DefaultStmt default ε
+Expression-stmt break ; ID + - ( NUM
+Selection-stmt if
+Iteration-stmt while
+Return-stmt return
+Return-stmt-prime ; ID + - ( NUM
+Switch-stmt switch
+Case-stmts ε case
+Case-stmt case
+Default-stmt default ε
 Expression ID + - ( NUM
 B = [ ( * + - < == ε
 H = * ε + - < ==
-SimpleExpressionZegond + - ( NUM
-SimpleExpressionPrime ( * + - < == ε
+Simple-expression-zegond + - ( NUM
+Simple-expression-prime ( * + - < == ε
 C ε < ==
 Relop < ==
-AdditiveExpression + - ( ID NUM
-AdditiveExpressionPrime ( * + - ε
-AdditiveExpressionZegond + - ( NUM
+Additive-expression + - ( ID NUM
+Additive-expression-prime ( * + - ε
+Additive-expression-zegond + - ( NUM
 D ε + -
 Addop + -
 Term + - ( ID NUM
-TermPrime ( * ε
-TermZegond + - ( NUM
+Term-prime ( * ε
+Term-zegond + - ( NUM
 G * ε
-SignedFactor + - ( ID NUM
-SignedFactorPrime ( ε
-SignedFactorZegond + - ( NUM
+Signed-factor + - ( ID NUM
+Signed-factor-prime ( ε
+Signed-factor-zegond + - ( NUM
 Factor ( ID NUM
-VarCallPrime ( [ ε
-VarPrime [ ε
-FactorPrime ( ε
-FactorZegond ( NUM
+Var-call-prime ( [ ε
+Var-prime [ ε
+Factor-prime ( ε
+Factor-zegond ( NUM
 Args ε ID + - ( NUM
-ArgList ID + - ( NUM
-ArgListPrime , ε
+Arg-list ID + - ( NUM
+Arg-list-prime , ε

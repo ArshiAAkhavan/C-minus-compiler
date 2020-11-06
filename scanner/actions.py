@@ -23,7 +23,11 @@ def symbol_token_gen(line_no, lexeme):
 def comment_token_gen(line_no, lexeme): return Token(TokenType.COMMENT, lexeme)
 
 
-def whitespace_token_gen(line_no, lexeme): return Token(TokenType.WHITE_SPACE, lexeme)
+def whitespace_token_gen(line_no, lexeme):
+    if lexeme == chr(26):
+        return Token(TokenType.EOF, "$")
+    else:
+        return Token(TokenType.WHITE_SPACE, lexeme)
 
 
 def error_gen(line_no, lexeme):

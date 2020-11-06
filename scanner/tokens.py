@@ -9,6 +9,7 @@ class TokenType(Enum):
     NUM = 3                         # 0000010       0123456789
     WHITE_SPACE = 4                 # 0000011       \n\t\r\v\f
     COMMENT = 5                     # 0000100       // /**/
+    EOF = 26                        # 0011010       $
 
     SYMBOL_LT = 60                  # 0111100       <
     SYMBOL_AS = 61                  # 0111101       =
