@@ -8,9 +8,8 @@ class Terminal:
         return s
 
 
-class NonTerminal(Terminal):
+class NonTerminal:
     def __init__(self, name, first=[], follow=[]):
-        super().__init__(name)
         self.name = name
         self.first = first
         self.follow = follow
@@ -46,7 +45,7 @@ class Grammer:
                 raw_rule = line.split("->")
                 raw_rule[1].strip('\n')
                 right = []
-                for e in raw_rule[1].split(" "):
+                for e in raw_rule[1].split():
                     if e:
                         right.append(self.get_element_by_id(e.rstrip()))
                 left = self.get_element_by_id(raw_rule[0].rstrip())
@@ -55,22 +54,21 @@ class Grammer:
     def import_firsts(self, path):
         with open(path, encoding='utf-8') as f:
             for line in f.readlines():
-                first = line.split(" ")
+                first = line.split()
                 nt = self.get_element_by_id(first[0])
                 nt.first = [self.get_element_by_id(e.rstrip()) for e in first[1:]]
 
     def import_follows(self, path):
         with open(path) as f:
             for line in f.readlines():
-                follow = line.split(" ")
+                follow = line.split()
                 nt = self.get_element_by_id(follow[0])
-                if follow[1].rstrip() != "":
-                    nt.follow = [self.get_element_by_id(e.rstrip()) for e in follow[1:]]
+                nt.follow = [self.get_element_by_id(e.rstrip()) for e in follow[1:]]
 
     def import_predict_sets(self, path):
         with open(path) as f:
             for i, line in enumerate(f.readlines()):
-                predict_set = line.split(" ")
+                predict_set = line.split()
                 #self.rules[i].add_predict(predict_set)
                 # todo: nonetype object has no attribute 'extend'
                 self.predict_sets.append([self.get_element_by_id(e.rstrip()) for e in predict_set[0:]])

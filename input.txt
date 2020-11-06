@@ -1,16 +1,6 @@
-int f(int a){
-return a *# a * a;
-}
+/* sample 1 */
 void main(void){
-int a;
-int b;
-a = 8/;
-if (b < 5) {
-a = f(a);
-}
-else{
-a = 4;
-}
-
-break;
+	int a;
+	int b;
+		a = b + - 1;
 }

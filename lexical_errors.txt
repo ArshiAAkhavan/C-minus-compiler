@@ -1,1 +1,2 @@
-There is no lexical error.
+5.	(/ , Invalid input)
+8.	(=$, Invalid input)
