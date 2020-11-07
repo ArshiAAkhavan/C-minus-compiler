@@ -3,22 +3,26 @@ from parser.grammar import Terminal
 from scanner.tokens import TokenType
 
 
+class NoTokenLeftException(Exception):
+    pass
+
+
 class LL1:
-    def __init__(self, token_generator, grammer):
+    def __init__(self, token_generator, grammar):
         self.token_generator = token_generator
-        self.grammer = grammer
+        self.grammar = grammar
         self.p_table = {}
         self.stack = []
         self.errors = []
         self.create_parse_table()
-        self.root = Node(self.grammer.rules[0].left.name)
+        self.root = Node(self.grammar.rules[0].left.name)
 
     def create_parse_table(self):
-        for rule in self.grammer.rules:
+        for rule in self.grammar.rules:
             for predict in rule.predict_set:
                 self.p_table[(rule.left.name, predict.name)] = [p.name for p in rule.right]
 
-        for nt in self.grammer.non_terminals:
+        for nt in self.grammar.non_terminals:
             for item in nt.follow:
                 if (nt.name, item.name) not in self.p_table:
                     self.p_table[(nt.name, item.name)] = "synch"
@@ -26,56 +30,69 @@ class LL1:
     def generate_parse_tree(self):
         self.stack = [self.root]
         token = self.get_next_valid_token()
-
-        while len(self.stack):
-            # todo @ghazal baraye grammer node ye Sm e behtar peyda kon
-            grammar_node = self.get_next_valid_grammer_node()
-            grammar_node.token = token
-            ### terminal
-            if isinstance(self.grammer.get_element_by_id(grammar_node.name), Terminal):
-                ### not matching
-                if grammar_node.name != self.get_token_matcher(token):
-                    self.errors.append((self.token_generator.get_line_no(), f"Missing {grammar_node.name}"))
-                if len(self.stack): token = self.get_next_valid_token()
-            ### none_terminal
-            else:
-                key = (grammar_node.name, self.get_token_matcher(token))
-                if key in self.p_table and self.p_table[key] != "synch":
-                    self.update_stack(grammar_node, key)
+        grammar_node= None
+        try:
+            while len(self.stack):
+                # todo @ghazal baraye grammar node ye Sm e behtar peyda kon
+                grammar_node = self.get_next_valid_grammar_node()
+                grammar_node.token = token
+                ### terminal
+                if isinstance(self.grammar.get_element_by_id(grammar_node.name), Terminal):
+                    ### not matching
+                    if grammar_node.name != self.get_token_matcher(token):
+                        self.errors.append((self.token_generator.get_line_no(), f"Missing {grammar_node.name}"))
+                    if len(self.stack): token = self.get_next_valid_token()
+                ### none_terminal
                 else:
-                    token = self.panic(grammar_node, key, token)
+                    key = (grammar_node.name, self.get_token_matcher(token))
+                    if key in self.p_table and self.p_table[key] != "synch":
+                        self.update_stack(grammar_node, key)
+                    else:
+                        token = self.panic(grammar_node, key, token)
+        except NoTokenLeftException:
+            self.remove_node(grammar_node)
+            [self.remove_node(g) for g in self.stack]
+
         return self.root
 
-    def update_stack(self, grammer_node, key):
+    def update_stack(self, grammar_node, key):
         ### should handle epsilon for ε and (ID,lexeme) & (KEYWORD,lexeme) for id,keyword here
-        self.stack.extend([Node(g, parent=grammer_node) for g in self.p_table[key]][::-1])
+        self.stack.extend([Node(g, parent=grammar_node) for g in self.p_table[key]][::-1])
 
-    def panic(self, grammer_node, key, token):
+    def panic(self, grammar_node, key, token):
         while key not in self.p_table:
-            self.errors.append((self.token_generator.get_line_no(), f"Illegal {token.lexeme}"))
+            self.errors.append((self.token_generator.get_line_no(), f"illegal {token.lexeme}"))
             token = self.get_next_valid_token()
-            key = (grammer_node.name, self.get_token_matcher(token))
+            key = (grammar_node.name, self.get_token_matcher(token))
+        if self.p_table[key] != 'synch':
+            self.update_stack(grammar_node, key)
+            return token
 
-        self.errors.append((self.token_generator.get_line_no(), f"Missing {grammer_node.name}"))
-
-        ### removing node from its parent
-        children = list(grammer_node.parent.children)
-        children.remove(grammer_node)
-        grammer_node.parent.children = tuple(children)
+        self.errors.append((self.token_generator.get_line_no(), f"Missing {grammar_node.name}"))
+        self.remove_node(grammar_node)
         return token
+
+    @staticmethod
+    def remove_node(grammar_node):
+        children = list(grammar_node.parent.children)
+        children.remove(grammar_node)
+        grammar_node.parent.children = tuple(children)
 
     def get_next_valid_token(self):
-        token = self.token_generator.get_next_token()
-        while token.type == TokenType.COMMENT or (
-                token.type == TokenType.WHITE_SPACE and token.lexeme != chr(26)):  # EOF
+        try:
             token = self.token_generator.get_next_token()
-        return token
+            while token.type == TokenType.COMMENT or (
+                    token.type == TokenType.WHITE_SPACE and token.lexeme != chr(26)):  # EOF
+                token = self.token_generator.get_next_token()
+            return token
+        except:
+            raise NoTokenLeftException()
 
-    def get_next_valid_grammer_node(self):
-        grammer_node = self.stack.pop()
-        while grammer_node.name == "ε":
-            grammer_node = self.stack.pop()
-        return grammer_node
+    def get_next_valid_grammar_node(self):
+        grammar_node = self.stack.pop()
+        while grammar_node.name == "ε":
+            grammar_node = self.stack.pop()
+        return grammar_node
 
     # todo @ghazal in gharare age token NUM ya ID bud, NUM o ID bargardune , dar gheyr e in surat lexeme ro
     @staticmethod
@@ -84,9 +101,11 @@ class LL1:
 
     def export_parse_tree(self, path):
         for node in PreOrderIter(self.root):
-            if node.name == "ε": node.name = "epsilon"
-            elif node.name == "$": pass
-            elif isinstance(self.grammer.get_element_by_id(node.name), Terminal):
+            if node.name == "ε":
+                node.name = "epsilon"
+            elif node.name == "$":
+                pass
+            elif isinstance(self.grammar.get_element_by_id(node.name), Terminal):
                 try:
                     index = node.token.type.name.find("_")
                     token_type = (node.token.type.name[:index], node.token.type.name)[index == -1]
