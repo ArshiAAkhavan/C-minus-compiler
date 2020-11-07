@@ -1,1 +1,1 @@
-from parser.grammer import init_grammer
+from parser.grammar import init_grammar

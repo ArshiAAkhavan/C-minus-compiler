@@ -29,7 +29,7 @@ class Rule:
         self.predict_set.extend(args)
 
 
-class Grammer:
+class Grammar:
     def __init__(self, non_terminals, terminals):
         self.non_terminals = non_terminals
         self.terminals = terminals
@@ -115,8 +115,8 @@ def init_non_terminals():
             NonTerminal('Arg-list'), NonTerminal('Arg-list-prime')]
 
 
-def init_grammer():
-    grammar = Grammer(init_non_terminals(), init_terminals())
+def init_grammar():
+    grammar = Grammar(init_non_terminals(), init_terminals())
     grammar.import_firsts("parser/data/Firsts.txt")
     grammar.import_follows("parser/data/Follows.txt")
     grammar.import_rules("parser/data/grammar.txt")
@@ -125,4 +125,4 @@ def init_grammer():
 
 
 if __name__ == "__main__":
-    g = init_grammer()
+    g = init_grammar()

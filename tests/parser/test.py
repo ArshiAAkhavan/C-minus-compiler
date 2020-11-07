@@ -5,7 +5,7 @@ from scanner.scanner import Scanner
 from scanner.lang import DFANode, FinalStateNode, Edge
 
 from parser.parser import LL1
-from parser.grammer import init_grammer
+from parser.grammar import init_grammar
 import logging
 
 
@@ -85,7 +85,7 @@ def generate_new_scanner(input_path):
     return Scanner(start, BufferReader(input_path, 30), language)
 
 
-grammer = init_grammer()
+grammer = init_grammar()
 
 
 def main():
