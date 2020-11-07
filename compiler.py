@@ -1,7 +1,7 @@
 from anytree import RenderTree
 
-from parser import init_grammar
-from parser.parser import LL1
+from Parser import init_grammar
+from Parser.parser import LL1
 from scanner import tables
 from scanner import actions
 from scanner.buffer_reader import BufferReader

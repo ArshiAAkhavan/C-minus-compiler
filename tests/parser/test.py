@@ -4,8 +4,8 @@ from scanner.buffer_reader import BufferReader
 from scanner.scanner import Scanner
 from scanner.lang import DFANode, FinalStateNode, Edge
 
-from parser.parser import LL1
-from parser.grammar import init_grammar
+from Parser.parser import LL1
+from Parser.grammar import init_grammar
 import logging
 
 
@@ -95,7 +95,7 @@ def main():
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
     for i in range(1, number_of_tests + 1, 1):
-        prefix = "tests/parser/samples/T{}/".format(i)
+        prefix = "tests/Parser/samples/T{}/".format(i)
 
         sc = generate_new_scanner(f"{prefix}input.txt")
         parser = LL1(sc, grammer)
@@ -106,6 +106,7 @@ def main():
 
         parser.generate_parse_tree()
         parser.export_parse_tree('parse_tree.txt')
+        parser.export_syntax_error('syntax_errors.txt')
 
         logger.warning(f"test no.{i}:")
         logger.warning(

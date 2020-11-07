@@ -1,7 +1,19 @@
-/*sample 6*/
-void main(void{
-	int prod;
-	int i;
-		prod = 1;
-		i = +1;
+/*sample 9*/
+int f(int a) {
+    void g(int b) {
+        output(b);
+        f(b -- 1);
+    }
+    if (a == ) {
+        output(a);
+        return -0;
+    } else {
+        g(a);
+    }
+
+}
+
+
+void main(void) {
+    f(10);
 }
