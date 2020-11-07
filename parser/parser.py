@@ -9,7 +9,7 @@ class LL1:
         self.grammer = grammer
         self.p_table = {}
         self.stack = []
-
+        self.errors = []
         self.create_parse_table()
         self.root = Node(self.grammer.rules[0].left.name)
 
@@ -19,8 +19,6 @@ class LL1:
                 self.p_table[(rule.left.name, predict.name)] = [p.name for p in rule.right]
 
         for nt in self.grammer.non_terminals:
-            # if nt.name =="Declaration-list":
-            #     print()
             for item in nt.follow:
                 if self.grammer.get_element_by_id("ε") not in nt.first and (nt, item) not in self.p_table:
                     self.p_table[(nt.name, item.name)] = "synch"
@@ -36,9 +34,7 @@ class LL1:
             if isinstance(self.grammer.get_element_by_id(grammer_node.name), Terminal):
                 ### not matching
                 if grammer_node.name != self.get_token_matcher(token):
-                    # todo should be changed to something else i thing
-                    # raise Exception(f"expected {grammer_node.name}!")
-                    print(f"expected {grammer_node.name}!")
+                    self.errors.append((self.token_generator.input_provider.get_line_no(), f"missing {grammer_node.name}"))
                 if len(self.stack): token = self.get_next_valid_token()
             ### none_terminal
             else:
@@ -47,6 +43,9 @@ class LL1:
                     self.update_stack(grammer_node, key)
                 else:
                     token = self.panic(grammer_node, key, token)
+                    if self.p_table[(grammer_node.name, self.get_token_matcher(token))] == "synch":
+                        self.errors.append((self.token_generator.input_provider.get_line_no(), f"missing {grammer_node.name}"))
+                        self.stack.pop()
         return self.root
 
     def update_stack(self, grammer_node, key):
@@ -55,6 +54,7 @@ class LL1:
 
     def panic(self, grammer_node, key, token):
         while key not in self.p_table:
+            self.errors.append((self.token_generator.input_provider.get_line_no(), f"illegal {token.name}"))
             token = self.get_next_valid_token()
             key = (grammer_node.name, self.get_token_matcher(token))
         return token
