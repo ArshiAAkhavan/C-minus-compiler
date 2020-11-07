@@ -27,23 +27,30 @@ class LL1:
                 if (nt.name, item.name) not in self.p_table:
                     self.p_table[(nt.name, item.name)] = "synch"
 
+    def add_error(self, error_root, error_type):
+        if error_type.lower() == "missing":
+            self.errors.append((self.token_generator.get_line_no(), f"{error_type} {error_root.name}"))
+        elif error_type.lower() == "illegal":
+            if error_root.type in [TokenType.NUM, TokenType.ID]:
+                self.errors.append((self.token_generator.get_line_no(), f"illegal {error_root.type.name}"))
+            else:
+                self.errors.append((self.token_generator.get_line_no(), f"illegal {error_root.lexeme}"))
+
     def generate_parse_tree(self):
         self.stack = [self.root]
         token = self.get_next_valid_token()
-        grammar_node= None
+        grammar_node = None
         try:
             while len(self.stack):
                 # todo @ghazal baraye grammar node ye Sm e behtar peyda kon
                 grammar_node = self.get_next_valid_grammar_node()
                 grammar_node.token = token
-                ### terminal
-                if isinstance(self.grammar.get_element_by_id(grammar_node.name), Terminal):
-                    ### not matching
-                    if grammar_node.name != self.get_token_matcher(token):
-                        self.errors.append((self.token_generator.get_line_no(), f"Missing {grammar_node.name}"))
+                if isinstance(self.grammar.get_element_by_id(grammar_node.name), Terminal):  ### terminal
+                    if grammar_node.name != self.get_token_matcher(token):  ### not matching
+                        self.add_error(grammar_node, "Missing")
+                        # self.errors.append((self.token_generator.get_line_no(), f"Missing {grammar_node.name}"))
                     if len(self.stack): token = self.get_next_valid_token()
-                ### none_terminal
-                else:
+                else:  ### none_terminal
                     key = (grammar_node.name, self.get_token_matcher(token))
                     if key in self.p_table and self.p_table[key] != "synch":
                         self.update_stack(grammar_node, key)
@@ -56,19 +63,20 @@ class LL1:
         return self.root
 
     def update_stack(self, grammar_node, key):
-        ### should handle epsilon for ε and (ID,lexeme) & (KEYWORD,lexeme) for id,keyword here
         self.stack.extend([Node(g, parent=grammar_node) for g in self.p_table[key]][::-1])
 
     def panic(self, grammar_node, key, token):
         while key not in self.p_table:
-            self.errors.append((self.token_generator.get_line_no(), f"illegal {token.lexeme}"))
+            self.add_error(token, "illegal")
+            # self.errors.append((self.token_generator.get_line_no(), f"illegal {token.lexeme}"))
             token = self.get_next_valid_token()
             key = (grammar_node.name, self.get_token_matcher(token))
         if self.p_table[key] != 'synch':
             self.update_stack(grammar_node, key)
             return token
 
-        self.errors.append((self.token_generator.get_line_no(), f"Missing {grammar_node.name}"))
+        self.add_error(grammar_node, "Missing")
+        # self.errors.append((self.token_generator.get_line_no(), f"Missing {grammar_node.name}"))
         self.remove_node(grammar_node)
         return token
 

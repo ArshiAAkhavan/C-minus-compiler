@@ -111,11 +111,11 @@ def main():
         logger.warning(
             f"\tparse_tree.txt:\t{open('parse_tree.txt').read().strip() == open(f'{prefix}parse_tree.txt').read().strip()}")
         logger.warning(
-            f"\tsyntax_errors.txt:\t{open('syntax_errors.txt').read().strip() == open(f'{prefix}syntax_errors.txt').read().strip()}")
+            f"\tsyntax_errors.txt:\t{open('syntax_errors.txt').read().strip().lower() == open(f'{prefix}syntax_errors.txt').read().strip().lower()}")
 
         test_status = open('parse_tree.txt').read().strip() == open(
-            f'{prefix}parse_tree.txt').read().strip() and open('syntax_errors.txt').read().strip() == open(
-            f'{prefix}syntax_errors.txt').read().strip()
+            f'{prefix}parse_tree.txt').read().strip() and open('syntax_errors.txt').read().strip().lower() == open(
+            f'{prefix}syntax_errors.txt').read().strip().lower()
 
         test_passes = test_passes and test_status
         status += ("F", ".")[test_status]
