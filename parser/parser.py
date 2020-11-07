@@ -34,7 +34,7 @@ class LL1:
             if isinstance(self.grammer.get_element_by_id(grammer_node.name), Terminal):
                 ### not matching
                 if grammer_node.name != self.get_token_matcher(token):
-                    self.errors.append((self.token_generator.get_line_no(), f"missing {grammer_node.name}"))
+                    self.errors.append((self.token_generator.get_line_no(), f"Missing {grammer_node.name}"))
                 if len(self.stack): token = self.get_next_valid_token()
             ### none_terminal
             else:
@@ -51,11 +51,11 @@ class LL1:
 
     def panic(self, grammer_node, key, token):
         while key not in self.p_table:
-            self.errors.append((self.token_generator.get_line_no(), f"illegal {token.lexeme}"))
+            self.errors.append((self.token_generator.get_line_no(), f"Illegal {token.lexeme}"))
             token = self.get_next_valid_token()
             key = (grammer_node.name, self.get_token_matcher(token))
 
-        self.errors.append((self.token_generator.get_line_no(), f"missing {grammer_node.name}"))
+        self.errors.append((self.token_generator.get_line_no(), f"Missing {grammer_node.name}"))
         return token
 
     def get_next_valid_token(self):
@@ -71,13 +71,7 @@ class LL1:
             grammer_node = self.stack.pop()
         return grammer_node
 
-    def export_syntax_error(self, path):
-        file = open(path, "w")
-        for line_no, error in self.errors:
-            file.write(f"#{line_no} : syntax error, {error}")
-        file.close()
-
-    #todo @ghazal in gharare age token NUM ya ID bud, NUM o ID bargardune , dar gheyr e in surat lexeme ro
+    # todo @ghazal in gharare age token NUM ya ID bud, NUM o ID bargardune , dar gheyr e in surat lexeme ro
     @staticmethod
     def get_token_matcher(token):
         return (token.lexeme, token.type.name)[token.type in [TokenType.NUM, TokenType.ID]]
@@ -86,3 +80,9 @@ class LL1:
         with open(path, 'w', encoding='utf-8') as f:
             for pre, fill, node in RenderTree(self.root):
                 f.write("%s%s\n" % (pre, node.name))
+
+    def export_syntax_error(self, path):
+        file = open(path, "w")
+        for line_no, error in self.errors:
+            file.write(f"#{line_no} : Syntax Error, {error}\n")
+        file.close()

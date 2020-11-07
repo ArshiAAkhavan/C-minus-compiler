@@ -9,6 +9,8 @@ Program
 │   │       └── Fun-declaration-prime
 │   │           ├── (
 │   │           ├── Params
+│   │           │   ├── void
+│   │           │   └── Param-list-void-abtar
 │   │           ├── )
 │   │           └── Compound-stmt
 │   └── Declaration-list

@@ -100,6 +100,7 @@ def build_scanner():
 parser = LL1(build_scanner(), init_grammar())
 root = parser.generate_parse_tree()
 parser.export_parse_tree("parse_tree.txt")
+parser.export_syntax_error("syntax_errors.txt")
 # sc=build_scanner()
 # while sc.can_generate_token():
 #     try:
