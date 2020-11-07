@@ -6,7 +6,6 @@ from scanner.lang import DFANode, FinalStateNode, Edge
 
 from parser.parser import LL1
 from parser.grammer import init_grammer
-from parser.grammer import Terminal, NonTerminal, Grammer
 import logging
 
 

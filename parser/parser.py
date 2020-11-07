@@ -19,9 +19,11 @@ class LL1:
                 self.p_table[(rule.left.name, predict.name)] = [p.name for p in rule.right]
 
         for nt in self.grammer.non_terminals:
+            # if nt.name =="Declaration-list":
+            #     print()
             for item in nt.follow:
-                if (nt, item) not in self.p_table:
-                    self.p_table[(nt.name, item)] = "synch"
+                if self.grammer.get_element_by_id("ε") not in nt.first and (nt, item) not in self.p_table:
+                    self.p_table[(nt.name, item.name)] = "synch"
 
     def generate_parse_tree(self):
         self.stack = [self.root]
