@@ -97,16 +97,18 @@ def build_scanner():
     return Scanner(start, BufferReader("input.txt", 30), language)
 
 
-parser = LL1(build_scanner(), init_grammar())
-root = parser.generate_parse_tree()
-parser.export_parse_tree("parse_tree.txt")
-parser.export_syntax_error("syntax_errors.txt")
 # sc=build_scanner()
 # while sc.can_generate_token():
 #     try:
 #         a=sc.get_next_token()
 #     except Exception as e:
 #         print(e)
-# tables.get_error_table().export("lexical_errors.txt")
-# tables.get_symbol_table().export("symbol_table.txt")
-# tables.get_token_table().export("tokens.txt")
+
+parser = LL1(build_scanner(), init_grammar())
+root = parser.generate_parse_tree()
+parser.export_parse_tree("parse_tree.txt")
+
+parser.export_syntax_error("syntax_errors.txt")
+tables.get_error_table().export("lexical_errors.txt")
+tables.get_symbol_table().export("symbol_table.txt")
+tables.get_token_table().export("tokens.txt")
