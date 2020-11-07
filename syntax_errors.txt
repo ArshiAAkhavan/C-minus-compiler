@@ -14,4 +14,4 @@
 #6 : Syntax Error, illegal NUM
 #6 : Syntax Error, illegal ;
 #7 : Syntax Error, illegal }
-#8 : Syntax Error, illegal $
+#8 : Syntax Error, illegal EOF

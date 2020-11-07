@@ -31,7 +31,7 @@ class LL1:
         if error_type.lower() == "missing":
             self.errors.append((self.token_generator.get_line_no(), f"{error_type} {error_root.name}"))
         elif error_type.lower() == "illegal":
-            if error_root.type in [TokenType.NUM, TokenType.ID]:
+            if error_root.type in [TokenType.NUM, TokenType.ID, TokenType.EOF]:
                 self.errors.append((self.token_generator.get_line_no(), f"illegal {error_root.type.name}"))
             else:
                 self.errors.append((self.token_generator.get_line_no(), f"illegal {error_root.lexeme}"))
@@ -48,7 +48,6 @@ class LL1:
                 if isinstance(self.grammar.get_element_by_id(grammar_node.name), Terminal):  ### terminal
                     if grammar_node.name != self.get_token_matcher(token):  ### not matching
                         self.add_error(grammar_node, "Missing")
-                        # self.errors.append((self.token_generator.get_line_no(), f"Missing {grammar_node.name}"))
                     if len(self.stack): token = self.get_next_valid_token()
                 else:  ### none_terminal
                     key = (grammar_node.name, self.get_token_matcher(token))
@@ -68,7 +67,6 @@ class LL1:
     def panic(self, grammar_node, key, token):
         while key not in self.p_table:
             self.add_error(token, "illegal")
-            # self.errors.append((self.token_generator.get_line_no(), f"illegal {token.lexeme}"))
             token = self.get_next_valid_token()
             key = (grammar_node.name, self.get_token_matcher(token))
         if self.p_table[key] != 'synch':
@@ -76,7 +74,6 @@ class LL1:
             return token
 
         self.add_error(grammar_node, "Missing")
-        # self.errors.append((self.token_generator.get_line_no(), f"Missing {grammar_node.name}"))
         self.remove_node(grammar_node)
         return token
 
