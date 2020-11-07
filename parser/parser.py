@@ -9,6 +9,7 @@ class LL1:
         self.grammer = grammer
         self.p_table = {}
         self.stack = []
+        self.errors = []
         self.create_parse_table()
 
     def create_parse_table(self):
@@ -33,7 +34,7 @@ class LL1:
             if isinstance(self.grammer.get_element_by_id(grammer_node.name), Terminal):
                 ### not matching
                 if grammer_node.name != self.get_token_matcher(token):
-                    raise Exception(f"expected {grammer_node.name}!")
+                    self.errors.append((self.token_generator.input_provider.get_line_no(), f"missing {grammer_node.name}"))
                 if len(self.stack): token = self.get_next_valid_token()
             ### none_terminal
             else:
@@ -42,6 +43,9 @@ class LL1:
                     self.update_stack(grammer_node, key)
                 else:
                     token = self.panic(grammer_node, key, token)
+                    if self.p_table[(grammer_node.name, self.get_token_matcher(token))] == "synch":
+                        self.errors.append((self.token_generator.input_provider.get_line_no(), f"missing {grammer_node.name}"))
+                        self.stack.pop()
         return root
 
     def update_stack(self, grammer_node, key):
@@ -50,6 +54,7 @@ class LL1:
 
     def panic(self, grammer_node, key, token):
         while key not in self.p_table:
+            self.errors.append((self.token_generator.input_provider.get_line_no(), f"illegal {token.name}"))
             token = self.get_next_valid_token()
             key = (grammer_node.name, self.get_token_matcher(token))
         return token
