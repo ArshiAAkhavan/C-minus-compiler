@@ -13,6 +13,5 @@ vod min(voi){
 		default:
 			b = b - 1;
 	}
-	// testing 
 	return;
 }

@@ -81,9 +81,10 @@ class LL1:
 
     @staticmethod
     def remove_node(grammar_node):
-        children = list(grammar_node.parent.children)
-        children.remove(grammar_node)
-        grammar_node.parent.children = tuple(children)
+        if grammar_node.parent:
+            children = list(grammar_node.parent.children)
+            children.remove(grammar_node)
+            grammar_node.parent.children = tuple(children)
 
     def get_next_valid_token(self):
         try:
