@@ -1,4 +1,4 @@
-from anytree import Node, RenderTree
+from anytree import Node, RenderTree, PreOrderIter
 from parser.grammar import Terminal
 from scanner.tokens import TokenType
 
@@ -29,20 +29,21 @@ class LL1:
 
         while len(self.stack):
             # todo @ghazal baraye grammer node ye Sm e behtar peyda kon
-            grammer_node = self.get_next_valid_grammer_node()
+            grammar_node = self.get_next_valid_grammer_node()
+            grammar_node.token = token
             ### terminal
-            if isinstance(self.grammer.get_element_by_id(grammer_node.name), Terminal):
+            if isinstance(self.grammer.get_element_by_id(grammar_node.name), Terminal):
                 ### not matching
-                if grammer_node.name != self.get_token_matcher(token):
-                    self.errors.append((self.token_generator.get_line_no(), f"Missing {grammer_node.name}"))
+                if grammar_node.name != self.get_token_matcher(token):
+                    self.errors.append((self.token_generator.get_line_no(), f"Missing {grammar_node.name}"))
                 if len(self.stack): token = self.get_next_valid_token()
             ### none_terminal
             else:
-                key = (grammer_node.name, self.get_token_matcher(token))
+                key = (grammar_node.name, self.get_token_matcher(token))
                 if key in self.p_table and self.p_table[key] != "synch":
-                    self.update_stack(grammer_node, key)
+                    self.update_stack(grammar_node, key)
                 else:
-                    token = self.panic(grammer_node, key, token)
+                    token = self.panic(grammar_node, key, token)
         return self.root
 
     def update_stack(self, grammer_node, key):
@@ -56,6 +57,7 @@ class LL1:
             key = (grammer_node.name, self.get_token_matcher(token))
 
         self.errors.append((self.token_generator.get_line_no(), f"Missing {grammer_node.name}"))
+
         ### removing node from its parent
         children = list(grammer_node.parent.children)
         children.remove(grammer_node)
@@ -81,12 +83,21 @@ class LL1:
         return (token.lexeme, token.type.name)[token.type in [TokenType.NUM, TokenType.ID]]
 
     def export_parse_tree(self, path):
+        for node in PreOrderIter(self.root):
+            if node.name == "ε": node.name = "epsilon"
+            elif node.name == "$": pass
+            elif isinstance(self.grammer.get_element_by_id(node.name), Terminal):
+                try:
+                    index = node.token.type.name.find("_")
+                    token_type = (node.token.type.name[:index], node.token.type.name)[index == -1]
+                    node.name = f"({token_type}, {node.token.lexeme}) "
+                except:
+                    pass
         with open(path, 'w', encoding='utf-8') as f:
             for pre, fill, node in RenderTree(self.root):
                 f.write("%s%s\n" % (pre, node.name))
 
     def export_syntax_error(self, path):
-        file = open(path, "w")
-        for line_no, error in self.errors:
-            file.write(f"#{line_no} : Syntax Error, {error}\n")
-        file.close()
+        with open(path, 'w', encoding='utf-8') as f:
+            for line_no, error in self.errors:
+                f.write(f"#{line_no} : Syntax Error, {error}\n")
