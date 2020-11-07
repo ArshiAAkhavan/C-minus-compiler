@@ -117,10 +117,10 @@ def init_non_terminals():
 
 def init_grammar():
     grammar = Grammer(init_non_terminals(), init_terminals())
-    grammar.import_firsts("parser/data/Firsts.txt")
-    grammar.import_follows("parser/data/Follows.txt")
-    grammar.import_rules("parser/data/grammar.txt")
-    grammar.import_predict_sets("parser/data/Predicts.csv")
+    grammar.import_firsts("data/Firsts.txt")
+    grammar.import_follows("data/Follows.txt")
+    grammar.import_rules("data/grammar.txt")
+    grammar.import_predict_sets("data/Predicts.csv")
     return grammar
 
 
