@@ -1,4 +1,4 @@
-/*sample 10*/
+    /*sample 10*/
 int count;
 int result[50];
 
