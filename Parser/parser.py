@@ -31,7 +31,9 @@ class LL1:
         if error_type.lower() == "missing":
             self.errors.append((self.token_generator.get_line_no(), f"{error_type} {error_root.name}"))
         elif error_type.lower() == "illegal":
-            if error_root.type in [TokenType.NUM, TokenType.ID, TokenType.EOF]:
+            if error_root.type is TokenType.EOF:
+                self.errors.append((self.token_generator.get_line_no(), f"unexpected {error_root.type.name}"))
+            elif error_root.type in [TokenType.NUM, TokenType.ID]:
                 self.errors.append((self.token_generator.get_line_no(), f"illegal {error_root.type.name}"))
             else:
                 self.errors.append((self.token_generator.get_line_no(), f"illegal {error_root.lexeme}"))
@@ -47,7 +49,7 @@ class LL1:
                 grammar_node.token = token
                 if isinstance(self.grammar.get_element_by_id(grammar_node.name), Terminal):  ### terminal
                     if grammar_node.name != self.get_token_matcher(token):  ### not matching
-                        self.add_error(grammar_node, "Missing")
+                        self.add_error(grammar_node, "missing")
                         self.remove_node(grammar_node)
                     if len(self.stack): token = self.get_next_valid_token()
                 else:  ### none_terminal
@@ -74,7 +76,7 @@ class LL1:
             self.update_stack(grammar_node, key)
             return token
 
-        self.add_error(grammar_node, "Missing")
+        self.add_error(grammar_node, "missing")
         self.remove_node(grammar_node)
         return token
 
@@ -125,5 +127,7 @@ class LL1:
 
     def export_syntax_error(self, path):
         with open(path, 'w', encoding='utf-8') as f:
+            if not self.errors:
+                f.write("There is no syntax error.\n")
             for line_no, error in self.errors:
-                f.write(f"#{line_no} : Syntax Error, {error}\n")
+                f.write(f"#{line_no} : syntax error, {error}\n")
