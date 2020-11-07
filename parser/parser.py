@@ -72,6 +72,12 @@ class LL1:
             grammer_node = self.stack.pop()
         return grammer_node
 
+    def export_syntax_error(self, path):
+        file = open(path, "w")
+        for line_no, error in self.errors:
+            file.write(f"#{line_no} : syntax error, {error}")
+        file.close()
+
     #todo @ghazal in gharare age token NUM ya ID bud, NUM o ID bargardune , dar gheyr e in surat lexeme ro
     @staticmethod
     def get_token_matcher(token):
