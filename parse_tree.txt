@@ -1,0 +1,76 @@
+Program
+├── Declaration-list
+│   ├── Declaration
+│   │   ├── Declaration-initial
+│   │   │   ├── Type-specifier
+│   │   │   │   └── void
+│   │   │   └── ID
+│   │   └── Declaration-prime
+│   │       └── Fun-declaration-prime
+│   │           ├── (
+│   │           ├── Params
+│   │           │   ├── void
+│   │           │   └── Param-list-void-abtar
+│   │           │       └── ε
+│   │           ├── )
+│   │           └── Compound-stmt
+│   │               ├── {
+│   │               ├── Declaration-list
+│   │               │   ├── Declaration
+│   │               │   │   ├── Declaration-initial
+│   │               │   │   │   ├── Type-specifier
+│   │               │   │   │   │   └── int
+│   │               │   │   │   └── ID
+│   │               │   │   └── Declaration-prime
+│   │               │   │       └── Var-declaration-prime
+│   │               │   │           └── ;
+│   │               │   └── Declaration-list
+│   │               │       ├── Declaration
+│   │               │       │   ├── Declaration-initial
+│   │               │       │   │   ├── Type-specifier
+│   │               │       │   │   │   └── int
+│   │               │       │   │   └── ID
+│   │               │       │   └── Declaration-prime
+│   │               │       │       └── Var-declaration-prime
+│   │               │       │           └── ;
+│   │               │       └── Declaration-list
+│   │               │           └── ε
+│   │               ├── Statement-list
+│   │               │   ├── Statement
+│   │               │   │   └── Expression-stmt
+│   │               │   │       ├── Expression
+│   │               │   │       │   ├── ID
+│   │               │   │       │   └── B
+│   │               │   │       │       ├── =
+│   │               │   │       │       └── Expression
+│   │               │   │       │           ├── ID
+│   │               │   │       │           └── B
+│   │               │   │       │               └── Simple-expression-prime
+│   │               │   │       │                   ├── Additive-expression-prime
+│   │               │   │       │                   │   ├── Term-prime
+│   │               │   │       │                   │   │   ├── Signed-factor-prime
+│   │               │   │       │                   │   │   │   └── Factor-prime
+│   │               │   │       │                   │   │   │       └── ε
+│   │               │   │       │                   │   │   └── G
+│   │               │   │       │                   │   │       └── ε
+│   │               │   │       │                   │   └── D
+│   │               │   │       │                   │       ├── Addop
+│   │               │   │       │                   │       │   └── +
+│   │               │   │       │                   │       ├── Term
+│   │               │   │       │                   │       │   ├── Signed-factor
+│   │               │   │       │                   │       │   │   ├── -
+│   │               │   │       │                   │       │   │   └── Factor
+│   │               │   │       │                   │       │   │       └── NUM
+│   │               │   │       │                   │       │   └── G
+│   │               │   │       │                   │       │       └── ε
+│   │               │   │       │                   │       └── D
+│   │               │   │       │                   │           └── ε
+│   │               │   │       │                   └── C
+│   │               │   │       │                       └── ε
+│   │               │   │       └── ;
+│   │               │   └── Statement-list
+│   │               │       └── ε
+│   │               └── }
+│   └── Declaration-list
+│       └── ε
+└── $

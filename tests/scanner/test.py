@@ -89,8 +89,8 @@ def main():
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
     for i in range(1, number_of_tests + 1, 1):
-        prefix = "samples/T{0:02d}/".format(i)
-
+        prefix = "tests/scanner/samples/T{0:02d}/".format(i)
+        prefix = "tests/parser/samples/T{}/".format(i)
         sc = generate_new_scanner(f"{prefix}input.txt")
 
         tables.get_token_table().tokens = []
@@ -117,7 +117,8 @@ def main():
 
         test_status = open('lexical_errors.txt').read().strip() == open(
             f'{prefix}lexical_errors.txt').read().strip() and \
-                      open('symbol_table.txt').read().strip() == open(f'{prefix}symbol_table.txt').read().strip() and \
+                      open('symbol_table.txt').read().strip() == open(
+            f'{prefix}symbol_table.txt').read().strip() and \
                       open('tokens.txt').read().strip() == open(f'{prefix}tokens.txt').read().strip()
         test_passes = test_passes and test_status
         status += ("F", ".")[test_status]
