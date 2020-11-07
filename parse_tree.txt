@@ -3,911 +3,307 @@ Program
 │   ├── Declaration
 │   │   ├── Declaration-initial
 │   │   │   ├── Type-specifier
-│   │   │   │   └── int
+│   │   │   │   └── void
 │   │   │   └── ID
 │   │   └── Declaration-prime
-│   │       └── Var-declaration-prime
-│   │           └── ;
+│   │       └── Fun-declaration-prime
+│   │           ├── (
+│   │           ├── Params
+│   │           │   ├── void
+│   │           │   └── Param-list-void-abtar
+│   │           │       └── ε
+│   │           ├── )
+│   │           └── Compound-stmt
+│   │               ├── {
+│   │               ├── Declaration-list
+│   │               │   ├── Declaration
+│   │               │   │   ├── Declaration-initial
+│   │               │   │   │   ├── Type-specifier
+│   │               │   │   │   │   └── int
+│   │               │   │   │   └── ID
+│   │               │   │   └── Declaration-prime
+│   │               │   │       └── Var-declaration-prime
+│   │               │   │           └── ;
+│   │               │   └── Declaration-list
+│   │               │       ├── Declaration
+│   │               │       │   ├── Declaration-initial
+│   │               │       │   │   ├── Type-specifier
+│   │               │       │   │   │   └── int
+│   │               │       │   │   └── ID
+│   │               │       │   └── Declaration-prime
+│   │               │       │       └── Var-declaration-prime
+│   │               │       │           └── ;
+│   │               │       └── Declaration-list
+│   │               │           └── ε
+│   │               ├── Statement-list
+│   │               │   ├── Statement
+│   │               │   │   └── Expression-stmt
+│   │               │   │       ├── Expression
+│   │               │   │       │   ├── ID
+│   │               │   │       │   └── B
+│   │               │   │       │       ├── =
+│   │               │   │       │       └── Expression
+│   │               │   │       │           └── Simple-expression-zegond
+│   │               │   │       │               ├── Additive-expression-zegond
+│   │               │   │       │               │   ├── Term-zegond
+│   │               │   │       │               │   │   ├── Signed-factor-zegond
+│   │               │   │       │               │   │   │   └── Factor-zegond
+│   │               │   │       │               │   │   │       └── NUM
+│   │               │   │       │               │   │   └── G
+│   │               │   │       │               │   │       └── ε
+│   │               │   │       │               │   └── D
+│   │               │   │       │               │       └── ε
+│   │               │   │       │               └── C
+│   │               │   │       │                   └── ε
+│   │               │   │       └── ;
+│   │               │   └── Statement-list
+│   │               │       ├── Statement
+│   │               │       │   └── Expression-stmt
+│   │               │       │       ├── Expression
+│   │               │       │       │   ├── ID
+│   │               │       │       │   └── B
+│   │               │       │       │       ├── =
+│   │               │       │       │       └── Expression
+│   │               │       │       │           └── Simple-expression-zegond
+│   │               │       │       │               ├── Additive-expression-zegond
+│   │               │       │       │               │   ├── Term-zegond
+│   │               │       │       │               │   │   ├── Signed-factor-zegond
+│   │               │       │       │               │   │   │   └── Factor-zegond
+│   │               │       │       │               │   │   │       └── NUM
+│   │               │       │       │               │   │   └── G
+│   │               │       │       │               │   │       └── ε
+│   │               │       │       │               │   └── D
+│   │               │       │       │               │       └── ε
+│   │               │       │       │               └── C
+│   │               │       │       │                   └── ε
+│   │               │       │       └── ;
+│   │               │       └── Statement-list
+│   │               │           ├── Statement
+│   │               │           │   └── Switch-stmt
+│   │               │           │       ├── switch
+│   │               │           │       ├── (
+│   │               │           │       ├── Expression
+│   │               │           │       │   ├── ID
+│   │               │           │       │   └── B
+│   │               │           │       │       └── Simple-expression-prime
+│   │               │           │       │           ├── Additive-expression-prime
+│   │               │           │       │           │   ├── Term-prime
+│   │               │           │       │           │   │   ├── Signed-factor-prime
+│   │               │           │       │           │   │   │   └── Factor-prime
+│   │               │           │       │           │   │   │       └── ε
+│   │               │           │       │           │   │   └── G
+│   │               │           │       │           │   │       └── ε
+│   │               │           │       │           │   └── D
+│   │               │           │       │           │       └── ε
+│   │               │           │       │           └── C
+│   │               │           │       │               └── ε
+│   │               │           │       ├── )
+│   │               │           │       ├── {
+│   │               │           │       ├── Case-stmts
+│   │               │           │       │   ├── Case-stmt
+│   │               │           │       │   │   ├── case
+│   │               │           │       │   │   ├── NUM
+│   │               │           │       │   │   ├── :
+│   │               │           │       │   │   └── Statement-list
+│   │               │           │       │   │       ├── Statement
+│   │               │           │       │   │       │   └── Expression-stmt
+│   │               │           │       │   │       │       ├── Expression
+│   │               │           │       │   │       │       │   ├── ID
+│   │               │           │       │   │       │       │   └── B
+│   │               │           │       │   │       │       │       ├── =
+│   │               │           │       │   │       │       │       └── Expression
+│   │               │           │       │   │       │       │           ├── ID
+│   │               │           │       │   │       │       │           └── B
+│   │               │           │       │   │       │       │               └── Simple-expression-prime
+│   │               │           │       │   │       │       │                   ├── Additive-expression-prime
+│   │               │           │       │   │       │       │                   │   ├── Term-prime
+│   │               │           │       │   │       │       │                   │   │   ├── Signed-factor-prime
+│   │               │           │       │   │       │       │                   │   │   │   └── Factor-prime
+│   │               │           │       │   │       │       │                   │   │   │       └── ε
+│   │               │           │       │   │       │       │                   │   │   └── G
+│   │               │           │       │   │       │       │                   │   │       └── ε
+│   │               │           │       │   │       │       │                   │   └── D
+│   │               │           │       │   │       │       │                   │       ├── Addop
+│   │               │           │       │   │       │       │                   │       │   └── +
+│   │               │           │       │   │       │       │                   │       ├── Term
+│   │               │           │       │   │       │       │                   │       │   ├── Signed-factor
+│   │               │           │       │   │       │       │                   │       │   │   └── Factor
+│   │               │           │       │   │       │       │                   │       │   │       └── NUM
+│   │               │           │       │   │       │       │                   │       │   └── G
+│   │               │           │       │   │       │       │                   │       │       └── ε
+│   │               │           │       │   │       │       │                   │       └── D
+│   │               │           │       │   │       │       │                   │           └── ε
+│   │               │           │       │   │       │       │                   └── C
+│   │               │           │       │   │       │       │                       └── ε
+│   │               │           │       │   │       │       └── ;
+│   │               │           │       │   │       └── Statement-list
+│   │               │           │       │   │           └── ε
+│   │               │           │       │   └── Case-stmts
+│   │               │           │       │       ├── Case-stmt
+│   │               │           │       │       │   ├── case
+│   │               │           │       │       │   ├── NUM
+│   │               │           │       │       │   ├── :
+│   │               │           │       │       │   └── Statement-list
+│   │               │           │       │       │       ├── Statement
+│   │               │           │       │       │       │   └── Expression-stmt
+│   │               │           │       │       │       │       ├── Expression
+│   │               │           │       │       │       │       │   ├── ID
+│   │               │           │       │       │       │       │   └── B
+│   │               │           │       │       │       │       │       ├── =
+│   │               │           │       │       │       │       │       └── Expression
+│   │               │           │       │       │       │       │           ├── ID
+│   │               │           │       │       │       │       │           └── B
+│   │               │           │       │       │       │       │               └── Simple-expression-prime
+│   │               │           │       │       │       │       │                   ├── Additive-expression-prime
+│   │               │           │       │       │       │       │                   │   ├── Term-prime
+│   │               │           │       │       │       │       │                   │   │   ├── Signed-factor-prime
+│   │               │           │       │       │       │       │                   │   │   │   └── Factor-prime
+│   │               │           │       │       │       │       │                   │   │   │       └── ε
+│   │               │           │       │       │       │       │                   │   │   └── G
+│   │               │           │       │       │       │       │                   │   │       └── ε
+│   │               │           │       │       │       │       │                   │   └── D
+│   │               │           │       │       │       │       │                   │       ├── Addop
+│   │               │           │       │       │       │       │                   │       │   └── +
+│   │               │           │       │       │       │       │                   │       ├── Term
+│   │               │           │       │       │       │       │                   │       │   ├── Signed-factor
+│   │               │           │       │       │       │       │                   │       │   │   └── Factor
+│   │               │           │       │       │       │       │                   │       │   │       └── NUM
+│   │               │           │       │       │       │       │                   │       │   └── G
+│   │               │           │       │       │       │       │                   │       │       └── ε
+│   │               │           │       │       │       │       │                   │       └── D
+│   │               │           │       │       │       │       │                   │           └── ε
+│   │               │           │       │       │       │       │                   └── C
+│   │               │           │       │       │       │       │                       └── ε
+│   │               │           │       │       │       │       └── ;
+│   │               │           │       │       │       └── Statement-list
+│   │               │           │       │       │           ├── Statement
+│   │               │           │       │       │           │   └── Return-stmt
+│   │               │           │       │       │           │       ├── return
+│   │               │           │       │       │           │       └── Return-stmt-prime
+│   │               │           │       │       │           │           └── ;
+│   │               │           │       │       │           └── Statement-list
+│   │               │           │       │       │               └── ε
+│   │               │           │       │       └── Case-stmts
+│   │               │           │       │           ├── Case-stmt
+│   │               │           │       │           │   ├── case
+│   │               │           │       │           │   ├── NUM
+│   │               │           │       │           │   ├── :
+│   │               │           │       │           │   └── Statement-list
+│   │               │           │       │           │       ├── Statement
+│   │               │           │       │           │       │   └── Compound-stmt
+│   │               │           │       │           │       │       ├── {
+│   │               │           │       │           │       │       ├── Declaration-list
+│   │               │           │       │           │       │       │   └── ε
+│   │               │           │       │           │       │       ├── Statement-list
+│   │               │           │       │           │       │       │   ├── Statement
+│   │               │           │       │           │       │       │   │   └── Expression-stmt
+│   │               │           │       │           │       │       │   │       ├── Expression
+│   │               │           │       │           │       │       │   │       │   ├── ID
+│   │               │           │       │           │       │       │   │       │   └── B
+│   │               │           │       │           │       │       │   │       │       ├── =
+│   │               │           │       │           │       │       │   │       │       └── Expression
+│   │               │           │       │           │       │       │   │       │           └── Simple-expression-zegond
+│   │               │           │       │           │       │       │   │       │               ├── Additive-expression-zegond
+│   │               │           │       │           │       │       │   │       │               │   ├── Term-zegond
+│   │               │           │       │           │       │       │   │       │               │   │   ├── Signed-factor-zegond
+│   │               │           │       │           │       │       │   │       │               │   │   │   └── Factor-zegond
+│   │               │           │       │           │       │       │   │       │               │   │   │       └── NUM
+│   │               │           │       │           │       │       │   │       │               │   │   └── G
+│   │               │           │       │           │       │       │   │       │               │   │       └── ε
+│   │               │           │       │           │       │       │   │       │               │   └── D
+│   │               │           │       │           │       │       │   │       │               │       └── ε
+│   │               │           │       │           │       │       │   │       │               └── C
+│   │               │           │       │           │       │       │   │       │                   └── ε
+│   │               │           │       │           │       │       │   │       └── ;
+│   │               │           │       │           │       │       │   └── Statement-list
+│   │               │           │       │           │       │       │       ├── Statement
+│   │               │           │       │           │       │       │       │   └── Expression-stmt
+│   │               │           │       │           │       │       │       │       ├── Expression
+│   │               │           │       │           │       │       │       │       │   ├── ID
+│   │               │           │       │           │       │       │       │       │   └── B
+│   │               │           │       │           │       │       │       │       │       ├── =
+│   │               │           │       │           │       │       │       │       │       └── Expression
+│   │               │           │       │           │       │       │       │       │           ├── ID
+│   │               │           │       │           │       │       │       │       │           └── B
+│   │               │           │       │           │       │       │       │       │               └── Simple-expression-prime
+│   │               │           │       │           │       │       │       │       │                   ├── Additive-expression-prime
+│   │               │           │       │           │       │       │       │       │                   │   ├── Term-prime
+│   │               │           │       │           │       │       │       │       │                   │   │   ├── Signed-factor-prime
+│   │               │           │       │           │       │       │       │       │                   │   │   │   └── Factor-prime
+│   │               │           │       │           │       │       │       │       │                   │   │   │       └── ε
+│   │               │           │       │           │       │       │       │       │                   │   │   └── G
+│   │               │           │       │           │       │       │       │       │                   │   │       ├── *
+│   │               │           │       │           │       │       │       │       │                   │   │       ├── Signed-factor
+│   │               │           │       │           │       │       │       │       │                   │   │       │   ├── -
+│   │               │           │       │           │       │       │       │       │                   │   │       │   └── Factor
+│   │               │           │       │           │       │       │       │       │                   │   │       │       └── NUM
+│   │               │           │       │           │       │       │       │       │                   │   │       └── G
+│   │               │           │       │           │       │       │       │       │                   │   │           └── ε
+│   │               │           │       │           │       │       │       │       │                   │   └── D
+│   │               │           │       │           │       │       │       │       │                   │       └── ε
+│   │               │           │       │           │       │       │       │       │                   └── C
+│   │               │           │       │           │       │       │       │       │                       └── ε
+│   │               │           │       │           │       │       │       │       └── ;
+│   │               │           │       │           │       │       │       └── Statement-list
+│   │               │           │       │           │       │       │           ├── Statement
+│   │               │           │       │           │       │       │           │   └── Expression-stmt
+│   │               │           │       │           │       │       │           │       ├── break
+│   │               │           │       │           │       │       │           │       └── ;
+│   │               │           │       │           │       │       │           └── Statement-list
+│   │               │           │       │           │       │       │               └── ε
+│   │               │           │       │           │       │       └── }
+│   │               │           │       │           │       └── Statement-list
+│   │               │           │       │           │           └── ε
+│   │               │           │       │           └── Case-stmts
+│   │               │           │       │               └── ε
+│   │               │           │       ├── Default-stmt
+│   │               │           │       │   ├── default
+│   │               │           │       │   ├── :
+│   │               │           │       │   └── Statement-list
+│   │               │           │       │       ├── Statement
+│   │               │           │       │       │   └── Expression-stmt
+│   │               │           │       │       │       ├── Expression
+│   │               │           │       │       │       │   ├── ID
+│   │               │           │       │       │       │   └── B
+│   │               │           │       │       │       │       ├── =
+│   │               │           │       │       │       │       └── Expression
+│   │               │           │       │       │       │           ├── ID
+│   │               │           │       │       │       │           └── B
+│   │               │           │       │       │       │               └── Simple-expression-prime
+│   │               │           │       │       │       │                   ├── Additive-expression-prime
+│   │               │           │       │       │       │                   │   ├── Term-prime
+│   │               │           │       │       │       │                   │   │   ├── Signed-factor-prime
+│   │               │           │       │       │       │                   │   │   │   └── Factor-prime
+│   │               │           │       │       │       │                   │   │   │       └── ε
+│   │               │           │       │       │       │                   │   │   └── G
+│   │               │           │       │       │       │                   │   │       └── ε
+│   │               │           │       │       │       │                   │   └── D
+│   │               │           │       │       │       │                   │       ├── Addop
+│   │               │           │       │       │       │                   │       │   └── -
+│   │               │           │       │       │       │                   │       ├── Term
+│   │               │           │       │       │       │                   │       │   ├── Signed-factor
+│   │               │           │       │       │       │                   │       │   │   ├── -
+│   │               │           │       │       │       │                   │       │   │   └── Factor
+│   │               │           │       │       │       │                   │       │   │       └── NUM
+│   │               │           │       │       │       │                   │       │   └── G
+│   │               │           │       │       │       │                   │       │       └── ε
+│   │               │           │       │       │       │                   │       └── D
+│   │               │           │       │       │       │                   │           └── ε
+│   │               │           │       │       │       │                   └── C
+│   │               │           │       │       │       │                       └── ε
+│   │               │           │       │       │       └── ;
+│   │               │           │       │       └── Statement-list
+│   │               │           │       │           └── ε
+│   │               │           │       └── }
+│   │               │           └── Statement-list
+│   │               │               ├── Statement
+│   │               │               │   └── Return-stmt
+│   │               │               │       ├── return
+│   │               │               │       └── Return-stmt-prime
+│   │               │               │           └── ;
+│   │               │               └── Statement-list
+│   │               │                   └── ε
+│   │               └── }
 │   └── Declaration-list
-│       ├── Declaration
-│       │   ├── Declaration-initial
-│       │   │   ├── Type-specifier
-│       │   │   │   └── int
-│       │   │   └── ID
-│       │   └── Declaration-prime
-│       │       └── Var-declaration-prime
-│       │           ├── [
-│       │           ├── NUM
-│       │           ├── ]
-│       │           └── ;
-│       └── Declaration-list
-│           ├── Declaration
-│           │   ├── Declaration-initial
-│           │   │   ├── Type-specifier
-│           │   │   │   └── int
-│           │   │   └── ID
-│           │   └── Declaration-prime
-│           │       └── Fun-declaration-prime
-│           │           ├── (
-│           │           ├── Params
-│           │           │   ├── int
-│           │           │   ├── ID
-│           │           │   ├── Param-prime
-│           │           │   │   └── ε
-│           │           │   └── Param-list
-│           │           │       ├── ,
-│           │           │       ├── Param
-│           │           │       │   ├── Declaration-initial
-│           │           │       │   │   ├── Type-specifier
-│           │           │       │   │   │   └── int
-│           │           │       │   │   └── ID
-│           │           │       │   └── Param-prime
-│           │           │       │       ├── [
-│           │           │       │       └── ]
-│           │           │       └── Param-list
-│           │           │           └── ε
-│           │           ├── )
-│           │           └── Compound-stmt
-│           │               ├── {
-│           │               ├── Declaration-list
-│           │               │   └── ε
-│           │               ├── Statement-list
-│           │               │   ├── Statement
-│           │               │   │   └── Expression-stmt
-│           │               │   │       ├── Expression
-│           │               │   │       │   ├── ID
-│           │               │   │       │   └── B
-│           │               │   │       │       ├── =
-│           │               │   │       │       └── Expression
-│           │               │   │       │           ├── ID
-│           │               │   │       │           └── B
-│           │               │   │       │               └── Simple-expression-prime
-│           │               │   │       │                   ├── Additive-expression-prime
-│           │               │   │       │                   │   ├── Term-prime
-│           │               │   │       │                   │   │   ├── Signed-factor-prime
-│           │               │   │       │                   │   │   │   └── Factor-prime
-│           │               │   │       │                   │   │   │       └── ε
-│           │               │   │       │                   │   │   └── G
-│           │               │   │       │                   │   │       └── ε
-│           │               │   │       │                   │   └── D
-│           │               │   │       │                   │       ├── Addop
-│           │               │   │       │                   │       │   └── +
-│           │               │   │       │                   │       ├── Term
-│           │               │   │       │                   │       │   ├── Signed-factor
-│           │               │   │       │                   │       │   │   └── Factor
-│           │               │   │       │                   │       │   │       └── NUM
-│           │               │   │       │                   │       │   └── G
-│           │               │   │       │                   │       │       └── ε
-│           │               │   │       │                   │       └── D
-│           │               │   │       │                   │           └── ε
-│           │               │   │       │                   └── C
-│           │               │   │       │                       └── ε
-│           │               │   │       └── ;
-│           │               │   └── Statement-list
-│           │               │       ├── Statement
-│           │               │       │   └── Selection-stmt
-│           │               │       │       ├── if
-│           │               │       │       ├── (
-│           │               │       │       ├── Expression
-│           │               │       │       │   ├── ID
-│           │               │       │       │   └── B
-│           │               │       │       │       ├── [
-│           │               │       │       │       ├── Expression
-│           │               │       │       │       │   ├── ID
-│           │               │       │       │       │   └── B
-│           │               │       │       │       │       └── Simple-expression-prime
-│           │               │       │       │       │           ├── Additive-expression-prime
-│           │               │       │       │       │           │   ├── Term-prime
-│           │               │       │       │       │           │   │   ├── Signed-factor-prime
-│           │               │       │       │       │           │   │   │   └── Factor-prime
-│           │               │       │       │       │           │   │   │       └── ε
-│           │               │       │       │       │           │   │   └── G
-│           │               │       │       │       │           │   │       └── ε
-│           │               │       │       │       │           │   └── D
-│           │               │       │       │       │           │       ├── Addop
-│           │               │       │       │       │           │       │   └── -
-│           │               │       │       │       │           │       ├── Term
-│           │               │       │       │       │           │       │   ├── Signed-factor
-│           │               │       │       │       │           │       │   │   └── Factor
-│           │               │       │       │       │           │       │   │       └── NUM
-│           │               │       │       │       │           │       │   └── G
-│           │               │       │       │       │           │       │       └── ε
-│           │               │       │       │       │           │       └── D
-│           │               │       │       │       │           │           └── ε
-│           │               │       │       │       │           └── C
-│           │               │       │       │       │               └── ε
-│           │               │       │       │       ├── ]
-│           │               │       │       │       └── H
-│           │               │       │       │           ├── G
-│           │               │       │       │           │   └── ε
-│           │               │       │       │           ├── D
-│           │               │       │       │           │   └── ε
-│           │               │       │       │           └── C
-│           │               │       │       │               └── ε
-│           │               │       │       ├── )
-│           │               │       │       ├── Statement
-│           │               │       │       │   └── Compound-stmt
-│           │               │       │       │       ├── {
-│           │               │       │       │       ├── Declaration-list
-│           │               │       │       │       │   └── ε
-│           │               │       │       │       ├── Statement-list
-│           │               │       │       │       │   ├── Statement
-│           │               │       │       │       │   │   └── Return-stmt
-│           │               │       │       │       │   │       ├── return
-│           │               │       │       │       │   │       └── Return-stmt-prime
-│           │               │       │       │       │   │           ├── Expression
-│           │               │       │       │       │   │           │   ├── ID
-│           │               │       │       │       │   │           │   └── B
-│           │               │       │       │       │   │           │       ├── [
-│           │               │       │       │       │   │           │       ├── Expression
-│           │               │       │       │       │   │           │       │   ├── ID
-│           │               │       │       │       │   │           │       │   └── B
-│           │               │       │       │       │   │           │       │       └── Simple-expression-prime
-│           │               │       │       │       │   │           │       │           ├── Additive-expression-prime
-│           │               │       │       │       │   │           │       │           │   ├── Term-prime
-│           │               │       │       │       │   │           │       │           │   │   ├── Signed-factor-prime
-│           │               │       │       │       │   │           │       │           │   │   │   └── Factor-prime
-│           │               │       │       │       │   │           │       │           │   │   │       └── ε
-│           │               │       │       │       │   │           │       │           │   │   └── G
-│           │               │       │       │       │   │           │       │           │   │       └── ε
-│           │               │       │       │       │   │           │       │           │   └── D
-│           │               │       │       │       │   │           │       │           │       ├── Addop
-│           │               │       │       │       │   │           │       │           │       │   └── -
-│           │               │       │       │       │   │           │       │           │       ├── Term
-│           │               │       │       │       │   │           │       │           │       │   ├── Signed-factor
-│           │               │       │       │       │   │           │       │           │       │   │   └── Factor
-│           │               │       │       │       │   │           │       │           │       │   │       └── NUM
-│           │               │       │       │       │   │           │       │           │       │   └── G
-│           │               │       │       │       │   │           │       │           │       │       └── ε
-│           │               │       │       │       │   │           │       │           │       └── D
-│           │               │       │       │       │   │           │       │           │           └── ε
-│           │               │       │       │       │   │           │       │           └── C
-│           │               │       │       │       │   │           │       │               └── ε
-│           │               │       │       │       │   │           │       ├── ]
-│           │               │       │       │       │   │           │       └── H
-│           │               │       │       │       │   │           │           ├── G
-│           │               │       │       │       │   │           │           │   └── ε
-│           │               │       │       │       │   │           │           ├── D
-│           │               │       │       │       │   │           │           │   └── ε
-│           │               │       │       │       │   │           │           └── C
-│           │               │       │       │       │   │           │               └── ε
-│           │               │       │       │       │   │           └── ;
-│           │               │       │       │       │   └── Statement-list
-│           │               │       │       │       │       └── ε
-│           │               │       │       │       └── }
-│           │               │       │       ├── else
-│           │               │       │       └── Statement
-│           │               │       │           └── Compound-stmt
-│           │               │       │               ├── {
-│           │               │       │               ├── Declaration-list
-│           │               │       │               │   └── ε
-│           │               │       │               ├── Statement-list
-│           │               │       │               │   ├── Statement
-│           │               │       │               │   │   └── Selection-stmt
-│           │               │       │               │   │       ├── if
-│           │               │       │               │   │       ├── (
-│           │               │       │               │   │       ├── Expression
-│           │               │       │               │   │       │   ├── ID
-│           │               │       │               │   │       │   └── B
-│           │               │       │               │   │       │       └── Simple-expression-prime
-│           │               │       │               │   │       │           ├── Additive-expression-prime
-│           │               │       │               │   │       │           │   ├── Term-prime
-│           │               │       │               │   │       │           │   │   ├── Signed-factor-prime
-│           │               │       │               │   │       │           │   │   │   └── Factor-prime
-│           │               │       │               │   │       │           │   │   │       └── ε
-│           │               │       │               │   │       │           │   │   └── G
-│           │               │       │               │   │       │           │   │       └── ε
-│           │               │       │               │   │       │           │   └── D
-│           │               │       │               │   │       │           │       └── ε
-│           │               │       │               │   │       │           └── C
-│           │               │       │               │   │       │               ├── Relop
-│           │               │       │               │   │       │               │   └── ==
-│           │               │       │               │   │       │               └── Additive-expression
-│           │               │       │               │   │       │                   ├── Term
-│           │               │       │               │   │       │                   │   ├── Signed-factor
-│           │               │       │               │   │       │                   │   │   └── Factor
-│           │               │       │               │   │       │                   │   │       └── NUM
-│           │               │       │               │   │       │                   │   └── G
-│           │               │       │               │   │       │                   │       └── ε
-│           │               │       │               │   │       │                   └── D
-│           │               │       │               │   │       │                       └── ε
-│           │               │       │               │   │       ├── )
-│           │               │       │               │   │       ├── Statement
-│           │               │       │               │   │       │   └── Compound-stmt
-│           │               │       │               │   │       │       ├── {
-│           │               │       │               │   │       │       ├── Declaration-list
-│           │               │       │               │   │       │       │   └── ε
-│           │               │       │               │   │       │       ├── Statement-list
-│           │               │       │               │   │       │       │   ├── Statement
-│           │               │       │               │   │       │       │   │   └── Expression-stmt
-│           │               │       │               │   │       │       │   │       ├── Expression
-│           │               │       │               │   │       │       │   │       │   ├── ID
-│           │               │       │               │   │       │       │   │       │   └── B
-│           │               │       │               │   │       │       │   │       │       ├── [
-│           │               │       │               │   │       │       │   │       │       ├── Expression
-│           │               │       │               │   │       │       │   │       │       │   ├── ID
-│           │               │       │               │   │       │       │   │       │       │   └── B
-│           │               │       │               │   │       │       │   │       │       │       └── Simple-expression-prime
-│           │               │       │               │   │       │       │   │       │       │           ├── Additive-expression-prime
-│           │               │       │               │   │       │       │   │       │       │           │   ├── Term-prime
-│           │               │       │               │   │       │       │   │       │       │           │   │   ├── Signed-factor-prime
-│           │               │       │               │   │       │       │   │       │       │           │   │   │   └── Factor-prime
-│           │               │       │               │   │       │       │   │       │       │           │   │   │       └── ε
-│           │               │       │               │   │       │       │   │       │       │           │   │   └── G
-│           │               │       │               │   │       │       │   │       │       │           │   │       └── ε
-│           │               │       │               │   │       │       │   │       │       │           │   └── D
-│           │               │       │               │   │       │       │   │       │       │           │       ├── Addop
-│           │               │       │               │   │       │       │   │       │       │           │       │   └── -
-│           │               │       │               │   │       │       │   │       │       │           │       ├── Term
-│           │               │       │               │   │       │       │   │       │       │           │       │   ├── Signed-factor
-│           │               │       │               │   │       │       │   │       │       │           │       │   │   └── Factor
-│           │               │       │               │   │       │       │   │       │       │           │       │   │       └── NUM
-│           │               │       │               │   │       │       │   │       │       │           │       │   └── G
-│           │               │       │               │   │       │       │   │       │       │           │       │       └── ε
-│           │               │       │               │   │       │       │   │       │       │           │       └── D
-│           │               │       │               │   │       │       │   │       │       │           │           └── ε
-│           │               │       │               │   │       │       │   │       │       │           └── C
-│           │               │       │               │   │       │       │   │       │       │               └── ε
-│           │               │       │               │   │       │       │   │       │       ├── ]
-│           │               │       │               │   │       │       │   │       │       └── H
-│           │               │       │               │   │       │       │   │       │           ├── =
-│           │               │       │               │   │       │       │   │       │           └── Expression
-│           │               │       │               │   │       │       │   │       │               └── Simple-expression-zegond
-│           │               │       │               │   │       │       │   │       │                   ├── Additive-expression-zegond
-│           │               │       │               │   │       │       │   │       │                   │   ├── Term-zegond
-│           │               │       │               │   │       │       │   │       │                   │   │   ├── Signed-factor-zegond
-│           │               │       │               │   │       │       │   │       │                   │   │   │   └── Factor-zegond
-│           │               │       │               │   │       │       │   │       │                   │   │   │       └── NUM
-│           │               │       │               │   │       │       │   │       │                   │   │   └── G
-│           │               │       │               │   │       │       │   │       │                   │   │       └── ε
-│           │               │       │               │   │       │       │   │       │                   │   └── D
-│           │               │       │               │   │       │       │   │       │                   │       └── ε
-│           │               │       │               │   │       │       │   │       │                   └── C
-│           │               │       │               │   │       │       │   │       │                       └── ε
-│           │               │       │               │   │       │       │   │       └── ;
-│           │               │       │               │   │       │       │   └── Statement-list
-│           │               │       │               │   │       │       │       ├── Statement
-│           │               │       │               │   │       │       │       │   └── Return-stmt
-│           │               │       │               │   │       │       │       │       ├── return
-│           │               │       │               │   │       │       │       │       └── Return-stmt-prime
-│           │               │       │               │   │       │       │       │           ├── Expression
-│           │               │       │               │   │       │       │       │           │   └── Simple-expression-zegond
-│           │               │       │               │   │       │       │       │           │       ├── Additive-expression-zegond
-│           │               │       │               │   │       │       │       │           │       │   ├── Term-zegond
-│           │               │       │               │   │       │       │       │           │       │   │   ├── Signed-factor-zegond
-│           │               │       │               │   │       │       │       │           │       │   │   │   └── Factor-zegond
-│           │               │       │               │   │       │       │       │           │       │   │   │       └── NUM
-│           │               │       │               │   │       │       │       │           │       │   │   └── G
-│           │               │       │               │   │       │       │       │           │       │   │       └── ε
-│           │               │       │               │   │       │       │       │           │       │   └── D
-│           │               │       │               │   │       │       │       │           │       │       └── ε
-│           │               │       │               │   │       │       │       │           │       └── C
-│           │               │       │               │   │       │       │       │           │           └── ε
-│           │               │       │               │   │       │       │       │           └── ;
-│           │               │       │               │   │       │       │       └── Statement-list
-│           │               │       │               │   │       │       │           └── ε
-│           │               │       │               │   │       │       └── }
-│           │               │       │               │   │       ├── else
-│           │               │       │               │   │       └── Statement
-│           │               │       │               │   │           └── Selection-stmt
-│           │               │       │               │   │               ├── if
-│           │               │       │               │   │               ├── (
-│           │               │       │               │   │               ├── Expression
-│           │               │       │               │   │               │   ├── ID
-│           │               │       │               │   │               │   └── B
-│           │               │       │               │   │               │       └── Simple-expression-prime
-│           │               │       │               │   │               │           ├── Additive-expression-prime
-│           │               │       │               │   │               │           │   ├── Term-prime
-│           │               │       │               │   │               │           │   │   ├── Signed-factor-prime
-│           │               │       │               │   │               │           │   │   │   └── Factor-prime
-│           │               │       │               │   │               │           │   │   │       └── ε
-│           │               │       │               │   │               │           │   │   └── G
-│           │               │       │               │   │               │           │   │       └── ε
-│           │               │       │               │   │               │           │   └── D
-│           │               │       │               │   │               │           │       └── ε
-│           │               │       │               │   │               │           └── C
-│           │               │       │               │   │               │               ├── Relop
-│           │               │       │               │   │               │               │   └── ==
-│           │               │       │               │   │               │               └── Additive-expression
-│           │               │       │               │   │               │                   ├── Term
-│           │               │       │               │   │               │                   │   ├── Signed-factor
-│           │               │       │               │   │               │                   │   │   ├── +
-│           │               │       │               │   │               │                   │   │   └── Factor
-│           │               │       │               │   │               │                   │   │       └── NUM
-│           │               │       │               │   │               │                   │   └── G
-│           │               │       │               │   │               │                   │       └── ε
-│           │               │       │               │   │               │                   └── D
-│           │               │       │               │   │               │                       └── ε
-│           │               │       │               │   │               ├── )
-│           │               │       │               │   │               ├── Statement
-│           │               │       │               │   │               │   └── Compound-stmt
-│           │               │       │               │   │               │       ├── {
-│           │               │       │               │   │               │       ├── Declaration-list
-│           │               │       │               │   │               │       │   └── ε
-│           │               │       │               │   │               │       ├── Statement-list
-│           │               │       │               │   │               │       │   ├── Statement
-│           │               │       │               │   │               │       │   │   └── Expression-stmt
-│           │               │       │               │   │               │       │   │       ├── Expression
-│           │               │       │               │   │               │       │   │       │   ├── ID
-│           │               │       │               │   │               │       │   │       │   └── B
-│           │               │       │               │   │               │       │   │       │       ├── [
-│           │               │       │               │   │               │       │   │       │       ├── Expression
-│           │               │       │               │   │               │       │   │       │       │   ├── ID
-│           │               │       │               │   │               │       │   │       │       │   └── B
-│           │               │       │               │   │               │       │   │       │       │       └── Simple-expression-prime
-│           │               │       │               │   │               │       │   │       │       │           ├── Additive-expression-prime
-│           │               │       │               │   │               │       │   │       │       │           │   ├── Term-prime
-│           │               │       │               │   │               │       │   │       │       │           │   │   ├── Signed-factor-prime
-│           │               │       │               │   │               │       │   │       │       │           │   │   │   └── Factor-prime
-│           │               │       │               │   │               │       │   │       │       │           │   │   │       └── ε
-│           │               │       │               │   │               │       │   │       │       │           │   │   └── G
-│           │               │       │               │   │               │       │   │       │       │           │   │       └── ε
-│           │               │       │               │   │               │       │   │       │       │           │   └── D
-│           │               │       │               │   │               │       │   │       │       │           │       ├── Addop
-│           │               │       │               │   │               │       │   │       │       │           │       │   └── -
-│           │               │       │               │   │               │       │   │       │       │           │       ├── Term
-│           │               │       │               │   │               │       │   │       │       │           │       │   ├── Signed-factor
-│           │               │       │               │   │               │       │   │       │       │           │       │   │   └── Factor
-│           │               │       │               │   │               │       │   │       │       │           │       │   │       └── NUM
-│           │               │       │               │   │               │       │   │       │       │           │       │   └── G
-│           │               │       │               │   │               │       │   │       │       │           │       │       └── ε
-│           │               │       │               │   │               │       │   │       │       │           │       └── D
-│           │               │       │               │   │               │       │   │       │       │           │           └── ε
-│           │               │       │               │   │               │       │   │       │       │           └── C
-│           │               │       │               │   │               │       │   │       │       │               └── ε
-│           │               │       │               │   │               │       │   │       │       ├── ]
-│           │               │       │               │   │               │       │   │       │       └── H
-│           │               │       │               │   │               │       │   │       │           ├── =
-│           │               │       │               │   │               │       │   │       │           └── Expression
-│           │               │       │               │   │               │       │   │       │               └── Simple-expression-zegond
-│           │               │       │               │   │               │       │   │       │                   ├── Additive-expression-zegond
-│           │               │       │               │   │               │       │   │       │                   │   ├── Term-zegond
-│           │               │       │               │   │               │       │   │       │                   │   │   ├── Signed-factor-zegond
-│           │               │       │               │   │               │       │   │       │                   │   │   │   └── Factor-zegond
-│           │               │       │               │   │               │       │   │       │                   │   │   │       └── NUM
-│           │               │       │               │   │               │       │   │       │                   │   │   └── G
-│           │               │       │               │   │               │       │   │       │                   │   │       └── ε
-│           │               │       │               │   │               │       │   │       │                   │   └── D
-│           │               │       │               │   │               │       │   │       │                   │       └── ε
-│           │               │       │               │   │               │       │   │       │                   └── C
-│           │               │       │               │   │               │       │   │       │                       └── ε
-│           │               │       │               │   │               │       │   │       └── ;
-│           │               │       │               │   │               │       │   └── Statement-list
-│           │               │       │               │   │               │       │       ├── Statement
-│           │               │       │               │   │               │       │       │   └── Return-stmt
-│           │               │       │               │   │               │       │       │       ├── return
-│           │               │       │               │   │               │       │       │       └── Return-stmt-prime
-│           │               │       │               │   │               │       │       │           ├── Expression
-│           │               │       │               │   │               │       │       │           │   └── Simple-expression-zegond
-│           │               │       │               │   │               │       │       │           │       ├── Additive-expression-zegond
-│           │               │       │               │   │               │       │       │           │       │   ├── Term-zegond
-│           │               │       │               │   │               │       │       │           │       │   │   ├── Signed-factor-zegond
-│           │               │       │               │   │               │       │       │           │       │   │   │   └── Factor-zegond
-│           │               │       │               │   │               │       │       │           │       │   │   │       └── NUM
-│           │               │       │               │   │               │       │       │           │       │   │   └── G
-│           │               │       │               │   │               │       │       │           │       │   │       └── ε
-│           │               │       │               │   │               │       │       │           │       │   └── D
-│           │               │       │               │   │               │       │       │           │       │       └── ε
-│           │               │       │               │   │               │       │       │           │       └── C
-│           │               │       │               │   │               │       │       │           │           └── ε
-│           │               │       │               │   │               │       │       │           └── ;
-│           │               │       │               │   │               │       │       └── Statement-list
-│           │               │       │               │   │               │       │           └── ε
-│           │               │       │               │   │               │       └── }
-│           │               │       │               │   │               ├── else
-│           │               │       │               │   │               └── Statement
-│           │               │       │               │   │                   └── Compound-stmt
-│           │               │       │               │   │                       ├── {
-│           │               │       │               │   │                       ├── Declaration-list
-│           │               │       │               │   │                       │   └── ε
-│           │               │       │               │   │                       ├── Statement-list
-│           │               │       │               │   │                       │   ├── Statement
-│           │               │       │               │   │                       │   │   └── Expression-stmt
-│           │               │       │               │   │                       │   │       ├── Expression
-│           │               │       │               │   │                       │   │       │   ├── ID
-│           │               │       │               │   │                       │   │       │   └── B
-│           │               │       │               │   │                       │   │       │       ├── [
-│           │               │       │               │   │                       │   │       │       ├── Expression
-│           │               │       │               │   │                       │   │       │       │   ├── ID
-│           │               │       │               │   │                       │   │       │       │   └── B
-│           │               │       │               │   │                       │   │       │       │       └── Simple-expression-prime
-│           │               │       │               │   │                       │   │       │       │           ├── Additive-expression-prime
-│           │               │       │               │   │                       │   │       │       │           │   ├── Term-prime
-│           │               │       │               │   │                       │   │       │       │           │   │   ├── Signed-factor-prime
-│           │               │       │               │   │                       │   │       │       │           │   │   │   └── Factor-prime
-│           │               │       │               │   │                       │   │       │       │           │   │   │       └── ε
-│           │               │       │               │   │                       │   │       │       │           │   │   └── G
-│           │               │       │               │   │                       │   │       │       │           │   │       └── ε
-│           │               │       │               │   │                       │   │       │       │           │   └── D
-│           │               │       │               │   │                       │   │       │       │           │       ├── Addop
-│           │               │       │               │   │                       │   │       │       │           │       │   └── -
-│           │               │       │               │   │                       │   │       │       │           │       ├── Term
-│           │               │       │               │   │                       │   │       │       │           │       │   ├── Signed-factor
-│           │               │       │               │   │                       │   │       │       │           │       │   │   └── Factor
-│           │               │       │               │   │                       │   │       │       │           │       │   │       └── NUM
-│           │               │       │               │   │                       │   │       │       │           │       │   └── G
-│           │               │       │               │   │                       │   │       │       │           │       │       └── ε
-│           │               │       │               │   │                       │   │       │       │           │       └── D
-│           │               │       │               │   │                       │   │       │       │           │           └── ε
-│           │               │       │               │   │                       │   │       │       │           └── C
-│           │               │       │               │   │                       │   │       │       │               └── ε
-│           │               │       │               │   │                       │   │       │       ├── ]
-│           │               │       │               │   │                       │   │       │       └── H
-│           │               │       │               │   │                       │   │       │           ├── =
-│           │               │       │               │   │                       │   │       │           └── Expression
-│           │               │       │               │   │                       │   │       │               ├── ID
-│           │               │       │               │   │                       │   │       │               └── B
-│           │               │       │               │   │                       │   │       │                   └── Simple-expression-prime
-│           │               │       │               │   │                       │   │       │                       ├── Additive-expression-prime
-│           │               │       │               │   │                       │   │       │                       │   ├── Term-prime
-│           │               │       │               │   │                       │   │       │                       │   │   ├── Signed-factor-prime
-│           │               │       │               │   │                       │   │       │                       │   │   │   └── Factor-prime
-│           │               │       │               │   │                       │   │       │                       │   │   │       ├── (
-│           │               │       │               │   │                       │   │       │                       │   │   │       ├── Args
-│           │               │       │               │   │                       │   │       │                       │   │   │       │   └── Arg-list
-│           │               │       │               │   │                       │   │       │                       │   │   │       │       ├── Expression
-│           │               │       │               │   │                       │   │       │                       │   │   │       │       │   ├── ID
-│           │               │       │               │   │                       │   │       │                       │   │   │       │       │   └── B
-│           │               │       │               │   │                       │   │       │                       │   │   │       │       │       └── Simple-expression-prime
-│           │               │       │               │   │                       │   │       │                       │   │   │       │       │           ├── Additive-expression-prime
-│           │               │       │               │   │                       │   │       │                       │   │   │       │       │           │   ├── Term-prime
-│           │               │       │               │   │                       │   │       │                       │   │   │       │       │           │   │   ├── Signed-factor-prime
-│           │               │       │               │   │                       │   │       │                       │   │   │       │       │           │   │   │   └── Factor-prime
-│           │               │       │               │   │                       │   │       │                       │   │   │       │       │           │   │   │       └── ε
-│           │               │       │               │   │                       │   │       │                       │   │   │       │       │           │   │   └── G
-│           │               │       │               │   │                       │   │       │                       │   │   │       │       │           │   │       └── ε
-│           │               │       │               │   │                       │   │       │                       │   │   │       │       │           │   └── D
-│           │               │       │               │   │                       │   │       │                       │   │   │       │       │           │       ├── Addop
-│           │               │       │               │   │                       │   │       │                       │   │   │       │       │           │       │   └── -
-│           │               │       │               │   │                       │   │       │                       │   │   │       │       │           │       ├── Term
-│           │               │       │               │   │                       │   │       │                       │   │   │       │       │           │       │   ├── Signed-factor
-│           │               │       │               │   │                       │   │       │                       │   │   │       │       │           │       │   │   └── Factor
-│           │               │       │               │   │                       │   │       │                       │   │   │       │       │           │       │   │       └── NUM
-│           │               │       │               │   │                       │   │       │                       │   │   │       │       │           │       │   └── G
-│           │               │       │               │   │                       │   │       │                       │   │   │       │       │           │       │       └── ε
-│           │               │       │               │   │                       │   │       │                       │   │   │       │       │           │       └── D
-│           │               │       │               │   │                       │   │       │                       │   │   │       │       │           │           └── ε
-│           │               │       │               │   │                       │   │       │                       │   │   │       │       │           └── C
-│           │               │       │               │   │                       │   │       │                       │   │   │       │       │               └── ε
-│           │               │       │               │   │                       │   │       │                       │   │   │       │       └── Arg-list-prime
-│           │               │       │               │   │                       │   │       │                       │   │   │       │           ├── ,
-│           │               │       │               │   │                       │   │       │                       │   │   │       │           ├── Expression
-│           │               │       │               │   │                       │   │       │                       │   │   │       │           │   ├── ID
-│           │               │       │               │   │                       │   │       │                       │   │   │       │           │   └── B
-│           │               │       │               │   │                       │   │       │                       │   │   │       │           │       └── Simple-expression-prime
-│           │               │       │               │   │                       │   │       │                       │   │   │       │           │           ├── Additive-expression-prime
-│           │               │       │               │   │                       │   │       │                       │   │   │       │           │           │   ├── Term-prime
-│           │               │       │               │   │                       │   │       │                       │   │   │       │           │           │   │   ├── Signed-factor-prime
-│           │               │       │               │   │                       │   │       │                       │   │   │       │           │           │   │   │   └── Factor-prime
-│           │               │       │               │   │                       │   │       │                       │   │   │       │           │           │   │   │       └── ε
-│           │               │       │               │   │                       │   │       │                       │   │   │       │           │           │   │   └── G
-│           │               │       │               │   │                       │   │       │                       │   │   │       │           │           │   │       └── ε
-│           │               │       │               │   │                       │   │       │                       │   │   │       │           │           │   └── D
-│           │               │       │               │   │                       │   │       │                       │   │   │       │           │           │       └── ε
-│           │               │       │               │   │                       │   │       │                       │   │   │       │           │           └── C
-│           │               │       │               │   │                       │   │       │                       │   │   │       │           │               └── ε
-│           │               │       │               │   │                       │   │       │                       │   │   │       │           └── Arg-list-prime
-│           │               │       │               │   │                       │   │       │                       │   │   │       │               └── ε
-│           │               │       │               │   │                       │   │       │                       │   │   │       └── )
-│           │               │       │               │   │                       │   │       │                       │   │   └── G
-│           │               │       │               │   │                       │   │       │                       │   │       └── ε
-│           │               │       │               │   │                       │   │       │                       │   └── D
-│           │               │       │               │   │                       │   │       │                       │       ├── Addop
-│           │               │       │               │   │                       │   │       │                       │       │   └── +
-│           │               │       │               │   │                       │   │       │                       │       ├── Term
-│           │               │       │               │   │                       │   │       │                       │       │   ├── Signed-factor
-│           │               │       │               │   │                       │   │       │                       │       │   │   └── Factor
-│           │               │       │               │   │                       │   │       │                       │       │   │       ├── ID
-│           │               │       │               │   │                       │   │       │                       │       │   │       └── Var-call-prime
-│           │               │       │               │   │                       │   │       │                       │       │   │           ├── (
-│           │               │       │               │   │                       │   │       │                       │       │   │           ├── Args
-│           │               │       │               │   │                       │   │       │                       │       │   │           │   └── Arg-list
-│           │               │       │               │   │                       │   │       │                       │       │   │           │       ├── Expression
-│           │               │       │               │   │                       │   │       │                       │       │   │           │       │   ├── ID
-│           │               │       │               │   │                       │   │       │                       │       │   │           │       │   └── B
-│           │               │       │               │   │                       │   │       │                       │       │   │           │       │       └── Simple-expression-prime
-│           │               │       │               │   │                       │   │       │                       │       │   │           │       │           ├── Additive-expression-prime
-│           │               │       │               │   │                       │   │       │                       │       │   │           │       │           │   ├── Term-prime
-│           │               │       │               │   │                       │   │       │                       │       │   │           │       │           │   │   ├── Signed-factor-prime
-│           │               │       │               │   │                       │   │       │                       │       │   │           │       │           │   │   │   └── Factor-prime
-│           │               │       │               │   │                       │   │       │                       │       │   │           │       │           │   │   │       └── ε
-│           │               │       │               │   │                       │   │       │                       │       │   │           │       │           │   │   └── G
-│           │               │       │               │   │                       │   │       │                       │       │   │           │       │           │   │       └── ε
-│           │               │       │               │   │                       │   │       │                       │       │   │           │       │           │   └── D
-│           │               │       │               │   │                       │   │       │                       │       │   │           │       │           │       ├── Addop
-│           │               │       │               │   │                       │   │       │                       │       │   │           │       │           │       │   └── -
-│           │               │       │               │   │                       │   │       │                       │       │   │           │       │           │       ├── Term
-│           │               │       │               │   │                       │   │       │                       │       │   │           │       │           │       │   ├── Signed-factor
-│           │               │       │               │   │                       │   │       │                       │       │   │           │       │           │       │   │   └── Factor
-│           │               │       │               │   │                       │   │       │                       │       │   │           │       │           │       │   │       └── NUM
-│           │               │       │               │   │                       │   │       │                       │       │   │           │       │           │       │   └── G
-│           │               │       │               │   │                       │   │       │                       │       │   │           │       │           │       │       └── ε
-│           │               │       │               │   │                       │   │       │                       │       │   │           │       │           │       └── D
-│           │               │       │               │   │                       │   │       │                       │       │   │           │       │           │           └── ε
-│           │               │       │               │   │                       │   │       │                       │       │   │           │       │           └── C
-│           │               │       │               │   │                       │   │       │                       │       │   │           │       │               └── ε
-│           │               │       │               │   │                       │   │       │                       │       │   │           │       └── Arg-list-prime
-│           │               │       │               │   │                       │   │       │                       │       │   │           │           ├── ,
-│           │               │       │               │   │                       │   │       │                       │       │   │           │           ├── Expression
-│           │               │       │               │   │                       │   │       │                       │       │   │           │           │   ├── ID
-│           │               │       │               │   │                       │   │       │                       │       │   │           │           │   └── B
-│           │               │       │               │   │                       │   │       │                       │       │   │           │           │       └── Simple-expression-prime
-│           │               │       │               │   │                       │   │       │                       │       │   │           │           │           ├── Additive-expression-prime
-│           │               │       │               │   │                       │   │       │                       │       │   │           │           │           │   ├── Term-prime
-│           │               │       │               │   │                       │   │       │                       │       │   │           │           │           │   │   ├── Signed-factor-prime
-│           │               │       │               │   │                       │   │       │                       │       │   │           │           │           │   │   │   └── Factor-prime
-│           │               │       │               │   │                       │   │       │                       │       │   │           │           │           │   │   │       └── ε
-│           │               │       │               │   │                       │   │       │                       │       │   │           │           │           │   │   └── G
-│           │               │       │               │   │                       │   │       │                       │       │   │           │           │           │   │       └── ε
-│           │               │       │               │   │                       │   │       │                       │       │   │           │           │           │   └── D
-│           │               │       │               │   │                       │   │       │                       │       │   │           │           │           │       └── ε
-│           │               │       │               │   │                       │   │       │                       │       │   │           │           │           └── C
-│           │               │       │               │   │                       │   │       │                       │       │   │           │           │               └── ε
-│           │               │       │               │   │                       │   │       │                       │       │   │           │           └── Arg-list-prime
-│           │               │       │               │   │                       │   │       │                       │       │   │           │               └── ε
-│           │               │       │               │   │                       │   │       │                       │       │   │           └── )
-│           │               │       │               │   │                       │   │       │                       │       │   └── G
-│           │               │       │               │   │                       │   │       │                       │       │       └── ε
-│           │               │       │               │   │                       │   │       │                       │       └── D
-│           │               │       │               │   │                       │   │       │                       │           └── ε
-│           │               │       │               │   │                       │   │       │                       └── C
-│           │               │       │               │   │                       │   │       │                           └── ε
-│           │               │       │               │   │                       │   │       └── ;
-│           │               │       │               │   │                       │   └── Statement-list
-│           │               │       │               │   │                       │       ├── Statement
-│           │               │       │               │   │                       │       │   └── Return-stmt
-│           │               │       │               │   │                       │       │       ├── return
-│           │               │       │               │   │                       │       │       └── Return-stmt-prime
-│           │               │       │               │   │                       │       │           ├── Expression
-│           │               │       │               │   │                       │       │           │   ├── ID
-│           │               │       │               │   │                       │       │           │   └── B
-│           │               │       │               │   │                       │       │           │       ├── [
-│           │               │       │               │   │                       │       │           │       ├── Expression
-│           │               │       │               │   │                       │       │           │       │   ├── ID
-│           │               │       │               │   │                       │       │           │       │   └── B
-│           │               │       │               │   │                       │       │           │       │       └── Simple-expression-prime
-│           │               │       │               │   │                       │       │           │       │           ├── Additive-expression-prime
-│           │               │       │               │   │                       │       │           │       │           │   ├── Term-prime
-│           │               │       │               │   │                       │       │           │       │           │   │   ├── Signed-factor-prime
-│           │               │       │               │   │                       │       │           │       │           │   │   │   └── Factor-prime
-│           │               │       │               │   │                       │       │           │       │           │   │   │       └── ε
-│           │               │       │               │   │                       │       │           │       │           │   │   └── G
-│           │               │       │               │   │                       │       │           │       │           │   │       └── ε
-│           │               │       │               │   │                       │       │           │       │           │   └── D
-│           │               │       │               │   │                       │       │           │       │           │       ├── Addop
-│           │               │       │               │   │                       │       │           │       │           │       │   └── -
-│           │               │       │               │   │                       │       │           │       │           │       ├── Term
-│           │               │       │               │   │                       │       │           │       │           │       │   ├── Signed-factor
-│           │               │       │               │   │                       │       │           │       │           │       │   │   └── Factor
-│           │               │       │               │   │                       │       │           │       │           │       │   │       └── NUM
-│           │               │       │               │   │                       │       │           │       │           │       │   └── G
-│           │               │       │               │   │                       │       │           │       │           │       │       └── ε
-│           │               │       │               │   │                       │       │           │       │           │       └── D
-│           │               │       │               │   │                       │       │           │       │           │           └── ε
-│           │               │       │               │   │                       │       │           │       │           └── C
-│           │               │       │               │   │                       │       │           │       │               └── ε
-│           │               │       │               │   │                       │       │           │       ├── ]
-│           │               │       │               │   │                       │       │           │       └── H
-│           │               │       │               │   │                       │       │           │           ├── G
-│           │               │       │               │   │                       │       │           │           │   └── ε
-│           │               │       │               │   │                       │       │           │           ├── D
-│           │               │       │               │   │                       │       │           │           │   └── ε
-│           │               │       │               │   │                       │       │           │           └── C
-│           │               │       │               │   │                       │       │           │               └── ε
-│           │               │       │               │   │                       │       │           └── ;
-│           │               │       │               │   │                       │       └── Statement-list
-│           │               │       │               │   │                       │           ├── Statement
-│           │               │       │               │   │                       │           │   └── Expression-stmt
-│           │               │       │               │   │                       │           │       └── ;
-│           │               │       │               │   │                       │           └── Statement-list
-│           │               │       │               │   │                       │               └── ε
-│           │               │       │               │   │                       └── }
-│           │               │       │               │   └── Statement-list
-│           │               │       │               │       └── ε
-│           │               │       │               └── }
-│           │               │       └── Statement-list
-│           │               │           └── ε
-│           │               └── }
-│           └── Declaration-list
-│               ├── Declaration
-│               │   ├── Declaration-initial
-│               │   │   ├── Type-specifier
-│               │   │   │   └── void
-│               │   │   └── ID
-│               │   └── Declaration-prime
-│               │       └── Fun-declaration-prime
-│               │           ├── (
-│               │           ├── Params
-│               │           │   ├── void
-│               │           │   └── Param-list-void-abtar
-│               │           │       └── ε
-│               │           ├── )
-│               │           └── Compound-stmt
-│               │               ├── {
-│               │               ├── Declaration-list
-│               │               │   ├── Declaration
-│               │               │   │   ├── Declaration-initial
-│               │               │   │   │   ├── Type-specifier
-│               │               │   │   │   │   └── int
-│               │               │   │   │   └── ID
-│               │               │   │   └── Declaration-prime
-│               │               │   │       └── Var-declaration-prime
-│               │               │   │           └── ;
-│               │               │   └── Declaration-list
-│               │               │       └── ε
-│               │               ├── Statement-list
-│               │               │   ├── Statement
-│               │               │   │   └── Expression-stmt
-│               │               │   │       ├── Expression
-│               │               │   │       │   ├── ID
-│               │               │   │       │   └── B
-│               │               │   │       │       ├── =
-│               │               │   │       │       └── Expression
-│               │               │   │       │           └── Simple-expression-zegond
-│               │               │   │       │               ├── Additive-expression-zegond
-│               │               │   │       │               │   ├── Term-zegond
-│               │               │   │       │               │   │   ├── Signed-factor-zegond
-│               │               │   │       │               │   │   │   └── Factor-zegond
-│               │               │   │       │               │   │   │       └── NUM
-│               │               │   │       │               │   │   └── G
-│               │               │   │       │               │   │       └── ε
-│               │               │   │       │               │   └── D
-│               │               │   │       │               │       └── ε
-│               │               │   │       │               └── C
-│               │               │   │       │                   └── ε
-│               │               │   │       └── ;
-│               │               │   └── Statement-list
-│               │               │       ├── Statement
-│               │               │       │   └── Iteration-stmt
-│               │               │       │       ├── while
-│               │               │       │       ├── (
-│               │               │       │       ├── Expression
-│               │               │       │       │   ├── ID
-│               │               │       │       │   └── B
-│               │               │       │       │       └── Simple-expression-prime
-│               │               │       │       │           ├── Additive-expression-prime
-│               │               │       │       │           │   ├── Term-prime
-│               │               │       │       │           │   │   ├── Signed-factor-prime
-│               │               │       │       │           │   │   │   └── Factor-prime
-│               │               │       │       │           │   │   │       └── ε
-│               │               │       │       │           │   │   └── G
-│               │               │       │       │           │   │       └── ε
-│               │               │       │       │           │   └── D
-│               │               │       │       │           │       └── ε
-│               │               │       │       │           └── C
-│               │               │       │       │               ├── Relop
-│               │               │       │       │               │   └── <
-│               │               │       │       │               └── Additive-expression
-│               │               │       │       │                   ├── Term
-│               │               │       │       │                   │   ├── Signed-factor
-│               │               │       │       │                   │   │   └── Factor
-│               │               │       │       │                   │   │       └── NUM
-│               │               │       │       │                   │   └── G
-│               │               │       │       │                   │       └── ε
-│               │               │       │       │                   └── D
-│               │               │       │       │                       └── ε
-│               │               │       │       ├── )
-│               │               │       │       └── Statement
-│               │               │       │           └── Compound-stmt
-│               │               │       │               ├── {
-│               │               │       │               ├── Declaration-list
-│               │               │       │               │   └── ε
-│               │               │       │               ├── Statement-list
-│               │               │       │               │   ├── Statement
-│               │               │       │               │   │   └── Expression-stmt
-│               │               │       │               │   │       ├── Expression
-│               │               │       │               │   │       │   ├── ID
-│               │               │       │               │   │       │   └── B
-│               │               │       │               │   │       │       ├── [
-│               │               │       │               │   │       │       ├── Expression
-│               │               │       │               │   │       │       │   ├── ID
-│               │               │       │               │   │       │       │   └── B
-│               │               │       │               │   │       │       │       └── Simple-expression-prime
-│               │               │       │               │   │       │       │           ├── Additive-expression-prime
-│               │               │       │               │   │       │       │           │   ├── Term-prime
-│               │               │       │               │   │       │       │           │   │   ├── Signed-factor-prime
-│               │               │       │               │   │       │       │           │   │   │   └── Factor-prime
-│               │               │       │               │   │       │       │           │   │   │       └── ε
-│               │               │       │               │   │       │       │           │   │   └── G
-│               │               │       │               │   │       │       │           │   │       └── ε
-│               │               │       │               │   │       │       │           │   └── D
-│               │               │       │               │   │       │       │           │       └── ε
-│               │               │       │               │   │       │       │           └── C
-│               │               │       │               │   │       │       │               └── ε
-│               │               │       │               │   │       │       ├── ]
-│               │               │       │               │   │       │       └── H
-│               │               │       │               │   │       │           ├── =
-│               │               │       │               │   │       │           └── Expression
-│               │               │       │               │   │       │               └── Simple-expression-zegond
-│               │               │       │               │   │       │                   ├── Additive-expression-zegond
-│               │               │       │               │   │       │                   │   ├── Term-zegond
-│               │               │       │               │   │       │                   │   │   ├── Signed-factor-zegond
-│               │               │       │               │   │       │                   │   │   │   └── Factor-zegond
-│               │               │       │               │   │       │                   │   │   │       └── NUM
-│               │               │       │               │   │       │                   │   │   └── G
-│               │               │       │               │   │       │                   │   │       └── ε
-│               │               │       │               │   │       │                   │   └── D
-│               │               │       │               │   │       │                   │       └── ε
-│               │               │       │               │   │       │                   └── C
-│               │               │       │               │   │       │                       └── ε
-│               │               │       │               │   │       └── ;
-│               │               │       │               │   └── Statement-list
-│               │               │       │               │       ├── Statement
-│               │               │       │               │       │   └── Expression-stmt
-│               │               │       │               │       │       └── ;
-│               │               │       │               │       └── Statement-list
-│               │               │       │               │           ├── Statement
-│               │               │       │               │           │   └── Expression-stmt
-│               │               │       │               │           │       ├── Expression
-│               │               │       │               │           │       │   ├── ID
-│               │               │       │               │           │       │   └── B
-│               │               │       │               │           │       │       ├── =
-│               │               │       │               │           │       │       └── Expression
-│               │               │       │               │           │       │           ├── ID
-│               │               │       │               │           │       │           └── B
-│               │               │       │               │           │       │               └── Simple-expression-prime
-│               │               │       │               │           │       │                   ├── Additive-expression-prime
-│               │               │       │               │           │       │                   │   ├── Term-prime
-│               │               │       │               │           │       │                   │   │   ├── Signed-factor-prime
-│               │               │       │               │           │       │                   │   │   │   └── Factor-prime
-│               │               │       │               │           │       │                   │   │   │       └── ε
-│               │               │       │               │           │       │                   │   │   └── G
-│               │               │       │               │           │       │                   │   │       └── ε
-│               │               │       │               │           │       │                   │   └── D
-│               │               │       │               │           │       │                   │       ├── Addop
-│               │               │       │               │           │       │                   │       │   └── +
-│               │               │       │               │           │       │                   │       ├── Term
-│               │               │       │               │           │       │                   │       │   ├── Signed-factor
-│               │               │       │               │           │       │                   │       │   │   ├── -
-│               │               │       │               │           │       │                   │       │   │   └── Factor
-│               │               │       │               │           │       │                   │       │   │       └── NUM
-│               │               │       │               │           │       │                   │       │   └── G
-│               │               │       │               │           │       │                   │       │       └── ε
-│               │               │       │               │           │       │                   │       └── D
-│               │               │       │               │           │       │                   │           └── ε
-│               │               │       │               │           │       │                   └── C
-│               │               │       │               │           │       │                       └── ε
-│               │               │       │               │           │       └── ;
-│               │               │       │               │           └── Statement-list
-│               │               │       │               │               └── ε
-│               │               │       │               └── }
-│               │               │       └── Statement-list
-│               │               │           ├── Statement
-│               │               │           │   └── Expression-stmt
-│               │               │           │       ├── Expression
-│               │               │           │       │   ├── ID
-│               │               │           │       │   └── B
-│               │               │           │       │       ├── =
-│               │               │           │       │       └── Expression
-│               │               │           │       │           └── Simple-expression-zegond
-│               │               │           │       │               ├── Additive-expression-zegond
-│               │               │           │       │               │   ├── Term-zegond
-│               │               │           │       │               │   │   ├── Signed-factor-zegond
-│               │               │           │       │               │   │   │   └── Factor-zegond
-│               │               │           │       │               │   │   │       └── NUM
-│               │               │           │       │               │   │   └── G
-│               │               │           │       │               │   │       └── ε
-│               │               │           │       │               │   └── D
-│               │               │           │       │               │       └── ε
-│               │               │           │       │               └── C
-│               │               │           │       │                   └── ε
-│               │               │           │       └── ;
-│               │               │           └── Statement-list
-│               │               │               ├── Statement
-│               │               │               │   └── Expression-stmt
-│               │               │               │       ├── Expression
-│               │               │               │       │   ├── ID
-│               │               │               │       │   └── B
-│               │               │               │       │       └── Simple-expression-prime
-│               │               │               │       │           ├── Additive-expression-prime
-│               │               │               │       │           │   ├── Term-prime
-│               │               │               │       │           │   │   ├── Signed-factor-prime
-│               │               │               │       │           │   │   │   └── Factor-prime
-│               │               │               │       │           │   │   │       ├── (
-│               │               │               │       │           │   │   │       ├── Args
-│               │               │               │       │           │   │   │       │   └── Arg-list
-│               │               │               │       │           │   │   │       │       ├── Expression
-│               │               │               │       │           │   │   │       │       │   ├── ID
-│               │               │               │       │           │   │   │       │       │   └── B
-│               │               │               │       │           │   │   │       │       │       └── Simple-expression-prime
-│               │               │               │       │           │   │   │       │       │           ├── Additive-expression-prime
-│               │               │               │       │           │   │   │       │       │           │   ├── Term-prime
-│               │               │               │       │           │   │   │       │       │           │   │   ├── Signed-factor-prime
-│               │               │               │       │           │   │   │       │       │           │   │   │   └── Factor-prime
-│               │               │               │       │           │   │   │       │       │           │   │   │       ├── (
-│               │               │               │       │           │   │   │       │       │           │   │   │       ├── Args
-│               │               │               │       │           │   │   │       │       │           │   │   │       │   └── Arg-list
-│               │               │               │       │           │   │   │       │       │           │   │   │       │       ├── Expression
-│               │               │               │       │           │   │   │       │       │           │   │   │       │       │   └── Simple-expression-zegond
-│               │               │               │       │           │   │   │       │       │           │   │   │       │       │       ├── Additive-expression-zegond
-│               │               │               │       │           │   │   │       │       │           │   │   │       │       │       │   ├── Term-zegond
-│               │               │               │       │           │   │   │       │       │           │   │   │       │       │       │   │   ├── Signed-factor-zegond
-│               │               │               │       │           │   │   │       │       │           │   │   │       │       │       │   │   │   └── Factor-zegond
-│               │               │               │       │           │   │   │       │       │           │   │   │       │       │       │   │   │       └── NUM
-│               │               │               │       │           │   │   │       │       │           │   │   │       │       │       │   │   └── G
-│               │               │               │       │           │   │   │       │       │           │   │   │       │       │       │   │       └── ε
-│               │               │               │       │           │   │   │       │       │           │   │   │       │       │       │   └── D
-│               │               │               │       │           │   │   │       │       │           │   │   │       │       │       │       └── ε
-│               │               │               │       │           │   │   │       │       │           │   │   │       │       │       └── C
-│               │               │               │       │           │   │   │       │       │           │   │   │       │       │           └── ε
-│               │               │               │       │           │   │   │       │       │           │   │   │       │       └── Arg-list-prime
-│               │               │               │       │           │   │   │       │       │           │   │   │       │           ├── ,
-│               │               │               │       │           │   │   │       │       │           │   │   │       │           ├── Expression
-│               │               │               │       │           │   │   │       │       │           │   │   │       │           │   ├── ID
-│               │               │               │       │           │   │   │       │       │           │   │   │       │           │   └── B
-│               │               │               │       │           │   │   │       │       │           │   │   │       │           │       └── Simple-expression-prime
-│               │               │               │       │           │   │   │       │       │           │   │   │       │           │           ├── Additive-expression-prime
-│               │               │               │       │           │   │   │       │       │           │   │   │       │           │           │   ├── Term-prime
-│               │               │               │       │           │   │   │       │       │           │   │   │       │           │           │   │   ├── Signed-factor-prime
-│               │               │               │       │           │   │   │       │       │           │   │   │       │           │           │   │   │   └── Factor-prime
-│               │               │               │       │           │   │   │       │       │           │   │   │       │           │           │   │   │       └── ε
-│               │               │               │       │           │   │   │       │       │           │   │   │       │           │           │   │   └── G
-│               │               │               │       │           │   │   │       │       │           │   │   │       │           │           │   │       └── ε
-│               │               │               │       │           │   │   │       │       │           │   │   │       │           │           │   └── D
-│               │               │               │       │           │   │   │       │       │           │   │   │       │           │           │       └── ε
-│               │               │               │       │           │   │   │       │       │           │   │   │       │           │           └── C
-│               │               │               │       │           │   │   │       │       │           │   │   │       │           │               └── ε
-│               │               │               │       │           │   │   │       │       │           │   │   │       │           └── Arg-list-prime
-│               │               │               │       │           │   │   │       │       │           │   │   │       │               └── ε
-│               │               │               │       │           │   │   │       │       │           │   │   │       └── )
-│               │               │               │       │           │   │   │       │       │           │   │   └── G
-│               │               │               │       │           │   │   │       │       │           │   │       └── ε
-│               │               │               │       │           │   │   │       │       │           │   └── D
-│               │               │               │       │           │   │   │       │       │           │       └── ε
-│               │               │               │       │           │   │   │       │       │           └── C
-│               │               │               │       │           │   │   │       │       │               └── ε
-│               │               │               │       │           │   │   │       │       └── Arg-list-prime
-│               │               │               │       │           │   │   │       │           └── ε
-│               │               │               │       │           │   │   │       └── )
-│               │               │               │       │           │   │   └── G
-│               │               │               │       │           │   │       └── ε
-│               │               │               │       │           │   └── D
-│               │               │               │       │           │       └── ε
-│               │               │               │       │           └── C
-│               │               │               │       │               └── ε
-│               │               │               │       └── ;
-│               │               │               └── Statement-list
-│               │               │                   ├── Statement
-│               │               │                   │   └── Expression-stmt
-│               │               │                   │       ├── Expression
-│               │               │                   │       │   ├── ID
-│               │               │                   │       │   └── B
-│               │               │                   │       │       └── Simple-expression-prime
-│               │               │                   │       │           ├── Additive-expression-prime
-│               │               │                   │       │           │   ├── Term-prime
-│               │               │                   │       │           │   │   ├── Signed-factor-prime
-│               │               │                   │       │           │   │   │   └── Factor-prime
-│               │               │                   │       │           │   │   │       ├── (
-│               │               │                   │       │           │   │   │       ├── Args
-│               │               │                   │       │           │   │   │       │   └── Arg-list
-│               │               │                   │       │           │   │   │       │       ├── Expression
-│               │               │                   │       │           │   │   │       │       │   ├── ID
-│               │               │                   │       │           │   │   │       │       │   └── B
-│               │               │                   │       │           │   │   │       │       │       └── Simple-expression-prime
-│               │               │                   │       │           │   │   │       │       │           ├── Additive-expression-prime
-│               │               │                   │       │           │   │   │       │       │           │   ├── Term-prime
-│               │               │                   │       │           │   │   │       │       │           │   │   ├── Signed-factor-prime
-│               │               │                   │       │           │   │   │       │       │           │   │   │   └── Factor-prime
-│               │               │                   │       │           │   │   │       │       │           │   │   │       └── ε
-│               │               │                   │       │           │   │   │       │       │           │   │   └── G
-│               │               │                   │       │           │   │   │       │       │           │   │       └── ε
-│               │               │                   │       │           │   │   │       │       │           │   └── D
-│               │               │                   │       │           │   │   │       │       │           │       └── ε
-│               │               │                   │       │           │   │   │       │       │           └── C
-│               │               │                   │       │           │   │   │       │       │               └── ε
-│               │               │                   │       │           │   │   │       │       └── Arg-list-prime
-│               │               │                   │       │           │   │   │       │           └── ε
-│               │               │                   │       │           │   │   │       └── )
-│               │               │                   │       │           │   │   └── G
-│               │               │                   │       │           │   │       └── ε
-│               │               │                   │       │           │   └── D
-│               │               │                   │       │           │       └── ε
-│               │               │                   │       │           └── C
-│               │               │                   │       │               └── ε
-│               │               │                   │       └── ;
-│               │               │                   └── Statement-list
-│               │               │                       └── ε
-│               │               └── }
-│               └── Declaration-list
-│                   └── ε
+│       └── ε
 └── $
