@@ -20,7 +20,7 @@ class LL1:
 
         for nt in self.grammer.non_terminals:
             for item in nt.follow:
-                if self.grammer.get_element_by_id("ε") not in nt.first and (nt, item) not in self.p_table:
+                if (nt.name, item.name) not in self.p_table:
                     self.p_table[(nt.name, item.name)] = "synch"
 
     def generate_parse_tree(self):
