@@ -1,0 +1,17 @@
+#2 : syntax error, illegal {
+#3 : syntax error, illegal int
+#3 : syntax error, illegal ;
+#4 : syntax error, illegal int
+#4 : syntax error, illegal ID
+#4 : syntax error, illegal ;
+#5 : syntax error, illegal ID
+#5 : syntax error, illegal =
+#5 : syntax error, illegal NUM
+#5 : syntax error, illegal ;
+#6 : syntax error, illegal ID
+#6 : syntax error, illegal =
+#6 : syntax error, illegal +
+#6 : syntax error, illegal NUM
+#6 : syntax error, illegal ;
+#7 : syntax error, illegal }
+#8 : syntax error, unexpected EOF

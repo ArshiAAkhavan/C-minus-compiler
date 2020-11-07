@@ -1,6 +1,6 @@
 from anytree import RenderTree
 
-from parser import init_grammar
+from parser import init_grammer
 from parser.parser import LL1
 from scanner import tables
 from scanner import actions
@@ -97,17 +97,15 @@ def build_scanner():
     return Scanner(start, BufferReader("input.txt", 30), language)
 
 
-parser = LL1(build_scanner(), init_grammar())
+parser = LL1(build_scanner(), init_grammer())
 root = parser.generate_parse_tree()
-for pre, fill, node in RenderTree(root):
-    print("%s%s" % (pre, node.name))
+parser.export_parse_tree("parse_tree.txt")
 # sc=build_scanner()
 # while sc.can_generate_token():
 #     try:
 #         a=sc.get_next_token()
 #     except Exception as e:
 #         print(e)
-
-tables.get_error_table().export("lexical_errors.txt")
-tables.get_symbol_table().export("symbol_table.txt")
-tables.get_token_table().export("tokens.txt")
+# tables.get_error_table().export("lexical_errors.txt")
+# tables.get_symbol_table().export("symbol_table.txt")
+# tables.get_token_table().export("tokens.txt")

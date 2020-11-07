@@ -1,4 +1,4 @@
-from anytree import Node
+from anytree import Node, RenderTree
 from parser.grammer import Terminal
 from scanner.tokens import TokenType
 
@@ -11,6 +11,7 @@ class LL1:
         self.stack = []
         self.errors = []
         self.create_parse_table()
+        self.root = Node(self.grammer.rules[0].left.name)
 
     def create_parse_table(self):
         for rule in self.grammer.rules:
@@ -19,12 +20,11 @@ class LL1:
 
         for nt in self.grammer.non_terminals:
             for item in nt.follow:
-                if (nt, item) not in self.p_table:
-                    self.p_table[(nt.name, item)] = "synch"
+                if (nt.name, item.name) not in self.p_table:
+                    self.p_table[(nt.name, item.name)] = "synch"
 
     def generate_parse_tree(self):
-        root = Node(self.grammer.rules[0].left.name)
-        self.stack = [root]
+        self.stack = [self.root]
         token = self.get_next_valid_token()
 
         while len(self.stack):
@@ -46,7 +46,7 @@ class LL1:
                     if self.p_table[(grammer_node.name, self.get_token_matcher(token))] == "synch":
                         self.errors.append((self.token_generator.input_provider.get_line_no(), f"missing {grammer_node.name}"))
                         self.stack.pop()
-        return root
+        return self.root
 
     def update_stack(self, grammer_node, key):
         ### should handle epsilon for ε and (ID,lexeme) & (KEYWORD,lexeme) for id,keyword here
@@ -82,3 +82,8 @@ class LL1:
     @staticmethod
     def get_token_matcher(token):
         return (token.lexeme, token.type.name)[token.type in [TokenType.NUM, TokenType.ID]]
+
+    def export_parse_tree(self, path):
+        with open(path, 'w', encoding='utf-8') as f:
+            for pre, fill, node in RenderTree(self.root):
+                f.write("%s%s\n" % (pre, node.name))
