@@ -22,7 +22,8 @@ class LL1:
 
     def get_next_valid_token(self):
         token = self.token_generator.get_next_token()
-        while token.type == TokenType.COMMENT or (token.type == TokenType.WHITE_SPACE and token.lexeme != chr(26)):#EOF
+        while token.type == TokenType.COMMENT or (
+                token.type == TokenType.WHITE_SPACE and token.lexeme != chr(26)):  # EOF
             token = self.token_generator.get_next_token()
         return token
 
@@ -36,7 +37,7 @@ class LL1:
         root = Node(self.grammer.rules[0].left.name)
         self.stack = [root]
         token = self.get_next_valid_token()
-        while len(self.stack) and self.token_generator.can_generate_token():
+        while len(self.stack):
             # todo @ghazal baraye grammer node ye Sm e behtar peyda kon
             grammer_node = self.get_next_valid_grammer_node()
             ### terminal
@@ -44,7 +45,7 @@ class LL1:
                 ### not matching
                 if grammer_node.name != (token.lexeme, token.type.name)[token.type in [TokenType.NUM, TokenType.ID]]:
                     raise Exception(f"expected {grammer_node.name}!")
-                token = self.get_next_valid_token()
+                if len(self.stack): token = self.get_next_valid_token()
             ### none_terminal
             else:
                 ### matching
