@@ -1,0 +1,52 @@
+Program $ int void
+Declaration-list ε int void
+Declaration int void
+Declaration-initial int void
+Declaration-prime ( ; [
+Var-declaration-prime ; [
+Fun-declaration-prime (
+Type-specifier int void
+Params int void
+Param-list-void-abtar ID ε
+Param-list , ε
+Param int void
+Param-prime [ ε
+Compound-stmt {
+Statement-list ε { break ; if while return switch ID + - ( NUM
+Statement { break ; if while return switch ID + - ( NUM
+Expression-stmt break ; ID + - ( NUM
+Selection-stmt if
+Iteration-stmt while
+Return-stmt return
+Return-stmt-prime ; ID + - ( NUM
+Switch-stmt switch
+Case-stmts ε case
+Case-stmt case
+Default-stmt default ε
+Expression ID + - ( NUM
+B = [ ( * + - < == ε
+H = * ε + - < ==
+Simple-expression-zegond + - ( NUM
+Simple-expression-prime ( * + - < == ε
+C ε < ==
+Relop < ==
+Additive-expression + - ( ID NUM
+Additive-expression-prime ( * + - ε
+Additive-expression-zegond + - ( NUM
+D ε + -
+Addop + -
+Term + - ( ID NUM
+Term-prime ( * ε
+Term-zegond + - ( NUM
+G * ε
+Signed-factor + - ( ID NUM
+Signed-factor-prime ( ε
+Signed-factor-zegond + - ( NUM
+Factor ( ID NUM
+Var-call-prime ( [ ε
+Var-prime [ ε
+Factor-prime ( ε
+Factor-zegond ( NUM
+Args ε ID + - ( NUM
+Arg-list ID + - ( NUM
+Arg-list-prime , ε

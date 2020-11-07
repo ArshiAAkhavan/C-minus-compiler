@@ -1,0 +1,52 @@
+Program 
+Declaration-list $ { break ; if while return switch ID + - ( NUM }
+Declaration int void $ { break ; if while return switch ID + - ( NUM }
+Declaration-initial ( ; [ , )
+Declaration-prime int void $ { break ; if while return switch ID + - ( NUM }
+Var-declaration-prime int void $ { break ; if while return switch ID + - ( NUM }
+Fun-declaration-prime int void $ { break ; if while return switch ID + - ( NUM }
+Type-specifier ID
+Params )
+Param-list-void-abtar )
+Param-list )
+Param , )
+Param-prime , )
+Compound-stmt int void $ { break ; if while return switch ID + - ( NUM } else case default
+Statement-list } case default
+Statement { break ; if while return switch ID + - ( NUM } else case default
+Expression-stmt { break ; if while return switch ID + - ( NUM } else case default
+Selection-stmt { break ; if while return switch ID + - ( NUM } else case default
+Iteration-stmt { break ; if while return switch ID + - ( NUM } else case default
+Return-stmt { break ; if while return switch ID + - ( NUM } else case default
+Return-stmt-prime { break ; if while return switch ID + - ( NUM } else case default
+Switch-stmt { break ; if while return switch ID + - ( NUM } else case default
+Case-stmts default }
+Case-stmt case default }
+Default-stmt }
+Expression ; ) ] ,
+B ; ) ] ,
+H ; ) ] ,
+Simple-expression-zegond ; ) ] ,
+Simple-expression-prime ; ) ] ,
+C ; ) ] ,
+Relop + - ( ID NUM
+Additive-expression ; ) ] ,
+Additive-expression-prime < == ; ) ] ,
+Additive-expression-zegond < == ; ) ] ,
+D < == ; ) ] ,
+Addop + - ( ID NUM
+Term + - ; ) < == ] ,
+Term-prime + - < == ; ) ] ,
+Term-zegond + - < == ; ) ] ,
+G + - < == ; ) ] ,
+Signed-factor * + - ; ) < == ] ,
+Signed-factor-prime * + - < == ; ) ] ,
+Signed-factor-zegond * + - < == ; ) ] ,
+Factor * + - ; ) < == ] ,
+Var-call-prime * + - ; ) < == ] ,
+Var-prime * + - ; ) < == ] ,
+Factor-prime * + - < == ; ) ] ,
+Factor-zegond * + - < == ; ) ] ,
+Args )
+Arg-list )
+Arg-list-prime )

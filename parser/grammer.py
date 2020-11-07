@@ -95,31 +95,31 @@ def init_terminals():
 
 
 def init_non_terminals():
-    return [NonTerminal('Program'), NonTerminal('DeclarationList'), NonTerminal('Declaration'),
-            NonTerminal('DeclarationInitial'), NonTerminal('DeclarationPrime'),
-            NonTerminal('VarDeclarationPrime'),
-            NonTerminal('FunDeclarationPrime'), NonTerminal('TypeSpecifier'), NonTerminal('Params'),
-            NonTerminal('ParamListVoidAbtar'), NonTerminal('ParamList'), NonTerminal('Param'),
-            NonTerminal('ParamPrime'), NonTerminal('CompoundStmt'), NonTerminal('StatementList'),
-            NonTerminal('Statement'), NonTerminal('ExpressionStmt'), NonTerminal('SelectionStmt'),
-            NonTerminal('IterationStmt'), NonTerminal('ReturnStmt'), NonTerminal('ReturnStmtPrime'),
-            NonTerminal('SwitchStmt'), NonTerminal('CaseStmts'), NonTerminal('CaseStmt'),
-            NonTerminal('DefaultStmt'), NonTerminal('Expression'), NonTerminal('B'), NonTerminal('H'),
-            NonTerminal('SimpleExpressionZegond'), NonTerminal('SimpleExpressionPrime'), NonTerminal('C'),
-            NonTerminal('Relop'), NonTerminal('AdditiveExpression'), NonTerminal('AdditiveExpressionPrime'),
-            NonTerminal('AdditiveExpressionZegond'), NonTerminal('D'), NonTerminal('Addop'),
-            NonTerminal('Term'), NonTerminal('TermPrime'), NonTerminal('TermZegond'), NonTerminal('G'),
-            NonTerminal('SignedFactor'), NonTerminal('SignedFactorPrime'), NonTerminal('SignedFactorZegond'),
-            NonTerminal('Factor'), NonTerminal('VarCallPrime'), NonTerminal('VarPrime'),
-            NonTerminal('FactorPrime'), NonTerminal('FactorZegond'), NonTerminal('Args'),
-            NonTerminal('ArgList'), NonTerminal('ArgListPrime')]
+    return [NonTerminal('Program'), NonTerminal('Declaration-list'), NonTerminal('Declaration'),
+            NonTerminal('Declaration-initial'), NonTerminal('Declaration-prime'),
+            NonTerminal('Var-declaration-prime'),
+            NonTerminal('Fun-declaration-prime'), NonTerminal('Type-specifier'), NonTerminal('Params'),
+            NonTerminal('Param-list-void-abtar'), NonTerminal('Param-list'), NonTerminal('Param'),
+            NonTerminal('Param-prime'), NonTerminal('Compound-stmt'), NonTerminal('Statement-list'),
+            NonTerminal('Statement'), NonTerminal('Expression-stmt'), NonTerminal('Selection-stmt'),
+            NonTerminal('Iteration-stmt'), NonTerminal('Return-stmt'), NonTerminal('Return-stmt-prime'),
+            NonTerminal('Switch-stmt'), NonTerminal('Case-stmts'), NonTerminal('Case-stmt'),
+            NonTerminal('Default-stmt'), NonTerminal('Expression'), NonTerminal('B'), NonTerminal('H'),
+            NonTerminal('Simple-expression-zegond'), NonTerminal('Simple-expression-prime'), NonTerminal('C'),
+            NonTerminal('Relop'), NonTerminal('Additive-expression'), NonTerminal('Additive-expression-prime'),
+            NonTerminal('Additive-expression-zegond'), NonTerminal('D'), NonTerminal('Addop'),
+            NonTerminal('Term'), NonTerminal('Term-prime'), NonTerminal('Term-zegond'), NonTerminal('G'),
+            NonTerminal('Signed-factor'), NonTerminal('Signed-factor-prime'), NonTerminal('Signed-factor-zegond'),
+            NonTerminal('Factor'), NonTerminal('Var-call-prime'), NonTerminal('Var-prime'),
+            NonTerminal('Factor-prime'), NonTerminal('Factor-zegond'), NonTerminal('Args'),
+            NonTerminal('Arg-list'), NonTerminal('Arg-list-prime')]
 
 
 def init_grammar():
     grammar = Grammer(init_non_terminals(), init_terminals())
-    grammar.import_firsts("parser/data/Firsts.csv")
-    grammar.import_follows("parser/data/Follows.csv")
-    grammar.import_rules("parser/data/grammer.txt")
+    grammar.import_firsts("parser/data/Firsts.txt")
+    grammar.import_follows("parser/data/Follows.txt")
+    grammar.import_rules("parser/data/grammar.txt")
     grammar.import_predict_sets("parser/data/Predicts.csv")
     return grammar
 
