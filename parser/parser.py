@@ -48,6 +48,7 @@ class LL1:
                 if isinstance(self.grammar.get_element_by_id(grammar_node.name), Terminal):  ### terminal
                     if grammar_node.name != self.get_token_matcher(token):  ### not matching
                         self.add_error(grammar_node, "Missing")
+                        self.remove_node(grammar_node)
                     if len(self.stack): token = self.get_next_valid_token()
                 else:  ### none_terminal
                     key = (grammar_node.name, self.get_token_matcher(token))
