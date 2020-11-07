@@ -7,13 +7,16 @@ class Scanner:
         self.input_provider = input_provider
         self.language = language
 
+    def get_line_no(self):
+        return self.input_provider.get_line_no()
+
     def can_generate_token(self):
         return self.input_provider.has_next()
 
     def get_next_token(self):
         state = self.root
         lexeme = ""
-        line_no = self.input_provider.get_line_no()
+        line_no = self.get_line_no()
         while True:
             if isinstance(state, FinalStateNode):
                 if state.should_push_back():

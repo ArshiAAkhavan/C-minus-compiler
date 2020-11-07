@@ -1,6 +1,6 @@
 from anytree import RenderTree
 
-from parser import init_grammer
+from parser import init_grammar
 from parser.parser import LL1
 from scanner import tables
 from scanner import actions
@@ -97,7 +97,7 @@ def build_scanner():
     return Scanner(start, BufferReader("input.txt", 30), language)
 
 
-parser = LL1(build_scanner(), init_grammer())
+parser = LL1(build_scanner(), init_grammar())
 root = parser.generate_parse_tree()
 parser.export_parse_tree("parse_tree.txt")
 # sc=build_scanner()
