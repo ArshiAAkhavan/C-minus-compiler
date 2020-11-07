@@ -1,4 +1,4 @@
-from anytree import Node, RenderTree
+from anytree import Node
 from parser.grammer import Terminal
 from scanner.tokens import TokenType
 
@@ -15,10 +15,44 @@ class LL1:
         for rule in self.grammer.rules:
             for predict in rule.predict_set:
                 self.p_table[(rule.left.name, predict.name)] = [p.name for p in rule.right]
+
         for nt in self.grammer.non_terminals:
             for item in nt.follow:
                 if (nt, item) not in self.p_table:
                     self.p_table[(nt.name, item)] = "synch"
+
+    def generate_parse_tree(self):
+        root = Node(self.grammer.rules[0].left.name)
+        self.stack = [root]
+        token = self.get_next_valid_token()
+
+        while len(self.stack):
+            # todo @ghazal baraye grammer node ye Sm e behtar peyda kon
+            grammer_node = self.get_next_valid_grammer_node()
+            ### terminal
+            if isinstance(self.grammer.get_element_by_id(grammer_node.name), Terminal):
+                ### not matching
+                if grammer_node.name != self.get_token_matcher(token):
+                    raise Exception(f"expected {grammer_node.name}!")
+                if len(self.stack): token = self.get_next_valid_token()
+            ### none_terminal
+            else:
+                key = (grammer_node.name, self.get_token_matcher(token))
+                if key in self.p_table and self.p_table[key] != "synch":
+                    self.update_stack(grammer_node, key)
+                else:
+                    token = self.panic(grammer_node, key, token)
+        return root
+
+    def update_stack(self, grammer_node, key):
+        ### should handle epsilon for ε and (ID,lexeme) & (KEYWORD,lexeme) for id,keyword here
+        self.stack.extend([Node(g, parent=grammer_node) for g in self.p_table[key]][::-1])
+
+    def panic(self, grammer_node, key, token):
+        while key not in self.p_table:
+            token = self.get_next_valid_token()
+            key = (grammer_node.name, self.get_token_matcher(token))
+        return token
 
     def get_next_valid_token(self):
         token = self.token_generator.get_next_token()
@@ -33,32 +67,7 @@ class LL1:
             grammer_node = self.stack.pop()
         return grammer_node
 
-    def generate_parse_tree(self):
-        root = Node(self.grammer.rules[0].left.name)
-        self.stack = [root]
-        token = self.get_next_valid_token()
-        while len(self.stack):
-            # todo @ghazal baraye grammer node ye Sm e behtar peyda kon
-            grammer_node = self.get_next_valid_grammer_node()
-            ### terminal
-            if isinstance(self.grammer.get_element_by_id(grammer_node.name), Terminal):
-                ### not matching
-                if grammer_node.name != (token.lexeme, token.type.name)[token.type in [TokenType.NUM, TokenType.ID]]:
-                    raise Exception(f"expected {grammer_node.name}!")
-                if len(self.stack): token = self.get_next_valid_token()
-            ### none_terminal
-            else:
-                ### matching
-                key = (grammer_node.name, (token.lexeme, token.type.name)[token.type in [TokenType.NUM, TokenType.ID]])
-                if key in self.p_table and self.p_table[key] != "synch":
-                    new_units = [Node(g, parent=grammer_node) for g in self.p_table[key]]
-                    self.stack.extend([n for n in new_units][::-1])
-                ### panicing
-                else:
-                    ### synch
-                    while key not in self.p_table:
-                        token = self.get_next_valid_token()
-                        key = (
-                            grammer_node.name,
-                            (token.lexeme, token.type.name)[token.type in [TokenType.NUM, TokenType.ID]])
-        return root
+    #todo @ghazal in gharare age token NUM ya ID bud, NUM o ID bargardune , dar gheyr e in surat lexeme ro
+    @staticmethod
+    def get_token_matcher(token):
+        return (token.lexeme, token.type.name)[token.type in [TokenType.NUM, TokenType.ID]]
