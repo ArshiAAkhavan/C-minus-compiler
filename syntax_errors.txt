@@ -1,6 +1,1 @@
-#2 : Syntax Error, Illegal {
-#3 : Syntax Error, Illegal int
-#3 : Syntax Error, Missing Param-list-void-abtar
-#3 : Syntax Error, Missing )
-#3 : Syntax Error, Missing Compound-stmt
-#3 : Syntax Error, Missing $
+#2 : Syntax Error, Missing Params

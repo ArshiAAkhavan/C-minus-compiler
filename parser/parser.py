@@ -56,6 +56,10 @@ class LL1:
             key = (grammer_node.name, self.get_token_matcher(token))
 
         self.errors.append((self.token_generator.get_line_no(), f"Missing {grammer_node.name}"))
+        ### removing node from its parent
+        children = list(grammer_node.parent.children)
+        children.remove(grammer_node)
+        grammer_node.parent.children = tuple(children)
         return token
 
     def get_next_valid_token(self):
