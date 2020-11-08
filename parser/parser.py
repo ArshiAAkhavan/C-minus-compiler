@@ -1,5 +1,4 @@
 from anytree import Node, RenderTree, PreOrderIter
-from parser.grammar import Terminal
 from scanner.tokens import TokenType
 
 
@@ -47,7 +46,7 @@ class LL1:
                 # todo @ghazal baraye grammar node ye Sm e behtar peyda kon
                 grammar_node = self.get_next_valid_grammar_node()
                 grammar_node.token = token
-                if isinstance(self.grammar.get_element_by_id(grammar_node.name), Terminal):  ### terminal
+                if self.grammar.is_terminal(grammar_node.name):  ### terminal
                     if grammar_node.name != self.get_token_matcher(token):  ### not matching
                         self.add_error(grammar_node, "missing")
                         self.remove_node(grammar_node)
@@ -113,7 +112,7 @@ class LL1:
         for node in PreOrderIter(self.root):
             if node.name == "ε":
                 node.name = "epsilon"
-            elif node.name != "$" and isinstance(self.grammar.get_element_by_id(node.name), Terminal):
+            elif node.name != "$" and self.grammar.is_terminal(node.name):
                 try:
                     index = node.token.type.name.find("_")
                     token_type = (node.token.type.name[:index], node.token.type.name)[index == -1]

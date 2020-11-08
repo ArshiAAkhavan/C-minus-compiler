@@ -69,8 +69,6 @@ class Grammar:
         with open(path) as f:
             for i, line in enumerate(f.readlines()):
                 predict_set = line.split()
-                #self.rules[i].add_predict(predict_set)
-                # todo: nonetype object has no attribute 'extend'
                 self.predict_sets.append([self.get_element_by_id(e.rstrip()) for e in predict_set[0:]])
                 self.rules[i].predict_set = [self.get_element_by_id(e.rstrip()) for e in predict_set[0:]]
 
