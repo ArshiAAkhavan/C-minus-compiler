@@ -95,7 +95,7 @@ def main():
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
     for i in range(1, number_of_tests + 1, 1):
-        prefix = "tests/Parser/samples/T{}/".format(i)
+        prefix = "tests/parser/samples/T{}/".format(i)
 
         sc = generate_new_scanner(f"{prefix}input.txt")
         parser = LL1(sc, grammer)
