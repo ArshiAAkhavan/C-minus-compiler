@@ -43,8 +43,7 @@ def generate_new_scanner(input_path):
     def comment_regex(start):
         # implementing comments
         comment_start_state = DFANode(actions.error_gen, supports_all_langs=True)  # a
-        special_error_state = FinalStateNode(actions.error_gen, push_back_mode=True,
-                                             supports_all_langs=True)  # for /\n situation
+        a_error = FinalStateNode(actions.error_gen, push_back_mode=True, supports_all_langs=True)
         short_comment_middle_state = DFANode(actions.error_gen, supports_all_langs=True)  # b
         comment_final_state = FinalStateNode(actions.comment_token_gen, push_back_mode=False,
                                              supports_all_langs=True)  # c
@@ -52,7 +51,7 @@ def generate_new_scanner(input_path):
         long_comment_end_state = DFANode(actions.error_gen, supports_all_langs=True)  # e
         start.append(Edge().include("/"), comment_start_state)
         comment_start_state.append(Edge().include("/"), short_comment_middle_state) \
-            .append(Edge().include("*"), long_comment_start_state).append(Edge().include('\n'), special_error_state)
+            .append(Edge().include("*"), long_comment_start_state).append(Edge().exclude('/').exclude('*'), a_error)
         short_comment_middle_state.append(Edge().include('\n'), comment_final_state).append(
             Edge().exclude('\n'), short_comment_middle_state)
         long_comment_start_state.append(Edge().include("*"), long_comment_end_state).append(Edge().exclude("*")

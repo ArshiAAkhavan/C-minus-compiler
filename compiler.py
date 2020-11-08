@@ -1,7 +1,7 @@
 from anytree import RenderTree
 
-from parser import init_grammar
-from parser.parser import LL1
+from Parser import init_grammar
+from Parser.parser import LL1
 from scanner import tables
 from scanner import actions
 from scanner.buffer_reader import BufferReader
@@ -54,15 +54,15 @@ def symbol_regex(start):
 def comment_regex(start):
     # implementing comments
     comment_start_state = DFANode(actions.error_gen, supports_all_langs=True)  # a
-    special_error_state = FinalStateNode(actions.error_gen, push_back_mode=True,
-                                         supports_all_langs=True)  # for /\n situation
+    a_error = FinalStateNode(actions.error_gen, push_back_mode=True, supports_all_langs=True)  # as a has no other
     short_comment_middle_state = DFANode(actions.error_gen, supports_all_langs=True)  # b
-    comment_final_state = FinalStateNode(actions.comment_token_gen, push_back_mode=False, supports_all_langs=True)  # c
+    comment_final_state = FinalStateNode(actions.comment_token_gen, push_back_mode=False,
+                                         supports_all_langs=True)  # c
     long_comment_start_state = DFANode(actions.error_gen, supports_all_langs=True)  # d
     long_comment_end_state = DFANode(actions.error_gen, supports_all_langs=True)  # e
     start.append(Edge().include("/"), comment_start_state)
     comment_start_state.append(Edge().include("/"), short_comment_middle_state) \
-        .append(Edge().include("*"), long_comment_start_state).append(Edge().include('\n'), special_error_state)
+        .append(Edge().include("*"), long_comment_start_state).append(Edge().exclude('/').exclude('*'), a_error)
     short_comment_middle_state.append(Edge().include('\n'), comment_final_state).append(
         Edge().exclude('\n'), short_comment_middle_state)
     long_comment_start_state.append(Edge().include("*"), long_comment_end_state).append(Edge().exclude("*")
@@ -94,7 +94,7 @@ def build_scanner():
         .include(':', '<').include(',').include('(', ')').include('[').include(']').include('{').include('}') \
         .include('+').include('-').include('=') \
         .include('\t', '\r').include(' ').include(chr(26))
-    return Scanner(start, BufferReader("input.txt", 30), language)
+    return Scanner(start, BufferReader("tests/scanner/samples/T15/input.txt", 30), language)
 
 
 # sc=build_scanner()
