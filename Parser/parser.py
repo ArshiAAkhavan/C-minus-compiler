@@ -40,44 +40,43 @@ class LL1:
     def generate_parse_tree(self):
         self.stack = [self.root]
         token = self.get_next_valid_token()
-        grammar_node = None
+        stack_top = None
         try:
             while len(self.stack):
-                # todo @ghazal baraye grammar node ye Sm e behtar peyda kon
-                grammar_node = self.get_next_valid_grammar_node()
-                grammar_node.token = token
-                if self.grammar.is_terminal(grammar_node.name):  ### terminal
-                    if grammar_node.name != self.get_token_matcher(token):  ### not matching
-                        self.add_error(grammar_node, "missing")
-                        self.remove_node(grammar_node)
+                stack_top = self.get_next_valid_stack_top()
+                stack_top.token = token
+                if self.grammar.is_terminal(stack_top.name):  # terminal
+                    if stack_top.name != self.get_token_key(token):  # not matching
+                        self.add_error(stack_top, "missing")
+                        self.remove_top(stack_top)
                     elif len(self.stack):
                         token = self.get_next_valid_token()
-                else:  ### none_terminal
-                    key = (grammar_node.name, self.get_token_matcher(token))
+                else:  # none_terminal
+                    key = (stack_top.name, self.get_token_key(token))
                     if key in self.p_table and self.p_table[key] != "synch":
-                        self.update_stack(grammar_node, key)
+                        self.update_stack(stack_top, key)
                     else:
-                        token = self.panic(grammar_node, key, token)
+                        token = self.panic(stack_top, key, token)
         except NoTokenLeftException:
-            self.remove_node(grammar_node)
-            [self.remove_node(g) for g in self.stack]
+            self.remove_top(stack_top)
+            [self.remove_top(g) for g in self.stack]
 
         return self.root
 
-    def update_stack(self, grammar_node, key):
-        self.stack.extend([Node(g, parent=grammar_node) for g in self.p_table[key]][::-1])
+    def update_stack(self, stack_top, key):
+        self.stack.extend([Node(g, parent=stack_top) for g in self.p_table[key]][::-1])
 
-    def panic(self, grammar_node, key, token):
+    def panic(self, stack_top, key, token):
         while key not in self.p_table:
             self.add_error(token, "illegal")
             token = self.get_next_valid_token()
-            key = (grammar_node.name, self.get_token_matcher(token))
+            key = (stack_top.name, self.get_token_key(token))
         if self.p_table[key] != 'synch':
-            self.update_stack(grammar_node, key)
+            self.update_stack(stack_top, key)
             return token
 
-        self.add_error(grammar_node, "missing")
-        self.remove_node(grammar_node)
+        self.add_error(stack_top, "missing")
+        self.remove_top(stack_top)
         return token
 
     def get_next_valid_token(self):
@@ -89,23 +88,22 @@ class LL1:
         except Exception:
             raise NoTokenLeftException()
 
-    def get_next_valid_grammar_node(self):
-        grammar_node = self.stack.pop()
-        while len(self.stack) and grammar_node.name == "ε":
-            grammar_node = self.stack.pop()
-        return grammar_node
+    def get_next_valid_stack_top(self):
+        stack_top = self.stack.pop()
+        while len(self.stack) and stack_top.name == "ε":
+            stack_top = self.stack.pop()
+        return stack_top
 
-    # todo @ghazal in gharare age token NUM ya ID bud, NUM o ID bargardune , dar gheyr e in surat lexeme ro
     @staticmethod
-    def get_token_matcher(token):
+    def get_token_key(token):
         return (token.lexeme, token.type.name)[token.type in [TokenType.NUM, TokenType.ID]]
 
     @staticmethod
-    def remove_node(grammar_node):
-        if grammar_node.parent:
-            children = list(grammar_node.parent.children)
-            children.remove(grammar_node)
-            grammar_node.parent.children = tuple(children)
+    def remove_top(stack_top):
+        if stack_top.parent:
+            children = list(stack_top.parent.children)
+            children.remove(stack_top)
+            stack_top.parent.children = tuple(children)
 
     def export_parse_tree(self, path):
         for node in PreOrderIter(self.root):
