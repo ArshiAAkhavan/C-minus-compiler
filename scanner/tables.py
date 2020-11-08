@@ -21,15 +21,8 @@ class __ErrorTable:
             file.write("There is no lexical error.")
             return
 
-        current_line_no = -1
         for e in self.lexical_errors:
-            if current_line_no != e.lineno:
-                if current_line_no != -1: file.write("\n")
-                current_line_no = e.lineno
-                file.write(f"{e.lineno}.\t")
-            else:
-                file.write(" ")
-            file.write(f"({e.characters}, {e.error_type})")
+            file.write(f"{e.lineno}.\t({e.characters}, {e.error_type})\n")
         file.close()
 
 

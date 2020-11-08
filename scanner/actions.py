@@ -47,3 +47,4 @@ def error_gen(line_no, lexeme):
     else:
         error = tables.Error(line_no, lexeme, "Invalid input")
         tables.get_error_table().add_lexical_error(error)
+    return Token(TokenType.ERROR, lexeme)

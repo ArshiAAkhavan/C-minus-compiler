@@ -94,7 +94,7 @@ def build_scanner():
         .include(':', '<').include(',').include('(', ')').include('[').include(']').include('{').include('}') \
         .include('+').include('-').include('=') \
         .include('\t', '\r').include(' ').include(chr(26))
-    return Scanner(start, BufferReader("tests/scanner/samples/T15/input.txt", 30), language)
+    return Scanner(start, BufferReader("input.txt", 30), language)
 
 
 # sc=build_scanner()
@@ -109,6 +109,6 @@ root = parser.generate_parse_tree()
 parser.export_parse_tree("parse_tree.txt")
 
 parser.export_syntax_error("syntax_errors.txt")
-tables.get_error_table().export("lexical_errors.txt")
-tables.get_symbol_table().export("symbol_table.txt")
-tables.get_token_table().export("tokens.txt")
+# tables.get_error_table().export("lexical_errors.txt")
+# tables.get_symbol_table().export("symbol_table.txt")
+# tables.get_token_table().export("tokens.txt")

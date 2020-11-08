@@ -83,7 +83,7 @@ class LL1:
     def get_next_valid_token(self):
         try:
             token = self.token_generator.get_next_token()
-            while token.type == TokenType.COMMENT or token.type == TokenType.WHITE_SPACE:
+            while token.type == TokenType.COMMENT or token.type == TokenType.WHITE_SPACE or token.type == TokenType.ERROR:
                 token = self.token_generator.get_next_token()
             return token
         except Exception:
