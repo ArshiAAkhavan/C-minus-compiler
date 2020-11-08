@@ -120,7 +120,3 @@ def init_grammar():
     grammar.import_rules("Parser/data/grammar.txt")
     grammar.import_predict_sets("Parser/data/Predicts.csv")
     return grammar
-
-
-if __name__ == "__main__":
-    g = init_grammar()
