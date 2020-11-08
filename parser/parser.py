@@ -34,9 +34,9 @@ class LL1:
             if error_root.type is TokenType.EOF:
                 self.errors.append((self.token_generator.get_line_no(), f"unexpected {error_root.type.name}"))
             elif error_root.type in [TokenType.NUM, TokenType.ID]:
-                self.errors.append((self.token_generator.get_line_no(), f"illegal {error_root.type.name}"))
+                self.errors.append((self.token_generator.get_line_no(), f"{error_type} {error_root.type.name}"))
             else:
-                self.errors.append((self.token_generator.get_line_no(), f"illegal {error_root.lexeme}"))
+                self.errors.append((self.token_generator.get_line_no(), f"{error_type} {error_root.lexeme}"))
 
     def generate_parse_tree(self):
         self.stack = [self.root]
@@ -51,8 +51,8 @@ class LL1:
                     if grammar_node.name != self.get_token_matcher(token):  ### not matching
                         self.add_error(grammar_node, "missing")
                         self.remove_node(grammar_node)
-                        continue
-                    if len(self.stack): token = self.get_next_valid_token()
+                    elif len(self.stack):
+                        token = self.get_next_valid_token()
                 else:  ### none_terminal
                     key = (grammar_node.name, self.get_token_matcher(token))
                     if key in self.p_table and self.p_table[key] != "synch":
@@ -81,13 +81,6 @@ class LL1:
         self.remove_node(grammar_node)
         return token
 
-    @staticmethod
-    def remove_node(grammar_node):
-        if grammar_node.parent:
-            children = list(grammar_node.parent.children)
-            children.remove(grammar_node)
-            grammar_node.parent.children = tuple(children)
-
     def get_next_valid_token(self):
         try:
             token = self.token_generator.get_next_token()
@@ -95,7 +88,7 @@ class LL1:
                     token.type == TokenType.WHITE_SPACE and token.lexeme != chr(26)):  # EOF
                 token = self.token_generator.get_next_token()
             return token
-        except:
+        except Exception:
             raise NoTokenLeftException()
 
     def get_next_valid_grammar_node(self):
@@ -109,13 +102,18 @@ class LL1:
     def get_token_matcher(token):
         return (token.lexeme, token.type.name)[token.type in [TokenType.NUM, TokenType.ID]]
 
+    @staticmethod
+    def remove_node(grammar_node):
+        if grammar_node.parent:
+            children = list(grammar_node.parent.children)
+            children.remove(grammar_node)
+            grammar_node.parent.children = tuple(children)
+
     def export_parse_tree(self, path):
         for node in PreOrderIter(self.root):
             if node.name == "ε":
                 node.name = "epsilon"
-            elif node.name == "$":
-                pass
-            elif isinstance(self.grammar.get_element_by_id(node.name), Terminal):
+            elif node.name != "$" and isinstance(self.grammar.get_element_by_id(node.name), Terminal):
                 try:
                     index = node.token.type.name.find("_")
                     token_type = (node.token.type.name[:index], node.token.type.name)[index == -1]
