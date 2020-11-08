@@ -83,8 +83,7 @@ class LL1:
     def get_next_valid_token(self):
         try:
             token = self.token_generator.get_next_token()
-            while token.type == TokenType.COMMENT or (
-                    token.type == TokenType.WHITE_SPACE and token.lexeme != chr(26)):  # EOF
+            while token.type == TokenType.COMMENT or token.type == TokenType.WHITE_SPACE:
                 token = self.token_generator.get_next_token()
             return token
         except Exception:
@@ -92,7 +91,7 @@ class LL1:
 
     def get_next_valid_grammar_node(self):
         grammar_node = self.stack.pop()
-        while grammar_node.name == "ε":
+        while len(self.stack) and grammar_node.name == "ε":
             grammar_node = self.stack.pop()
         return grammar_node
 
@@ -120,7 +119,7 @@ class LL1:
                 except:
                     pass
         with open(path, 'w', encoding='utf-8') as f:
-            for pre, fill, node in RenderTree(self.root):
+            for pre, _, node in RenderTree(self.root):
                 f.write("%s%s\n" % (pre, node.name))
 
     def export_syntax_error(self, path):
