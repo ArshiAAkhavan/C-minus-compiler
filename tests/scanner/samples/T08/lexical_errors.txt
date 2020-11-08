@@ -1,2 +1,3 @@
 4.	(1g, Invalid number)
-7.	(out$, Invalid input) (put£, Invalid input)
+7.	(out$, Invalid input)
+7.  (put£, Invalid input)
