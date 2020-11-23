@@ -14,7 +14,7 @@ SYMBOL | ; : , [ ] ( ) { } + - * = < ==
 COMMENT | Any string between a /* and a */ OR any string after a // and before a \n or EOF
 WHITESPACE | blank (ASCII 32), \n (ASCII 10), \r (ASCII 13), \t (ASCII 9), \v (ASCII 11), \f (ASCII 12)
 
-The grammar that this compiler can parse is in [grammar.txt](https://github.com/ArshiAAkhavan/C-minus-compiler/blob/master/Parser/data/grammar.txt).
+The grammar that this compiler uses is in [grammar.txt](https://github.com/ArshiAAkhavan/C-minus-compiler/blob/master/Parser/data/grammar.txt).
 
 ## First Phase : Scanner
 Scanner is the part of the compiler that reads the input file character by character and recognizes tokens.
