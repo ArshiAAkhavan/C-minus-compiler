@@ -154,7 +154,7 @@ Predicts.txt:
 
 id
 ```
-
+You can calculate the first, follow and predic sets of your grammar using [this tool](https://mikedevice.github.io/first-follow/).
 You also have to modify the [init_terminals](https://github.com/ArshiAAkhavan/C-minus-compiler/blob/master/Parser/grammar.py#L87) and [init_non_terminals](https://github.com/ArshiAAkhavan/C-minus-compiler/blob/master/Parser/grammar.py#L95) as shown bellow:
 
 ```python
