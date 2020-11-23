@@ -129,7 +129,7 @@ comment_start_state = DFANode(actions.error_gen,supports_all_langs=True)
 ### Parser
 This project is an LL1 parser so you can use this project if you have an LL1 grammar. First you should modify the [init_terminals](https://github.com/ArshiAAkhavan/C-minus-compiler/blob/master/Parser/grammar.py#L87) and [init_non_terminals](https://github.com/ArshiAAkhavan/C-minus-compiler/blob/master/Parser/grammar.py#L95) to containt the elements of your grammar. Then you have to replace the 4 files containing Firsts, Follows, Rules and predic sets in [data folder](https://github.com/ArshiAAkhavan/C-minus-compiler/tree/master/Parser/data). Please note the current formatting of the files or if you want to use a different format modify the import functions starting from [here](https://github.com/ArshiAAkhavan/C-minus-compiler/blob/master/Parser/grammar.py#L42) to make sure they work correctly.
 
-The parser will also work if you do not provide the first sets as well but make sure to remove [this line](https://github.com/ArshiAAkhavan/C-minus-compiler/blob/master/Parser/grammar.py#L118).
+The parser will work if you do not provide the first sets as well but make sure to remove [this line](https://github.com/ArshiAAkhavan/C-minus-compiler/blob/master/Parser/grammar.py#L118).
 
 Here is a simple example:
 
