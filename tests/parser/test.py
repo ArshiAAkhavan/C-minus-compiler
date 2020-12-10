@@ -1,4 +1,4 @@
-from scanner import tables
+from tables import tables
 from scanner import actions
 from scanner.buffer_reader import BufferReader
 from scanner.scanner import Scanner

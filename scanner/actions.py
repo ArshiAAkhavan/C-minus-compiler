@@ -1,5 +1,5 @@
 from scanner.tokens import Token, TokenType
-from scanner import tables
+from tables import tables
 
 
 def num_token_gen(line_no, lexeme):
