@@ -104,9 +104,9 @@ def build_scanner():
 
 parser = LL1(build_scanner(), init_grammar())
 root = parser.generate_parse_tree()
-parser.export_parse_tree("partse_tree.txt")
+parser.export_parse_tree("parse_tree.txt")
 
 parser.export_syntax_error("syntax_errors.txt")
 tables.get_error_table().export("lexical_errors.txt")
-tables.get_symbol_table().export("symbol_table.txt")
+# tables.get_symbol_table().export("symbol_table.txt")
 tables.get_token_table().export("tokens.txt")

@@ -11,12 +11,12 @@ class Scope:
 
     def append(self, token, force=False):
         if force:
-            return self.append(token)
+            return self.__append(token)
         id_record = self.get_IDrecord(token.lexeme)
         if id_record:
             return id_record
         else:
-            return self.parent.get_IDrecord(token.lexeme)
+            return self.__append(token)
 
     def __append(self, token):
         id_record = IDRecord(token, None, None, None, self)
@@ -26,7 +26,9 @@ class Scope:
     def get_IDrecord(self, lexeme):
         for record in self.stack:
             if record.token.lexeme == lexeme:
-                return lexeme
+                return record
+        if self.parent:
+            return self.parent.get_IDrecord(lexeme)
         return None
 
 
@@ -35,6 +37,7 @@ class __SymbolTable:
 
     def __init__(self):
         self.scopes = []
+        self.ids=[]
         self.scopes.append(Scope())
 
     def new_scope(self):
@@ -47,9 +50,10 @@ class __SymbolTable:
         return self.scopes[-1]
 
     def add_symbol(self, token, is_declaration=False):
+        print("taskali")
         if token.lexeme in self.keyword:
             return Token(TokenType.KEYWORD, token.lexeme)
-
+        # elif token.lexeme not in self.ids: self.ids.append(token.lexeme)
         self.get_current_scope().append(token, is_declaration)
         return token
 
