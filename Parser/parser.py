@@ -51,14 +51,14 @@ class LL1:
         try:
             while len(self.stack):
                 statement = self.get_next_valid_statement()
+                statement.token = token
 
                 # code generation
                 if statement.name.startswith("#"):
-                    self.code_gen.call(statement.name)
+                    self.code_gen.call(statement.name,statement.token)
                     self.remove_statement(statement)
                     continue
 
-                statement.token = token
                 if self.grammar.is_terminal(statement.name):  # terminal
                     if statement.name != self.get_token_key(token):  # not matching
                         self.add_error(statement, "missing")
