@@ -19,6 +19,11 @@ class NonTerminal:
         return s
 
 
+class Action:
+    def __init__(self, name):
+        self.name = name
+
+
 class Rule:
     def __init__(self, left, right, predict_set=None):
         self.left = left
@@ -77,6 +82,7 @@ class Grammar:
             if nt.name == name: return nt
         for t in self.terminals:
             if t.name == name: return t
+        return Action(name)
 
     def is_terminal(self, name):
         for t in self.terminals:
