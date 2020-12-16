@@ -1,5 +1,6 @@
 from Parser import init_grammar
 from Parser.parser import LL1
+from code_gen import CodeGen
 from tables import tables
 from scanner import actions
 from scanner.buffer_reader import BufferReader
@@ -102,7 +103,7 @@ def build_scanner():
 #     except Exception as e:
 #         print(e)
 
-parser = LL1(build_scanner(), init_grammar())
+parser = LL1(build_scanner(), init_grammar(), CodeGen())
 root = parser.generate_parse_tree()
 parser.export_parse_tree("parse_tree.txt")
 

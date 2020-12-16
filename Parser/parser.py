@@ -9,10 +9,10 @@ class NoTokenLeftException(Exception):
 
 
 class LL1:
-    def __init__(self, token_generator, grammar):
+    def __init__(self, token_generator, grammar,code_generator):
         self.token_generator = token_generator
         self.grammar = grammar
-        self.CodeGen = CodeGen()
+        self.code_gen = code_generator
         self.p_table = {}
         self.stack = []
         self.errors = []
@@ -54,7 +54,7 @@ class LL1:
                 statement = self.get_next_valid_statement()
                 statement.token = token
                 if statement.name.startswith("#"):
-                    self.CodeGen.call(statement.name)
+                    self.code_gen.call(statement.name)
                 elif self.grammar.is_terminal(statement.name):  # terminal
                     if statement.name != self.get_token_key(token):  # not matching
                         self.add_error(statement, "missing")

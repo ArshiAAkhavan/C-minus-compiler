@@ -1,3 +1,4 @@
+from code_gen import CodeGen
 from tables import tables
 from scanner import actions
 from scanner.buffer_reader import BufferReader
@@ -98,7 +99,7 @@ def main():
         prefix = "tests/parser/samples/T{}/".format(i)
 
         sc = generate_new_scanner(f"{prefix}input.txt")
-        parser = LL1(sc, grammer)
+        parser = LL1(sc, grammer,CodeGen())
 
         tables.get_token_table().tokens = []
         tables.get_symbol_table().ids = []
