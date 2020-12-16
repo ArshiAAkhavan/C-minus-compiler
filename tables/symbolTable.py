@@ -49,9 +49,12 @@ class __SymbolTable:
     def add_symbol(self, token, is_declaration=False):
         if token.lexeme in self.keyword:
             return Token(TokenType.KEYWORD, token.lexeme)
-        elif token.lexeme not in self.ids:
-            self.ids.append(token.lexeme)
+
+        self.get_current_scope().append(token, is_declaration)
         return token
+
+    def fetch(self, lexeme):
+        return self.get_current_scope().get_IDrecord(lexeme)
 
     def __str__(self):
         s = ""
