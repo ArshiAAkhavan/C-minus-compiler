@@ -50,7 +50,6 @@ class __SymbolTable:
         return self.scopes[-1]
 
     def add_symbol(self, token, is_declaration=False):
-        print("taskali")
         if token.lexeme in self.keyword:
             return Token(TokenType.KEYWORD, token.lexeme)
         # elif token.lexeme not in self.ids: self.ids.append(token.lexeme)
