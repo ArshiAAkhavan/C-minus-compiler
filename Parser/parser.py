@@ -1,6 +1,5 @@
 from anytree import Node, RenderTree, PreOrderIter
 
-from code_gen import CodeGen
 from scanner.tokens import TokenType
 
 
@@ -9,7 +8,7 @@ class NoTokenLeftException(Exception):
 
 
 class LL1:
-    def __init__(self, token_generator, grammar,code_generator):
+    def __init__(self, token_generator, grammar, code_generator):
         self.token_generator = token_generator
         self.grammar = grammar
         self.code_gen = code_generator
@@ -52,10 +51,15 @@ class LL1:
         try:
             while len(self.stack):
                 statement = self.get_next_valid_statement()
-                statement.token = token
+
+                # code generation
                 if statement.name.startswith("#"):
                     self.code_gen.call(statement.name)
-                elif self.grammar.is_terminal(statement.name):  # terminal
+                    self.remove_statement(statement)
+                    continue
+
+                statement.token = token
+                if self.grammar.is_terminal(statement.name):  # terminal
                     if statement.name != self.get_token_key(token):  # not matching
                         self.add_error(statement, "missing")
                         self.remove_statement(statement)

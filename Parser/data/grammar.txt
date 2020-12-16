@@ -6,7 +6,7 @@ Declaration-initial -> Type-specifier ID
 Declaration-prime -> Fun-declaration-prime
 Declaration-prime -> Var-declaration-prime
 Var-declaration-prime -> ;
-Var-declaration-prime -> [ NUM ] ;
+Var-declaration-prime -> [ #pnum NUM ] ;
 Fun-declaration-prime -> ( Params ) Compound-stmt
 Type-specifier -> int
 Type-specifier -> void
@@ -39,7 +39,7 @@ Return-stmt-prime -> Expression ;
 Switch-stmt -> switch ( Expression ) { Case-stmts Default-stmt }
 Case-stmts -> Case-stmt Case-stmts
 Case-stmts -> ε
-Case-stmt -> case NUM : Statement-list
+Case-stmt -> case #pnum NUM : Statement-list
 Default-stmt -> default : Statement-list
 Default-stmt -> ε
 Expression -> Simple-expression-zegond
@@ -76,7 +76,7 @@ Signed-factor-zegond -> - Factor
 Signed-factor-zegond -> Factor-zegond
 Factor -> ( Expression )
 Factor -> ID Var-call-prime
-Factor -> NUM
+Factor -> #pnum NUM
 Var-call-prime -> ( Args )
 Var-call-prime -> Var-prime
 Var-prime -> [ Expression ]
@@ -84,7 +84,7 @@ Var-prime -> ε
 Factor-prime -> ( Args )
 Factor-prime -> ε
 Factor-zegond -> ( Expression )
-Factor-zegond -> NUM
+Factor-zegond -> #pnum NUM
 Args -> Arg-list
 Args -> ε
 Arg-list -> Expression Arg-list-prime
