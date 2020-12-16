@@ -14,6 +14,23 @@ class __SymbolTable:
             self.ids.append(token.lexeme)
         return token
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     def __str__(self):
         s = ""
         for i, t in enumerate(self.keyword + self.ids):
