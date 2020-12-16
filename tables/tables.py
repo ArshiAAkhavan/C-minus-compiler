@@ -1,4 +1,3 @@
-# from tables import symbolTable.SymbolTable
 from tables.symbolTable import __SymbolTable
 
 
