@@ -3,12 +3,13 @@ from scanner.tokens import Token, TokenType
 
 IDRecord = namedtuple('IDRecord', 'token element_type no_args type scope')
 
-class ScopeStack:
-    def __init__(self,parent=None):
-        self.stack=[]
-        self.parent=parent
 
-    def append(self,token,force=False):
+class Scope:
+    def __init__(self, parent=None):
+        self.stack = []
+        self.parent = parent
+
+    def append(self, token, force=False):
         if force:
             return self.append(token)
         id_record = self.get_IDrecord(token.lexeme)
@@ -17,8 +18,8 @@ class ScopeStack:
         else:
             return self.parent.get_IDrecord(token.lexeme)
 
-    def __append(self,token):
-        id_record=IDRecord(token,None,None,None,self)
+    def __append(self, token):
+        id_record = IDRecord(token, None, None, None, self)
         self.stack.append(id_record)
         return id_record
 
@@ -28,33 +29,22 @@ class ScopeStack:
                 return lexeme
         return None
 
+
 class __SymbolTable:
     keyword = ["if", "else", "void", "int", "while", "break", "switch", "default", "case", "return"]
 
     def __init__(self):
         self.scopes = []
-        self.scopes.append(ScopeStack())
+        self.scopes.append(Scope())
 
-    def new_scope_stack(self):
-        self.scopes.append(ScopeStack(self.scopes[-1]))
+    def new_scope(self):
+        self.scopes.append(Scope(self.scopes[-1]))
+
+    def remove_scope(self):
+        self.scopes.pop()
 
     def get_current_scope(self):
         return self.scopes[-1]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     def add_symbol(self, token, is_declaration=False):
         if token.lexeme in self.keyword:
