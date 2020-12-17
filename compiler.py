@@ -106,6 +106,7 @@ def build_scanner():
 parser = LL1(build_scanner(), init_grammar(), CodeGen())
 root = parser.generate_parse_tree()
 parser.export_parse_tree("parse_tree.txt")
+parser.code_gen.export("output.txt")
 
 parser.export_syntax_error("syntax_errors.txt")
 tables.get_error_table().export("lexical_errors.txt")

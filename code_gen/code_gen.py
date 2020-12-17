@@ -5,7 +5,7 @@ class CodeGen:
     def __init__(self, data_address=100, temp_address=500):
         self.program_block = []
         self.semantic_stack = []
-        self.routines = {"#pnum": self.pnum}
+        self.routines = {"#pnum": self.pnum, "#declare_id": self.declare_id}
         self.data_address = data_address
         self.temp_address = temp_address
 

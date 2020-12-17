@@ -1,7 +1,20 @@
 from collections import namedtuple
 from scanner.tokens import Token, TokenType
 
-IDRecord = namedtuple('IDRecord', 'token element_type no_args type scope address')
+
+# IDRecord = namedtuple('IDRecord', 'token element_type no_args type scope address')
+# todo      i needed IDRecord to be mutable so i coudlnt used namedTuple but we can alternate that with RecordClass
+# todo      since in this project we can not use any external library then i am forced to use class instead
+# todo      currect implementation: from recordclass import recordclass
+#                                   IDRecord = recordclass('IDRecord', 'token element_type no_args type scope address')
+class IDRecord:
+    def __init__(self, token=None, element_type=None, no_args=None, id_type=None, scope=None, address=None):
+        self.token = token
+        self.element_type = element_type
+        self.no_args = no_args
+        self.id_type = id_type
+        self.scope = scope
+        self.address = address
 
 
 class Scope:
