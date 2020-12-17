@@ -21,7 +21,6 @@ class CodeGen:
                          "#assign": self.assign,
                          "#opp_push": self.op_push,
                          "#opp_exec": self.op_exec,
-                         "#sub": self.sub,
                          }
 
     def call(self, routine, token=None):
