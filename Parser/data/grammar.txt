@@ -2,7 +2,7 @@ Program -> Declaration-list $
 Declaration-list -> Declaration Declaration-list
 Declaration-list -> ε
 Declaration -> Declaration-initial Declaration-prime
-Declaration-initial -> Type-specifier ID
+Declaration-initial -> Type-specifier #declare_id ID
 Declaration-prime -> Fun-declaration-prime
 Declaration-prime -> Var-declaration-prime
 Var-declaration-prime -> ;

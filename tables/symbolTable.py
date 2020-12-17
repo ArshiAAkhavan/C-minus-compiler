@@ -1,7 +1,7 @@
 from collections import namedtuple
 from scanner.tokens import Token, TokenType
 
-IDRecord = namedtuple('IDRecord', 'token element_type no_args type scope')
+IDRecord = namedtuple('IDRecord', 'token element_type no_args type scope address')
 
 
 class Scope:
@@ -19,7 +19,7 @@ class Scope:
             return self.__append(token)
 
     def __append(self, token):
-        id_record = IDRecord(token, None, None, None, self)
+        id_record = IDRecord(token, None, None, None, self, None)
         self.stack.append(id_record)
         return id_record
 
@@ -37,7 +37,7 @@ class __SymbolTable:
 
     def __init__(self):
         self.scopes = []
-        self.ids=[]
+        self.ids = []
         self.scopes.append(Scope())
 
     def new_scope(self):
