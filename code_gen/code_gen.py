@@ -1,16 +1,19 @@
 from tables import tables
 from collections import namedtuple
 
-MidLangDefaults = namedtuple('MidLangDefaults', 'WORD_SIZE')
-MID_LANG = MidLangDefaults(4)
+MidLangDefaults = namedtuple('MidLangDefaults', 'WORD_SIZE DATA_ADDRESS TEMP_ADDRESS')
+MID_LANG = MidLangDefaults(4, 500, 1000)
 
 
 class CodeGen:
-    def __init__(self, data_address=100, temp_address=500):
+    def __init__(self, mid_lang_defaults=MID_LANG):
         self.program_block = []
         self.semantic_stack = []
-        self.data_address = data_address
-        self.temp_address = temp_address
+
+        self.MLD = mid_lang_defaults
+        self.data_address = self.MLD.DATA_ADDRESS
+        self.temp_address = self.MLD.TEMP_ADDRESS
+
         self.routines = {"#pnum": self.pnum,
                          "#pid": self.pid,
                          "#declare_id": self.declare_id,
@@ -37,16 +40,27 @@ class CodeGen:
     def pid(self, token):
         self.semantic_stack.append(self.find_var(token.lexeme).address)
 
+    def __operation(self, operand):
+        result = self.get_temp_var()
+        self.program_block.append(f"({operand}, {self.semantic_stack.pop()}, {self.semantic_stack.pop()}, {result})")
+        self.semantic_stack.append(result)
+
     def mul(self, token):
-        self.program_block.append(f"")
+        self.__operation("MULT")
+
+    def add(self, token):
+        self.__operation("ADD")
+
+    def sub(self, token):
+        self.__operation("SUB")
 
     def get_temp_var(self):
-        self.temp_address += MID_LANG.WORD_SIZE
-        return self.temp_address - MID_LANG.WORD_SIZE
+        self.temp_address += self.MLD.WORD_SIZE
+        return self.temp_address - self.MLD.WORD_SIZE
 
     def get_data_var(self):
-        self.data_address += MID_LANG.WORD_SIZE
-        return self.data_address - MID_LANG.WORD_SIZE
+        self.data_address += self.MLD.WORD_SIZE
+        return self.data_address - self.MLD.WORD_SIZE
 
     @staticmethod
     def find_var(id):
