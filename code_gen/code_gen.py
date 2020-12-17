@@ -24,6 +24,10 @@ class CodeGen:
                          "#op_push": self.op_push,
                          "#op_exec": self.op_exec,
                          "#pop": self.pop,
+                         "#hold": self.hold,
+                         "#label": self.label,
+                         "#check": self.check,
+                         "#prison_break": self.prison_break,
                          }
 
     def call(self, routine, token=None):
@@ -76,6 +80,10 @@ class CodeGen:
     def get_data_var(self, chunk_size=1):
         self.data_address += self.MLD.WORD_SIZE * chunk_size
         return self.data_address - self.MLD.WORD_SIZE * chunk_size
+
+    def hold(self, token):
+        self.semantic_stack.append(len(self.program_block))
+        self.program_block.append("(new you see me!)")
 
     def pop(self, token):
         self.semantic_stack.pop()
