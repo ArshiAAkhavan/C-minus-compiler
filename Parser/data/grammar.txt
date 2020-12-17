@@ -28,14 +28,14 @@ Statement -> Selection-stmt
 Statement -> Iteration-stmt
 Statement -> Return-stmt
 Statement -> Switch-stmt
-Expression-stmt -> Expression ;
+Expression-stmt -> Expression #pop ;
 Expression-stmt -> break ;
 Expression-stmt -> ;
 Selection-stmt -> if ( Expression ) Statement else Statement
 Iteration-stmt -> while ( Expression ) Statement
 Return-stmt -> return Return-stmt-prime
 Return-stmt-prime -> ;
-Return-stmt-prime -> Expression ;
+Return-stmt-prime -> Expression #pop ;
 Switch-stmt -> switch ( Expression ) { Case-stmts Default-stmt }
 Case-stmts -> Case-stmt Case-stmts
 Case-stmts -> ε

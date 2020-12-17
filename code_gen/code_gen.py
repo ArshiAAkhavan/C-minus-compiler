@@ -23,6 +23,7 @@ class CodeGen:
                          "#assign": self.assign,
                          "#opp_push": self.op_push,
                          "#opp_exec": self.op_exec,
+                         "#pop": self.pop,
                          }
 
     def call(self, routine, token=None):
@@ -51,7 +52,7 @@ class CodeGen:
         self.program_block.append(f"(ASSIGN, #0, {id_record.address}, )")
 
     def assign(self, token):
-        self.program_block.append(f"(ASSIGN, {self.semantic_stack.pop()}, {self.semantic_stack.pop()}, )")
+        self.program_block.append(f"(ASSIGN, {self.semantic_stack.pop()}, {self.semantic_stack[-1]}, )")
 
     def pid(self, token):
         self.semantic_stack.append(self.find_var(token.lexeme).address)
@@ -76,6 +77,9 @@ class CodeGen:
     def get_data_var(self, chunk_size=1):
         self.data_address += self.MLD.WORD_SIZE * chunk_size
         return self.data_address - self.MLD.WORD_SIZE * chunk_size
+
+    def pop(self, token):
+        self.semantic_stack.pop()
 
     @staticmethod
     def find_var(id):
