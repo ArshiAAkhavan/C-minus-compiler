@@ -70,6 +70,7 @@ class CodeGen:
         self.semantic_stack.append(result)
 
     operands = {'+': 'ADD', '-': 'SUB', '*': 'MULT', '<': 'LT', '==': 'EQ'}
+
     def op_push(self, token):
         self.semantic_stack.append(self.operands[token.lexeme])
 
@@ -87,6 +88,11 @@ class CodeGen:
 
     def label(self, token=None):
         self.semantic_stack.append(len(self.program_block))
+
+    def prison_break(self, token=None):
+        prison = self.semantic_stack.pop()
+        break_address = len(self.program_block)
+        self.program_block[prison] = f"(JP, {break_address}, , )"
 
     def pop(self, token=None):
         self.semantic_stack.pop()
