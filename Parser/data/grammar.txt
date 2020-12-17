@@ -51,21 +51,21 @@ H -> = Expression #assign
 H -> G D C
 Simple-expression-zegond -> Additive-expression-zegond C
 Simple-expression-prime -> Additive-expression-prime C
-C -> Relop Additive-expression
+C -> Relop Additive-expression #op_exec
 C -> ε
-Relop -> <
-Relop -> ==
+Relop -> #op_push <
+Relop -> #op_push ==
 Additive-expression -> Term D
 Additive-expression-prime -> Term-prime D
 Additive-expression-zegond -> Term-zegond D
-D -> Addop Term #opp_exec D
+D -> Addop Term #op_exec D
 D -> ε
-Addop -> #opp_push +
-Addop -> #opp_push -
+Addop -> #op_push +
+Addop -> #op_push -
 Term -> Signed-factor G
 Term-prime -> Signed-factor-prime G
 Term-zegond -> Signed-factor-zegond G
-G -> #opp_push * Signed-factor #opp_exec G
+G -> #op_push * Signed-factor #op_exec G
 G -> ε
 Signed-factor -> + Factor 
 Signed-factor -> - Factor 

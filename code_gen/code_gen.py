@@ -21,8 +21,8 @@ class CodeGen:
                          "#declare_id": self.declare_id,
                          "#declare_arr": self.declare_arr,
                          "#assign": self.assign,
-                         "#opp_push": self.op_push,
-                         "#opp_exec": self.op_exec,
+                         "#op_push": self.op_push,
+                         "#op_exec": self.op_exec,
                          "#pop": self.pop,
                          }
 
@@ -65,8 +65,7 @@ class CodeGen:
         self.program_block.append(f"({operand}, {first}, {second}, {result})")
         self.semantic_stack.append(result)
 
-    operands = {'+': 'ADD', '-': 'SUB', '*': 'MULT'}
-
+    operands = {'+': 'ADD', '-': 'SUB', '*': 'MULT', '<': 'LT', '==': 'EQ'}
     def op_push(self, token):
         self.semantic_stack.append(self.operands[token.lexeme])
 
