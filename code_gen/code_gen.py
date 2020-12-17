@@ -5,9 +5,13 @@ class CodeGen:
     def __init__(self, data_address=100, temp_address=500):
         self.program_block = []
         self.semantic_stack = []
-        self.routines = {"#pnum": self.pnum, "#declare_id": self.declare_id}
         self.data_address = data_address
         self.temp_address = temp_address
+        self.routines = {"#pnum":       self.pnum,
+                         "#pid":        self.pid,
+                         "#declare_id": self.declare_id,
+                         "#assign": self.assign,
+                         }
 
     def call(self, name, token=None):
         self.routines[name](token)
@@ -23,8 +27,8 @@ class CodeGen:
     def assign(self, token):
         self.program_block.append(f"(ASSIGN, {self.semantic_stack.pop()}, {self.semantic_stack.pop()}, )")
 
-    def pid(self, toke):
-        self.semantic_stack.append()
+    def pid(self, token):
+        self.semantic_stack.append(self.find_var(token.lexeme).address)
 
     def get_temp_var(self):
         self.temp_address += 1

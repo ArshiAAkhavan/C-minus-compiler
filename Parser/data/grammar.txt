@@ -43,11 +43,11 @@ Case-stmt -> case #pnum NUM : Statement-list
 Default-stmt -> default : Statement-list
 Default-stmt -> ε
 Expression -> Simple-expression-zegond
-Expression -> ID B
-B -> = Expression
+Expression -> #pid ID B
+B -> = Expression #assign
 B -> [ Expression ] H
 B -> Simple-expression-prime
-H -> = Expression
+H -> = Expression #assign
 H -> G D C
 Simple-expression-zegond -> Additive-expression-zegond C
 Simple-expression-prime -> Additive-expression-prime C
