@@ -33,11 +33,11 @@ class CodeGen:
                          }
 
     def call(self, routine, token=None):
-        # try:
+        try:
             self.routines[routine](token)
             self.export("output.txt")
-        # except:
-        #     print(f"error during generating code for token {token.lexeme} and routine {routine}")
+        except:
+            print(f"error during generating code for token {token.lexeme} and routine {routine}")
 
     def pnum(self, token):
         self.semantic_stack.append(f"#{token.lexeme}")
@@ -103,14 +103,12 @@ class CodeGen:
         self.semantic_stack.append(head)
 
     def decide_while(self, token):
-        address=self.semantic_stack.pop()
-        self.program_block[address]=f"(JPF, {self.semantic_stack.pop()}, {len(self.program_block)}, )"
-        # python so shit the line below doesnt work!
-        # self.program_block[self.semantic_stack.pop()]=f"(JPF, {self.semantic_stack.pop()}, {len(self.program_block)}, )"
+        address = self.semantic_stack.pop()
+        self.program_block[address] = f"(JPF, {self.semantic_stack.pop()}, {len(self.program_block)}, )"
 
     def jump_while(self, token):
-        head1=self.semantic_stack.pop()
-        head2=self.semantic_stack.pop()
+        head1 = self.semantic_stack.pop()
+        head2 = self.semantic_stack.pop()
         self.program_block.append(f"(JP, {self.semantic_stack.pop()}, , )")
         self.semantic_stack.append(head2)
         self.semantic_stack.append(head1)
