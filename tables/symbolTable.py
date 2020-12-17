@@ -1,4 +1,3 @@
-from collections import namedtuple
 from scanner.tokens import Token, TokenType
 
 

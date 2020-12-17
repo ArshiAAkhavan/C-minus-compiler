@@ -37,4 +37,4 @@ class CodeGen:
     def export(self, path):
         with open(path, "w") as f:
             for i,l in enumerate(self.program_block):
-                f.write(f"{i}\t{l}")
+                f.write(f"{i}\t{l}\n")
