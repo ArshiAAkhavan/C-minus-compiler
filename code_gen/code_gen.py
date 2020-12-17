@@ -26,8 +26,10 @@ class CodeGen:
                          "#pop": self.pop,
                          "#hold": self.hold,
                          "#label": self.label,
-                         "#check": self.check,
+                         "#decide_if": self.decide_if,
+                         "#decide_while": self.decide_while,
                          "#prison_break": self.prison_break,
+                         "#jump_while": self.jump_while,
                          }
 
     def call(self, routine, token=None):
@@ -94,10 +96,19 @@ class CodeGen:
         break_address = len(self.program_block)
         self.program_block[prison] = f"(JP, {break_address}, , )"
 
-    def check(self, token):
+    def decide_if(self, token):
         head = self.semantic_stack.pop()
         address = self.semantic_stack.pop()
         self.program_block[address] = f"(JPF, {self.semantic_stack.pop()}, {len(self.program_block)}, )"
+        self.semantic_stack.append(head)
+
+    def decide_while(self, token):
+        self.program_block[self.semantic_stack.pop()]=f"(JPF, {self.semantic_stack.pop()}, {len(self.program_block)}, )"
+
+    def jump_while(self, token):
+        head = self.semantic_stack.pop()
+        address = self.semantic_stack.pop()
+        self.program_block[address] = f"(JP, {address}, , )"
         self.semantic_stack.append(head)
 
     def pop(self, token=None):
