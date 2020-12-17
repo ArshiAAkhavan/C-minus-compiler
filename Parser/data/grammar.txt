@@ -77,7 +77,7 @@ Signed-factor-zegond -> Factor-zegond
 Factor -> ( Expression )
 Factor -> #pid ID Var-call-prime
 Factor -> #pnum NUM
-Var-call-prime -> ( A rgs )
+Var-call-prime -> ( Args )
 Var-call-prime -> Var-prime
 Var-prime -> [ Expression ]
 Var-prime -> ε
