@@ -31,8 +31,8 @@ class CodeGen:
         self.semantic_stack.append(self.find_var(token.lexeme).address)
 
     def get_temp_var(self):
-        self.temp_address += 1
-        return self.temp_address - 1
+        self.temp_address += 4
+        return self.temp_address - 4
 
     @staticmethod
     def find_var(id):
