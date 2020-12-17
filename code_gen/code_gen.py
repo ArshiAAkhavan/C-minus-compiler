@@ -17,17 +17,33 @@ class CodeGen:
 
         self.routines = {"#pnum": self.pnum,
                          "#pid": self.pid,
+                         "#parr": self.parr,
                          "#declare_id": self.declare_id,
+                         "#declare_arr": self.declare_arr,
                          "#assign": self.assign,
                          "#opp_push": self.op_push,
                          "#opp_exec": self.op_exec,
                          }
 
     def call(self, routine, token=None):
-        self.routines[routine](token)
+        try:
+            self.routines[routine](token)
+            self.export("output.txt")
+        except:
+            print(f"error during generating code for token {token.lexeme} and routine {routine}")
 
     def pnum(self, token):
         self.semantic_stack.append(f"#{token.lexeme}")
+
+    def parr(self, token):
+        offset = self.semantic_stack.pop()
+        temp = self.get_temp_var()
+        self.program_block.append(f"(MULT, #4, {offset}, {temp})")
+        self.program_block.append(f"(ADD, #{self.semantic_stack.pop()}, {temp}, {temp})")
+        self.semantic_stack.append(f"@{temp}")
+
+    def declare_arr(self, token):
+        self.get_data_var(int(self.semantic_stack.pop()[1:]) - 1)
 
     def declare_id(self, token):
         id_record = self.find_var(token.lexeme)
@@ -49,6 +65,7 @@ class CodeGen:
         self.semantic_stack.append(result)
 
     operands = {'+': 'ADD', '-': 'SUB', '*': 'MULT'}
+
     def op_push(self, token):
         self.semantic_stack.append(self.operands[token.lexeme])
 
@@ -56,9 +73,9 @@ class CodeGen:
         self.temp_address += self.MLD.WORD_SIZE
         return self.temp_address - self.MLD.WORD_SIZE
 
-    def get_data_var(self):
-        self.data_address += self.MLD.WORD_SIZE
-        return self.data_address - self.MLD.WORD_SIZE
+    def get_data_var(self, chunk_size=1):
+        self.data_address += self.MLD.WORD_SIZE * chunk_size
+        return self.data_address - self.MLD.WORD_SIZE * chunk_size
 
     @staticmethod
     def find_var(id):
