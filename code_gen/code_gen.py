@@ -15,6 +15,9 @@ class CodeGen:
                          "#pid": self.pid,
                          "#declare_id": self.declare_id,
                          "#assign": self.assign,
+                         "#mul": self.mul,
+                         "#add": self.add,
+                         "#sub": self.sub,
                          }
 
     def call(self, name, token=None):
@@ -25,7 +28,7 @@ class CodeGen:
 
     def declare_id(self, token):
         id_record = self.find_var(token.lexeme)
-        id_record.address = self.get_temp_var()
+        id_record.address = self.get_data_var()
         self.program_block.append(f"(ASSIGN, #0, {id_record.address}, )")
 
     def assign(self, token):
@@ -34,9 +37,16 @@ class CodeGen:
     def pid(self, token):
         self.semantic_stack.append(self.find_var(token.lexeme).address)
 
+    def mul(self, token):
+        self.program_block.append(f"")
+
     def get_temp_var(self):
         self.temp_address += MID_LANG.WORD_SIZE
         return self.temp_address - MID_LANG.WORD_SIZE
+
+    def get_data_var(self):
+        self.data_address += MID_LANG.WORD_SIZE
+        return self.data_address - MID_LANG.WORD_SIZE
 
     @staticmethod
     def find_var(id):
