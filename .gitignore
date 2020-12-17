@@ -182,3 +182,4 @@ lexical_errors.txt
 symbol_table.txt
 tokens.txt
 syntax_errors.txt
+output.txt
