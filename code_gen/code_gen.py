@@ -94,6 +94,12 @@ class CodeGen:
         break_address = len(self.program_block)
         self.program_block[prison] = f"(JP, {break_address}, , )"
 
+    def check(self, token):
+        head = self.semantic_stack.pop()
+        address = self.semantic_stack.pop()
+        self.program_block[address] = f"(JPF, {self.semantic_stack.pop()}, {len(self.program_block)}, )"
+        self.semantic_stack.append(head)
+
     def pop(self, token=None):
         self.semantic_stack.pop()
 
