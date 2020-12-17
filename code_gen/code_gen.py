@@ -40,14 +40,14 @@ class CodeGen:
     def pnum(self, token):
         self.semantic_stack.append(f"#{token.lexeme}")
 
-    def parr(self, token):
+    def parr(self, token=None):
         offset = self.semantic_stack.pop()
         temp = self.get_temp_var()
         self.program_block.append(f"(MULT, #4, {offset}, {temp})")
         self.program_block.append(f"(ADD, #{self.semantic_stack.pop()}, {temp}, {temp})")
         self.semantic_stack.append(f"@{temp}")
 
-    def declare_arr(self, token):
+    def declare_arr(self, token=None):
         self.get_data_var(int(self.semantic_stack.pop()[1:]) - 1)
 
     def declare_id(self, token):
@@ -55,7 +55,7 @@ class CodeGen:
         id_record.address = self.get_data_var()
         self.program_block.append(f"(ASSIGN, #0, {id_record.address}, )")
 
-    def assign(self, token):
+    def assign(self, token=None):
         self.program_block.append(f"(ASSIGN, {self.semantic_stack.pop()}, {self.semantic_stack[-1]}, )")
 
     def pid(self, token):
@@ -81,11 +81,14 @@ class CodeGen:
         self.data_address += self.MLD.WORD_SIZE * chunk_size
         return self.data_address - self.MLD.WORD_SIZE * chunk_size
 
-    def hold(self, token):
-        self.semantic_stack.append(len(self.program_block))
+    def hold(self, token=None):
+        self.label()
         self.program_block.append("(new you see me!)")
 
-    def pop(self, token):
+    def label(self, token=None):
+        self.semantic_stack.append(len(self.program_block))
+
+    def pop(self, token=None):
         self.semantic_stack.pop()
 
     @staticmethod
