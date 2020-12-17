@@ -58,26 +58,26 @@ Relop -> ==
 Additive-expression -> Term D
 Additive-expression-prime -> Term-prime D
 Additive-expression-zegond -> Term-zegond D
-D -> Addop Term D
+D -> Addop Term #opp_exec D
 D -> ε
-Addop -> +
-Addop -> -
+Addop -> #opp_push +
+Addop -> #opp_push -
 Term -> Signed-factor G
 Term-prime -> Signed-factor-prime G
 Term-zegond -> Signed-factor-zegond G
-G -> * Signed-factor G
+G -> #opp_push * Signed-factor #opp_exec G
 G -> ε
-Signed-factor -> + Factor
-Signed-factor -> - Factor
+Signed-factor -> + Factor 
+Signed-factor -> - Factor 
 Signed-factor -> Factor
 Signed-factor-prime -> Factor-prime
-Signed-factor-zegond -> + Factor
-Signed-factor-zegond -> - Factor
+Signed-factor-zegond -> + Factor 
+Signed-factor-zegond -> - Factor 
 Signed-factor-zegond -> Factor-zegond
 Factor -> ( Expression )
-Factor -> ID Var-call-prime
+Factor -> #pid ID Var-call-prime
 Factor -> #pnum NUM
-Var-call-prime -> ( Args )
+Var-call-prime -> ( A rgs )
 Var-call-prime -> Var-prime
 Var-prime -> [ Expression ]
 Var-prime -> ε

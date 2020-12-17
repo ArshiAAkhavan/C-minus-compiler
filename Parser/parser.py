@@ -56,9 +56,10 @@ class LL1:
                 # code generation
                 if statement.name.startswith("#"):
                     self.code_gen.call(statement.name,statement.token)
-                    self.remove_statement(statement)
+                    # self.remove_statement(statement)
                     continue
-
+                if statement.name == "Expression" and token.lexeme=="#pid":
+                    print("taskali")
                 if self.grammar.is_terminal(statement.name):  # terminal
                     if statement.name != self.get_token_key(token):  # not matching
                         self.add_error(statement, "missing")

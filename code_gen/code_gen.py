@@ -6,6 +6,7 @@ MID_LANG = MidLangDefaults(4, 500, 1000)
 
 
 class CodeGen:
+
     def __init__(self, mid_lang_defaults=MID_LANG):
         self.program_block = []
         self.semantic_stack = []
@@ -18,13 +19,13 @@ class CodeGen:
                          "#pid": self.pid,
                          "#declare_id": self.declare_id,
                          "#assign": self.assign,
-                         "#mul": self.mul,
-                         "#add": self.add,
+                         "#opp_push": self.op_push,
+                         "#opp_exec": self.op_exec,
                          "#sub": self.sub,
                          }
 
-    def call(self, name, token=None):
-        self.routines[name](token)
+    def call(self, routine, token=None):
+        self.routines[routine](token)
 
     def pnum(self, token):
         self.semantic_stack.append(f"#{token.lexeme}")
@@ -40,13 +41,17 @@ class CodeGen:
     def pid(self, token):
         self.semantic_stack.append(self.find_var(token.lexeme).address)
 
-    def __operation(self, operand):
+    def op_exec(self, token):
+        second=self.semantic_stack.pop()
+        operand=self.semantic_stack.pop()
+        first=self.semantic_stack.pop()
         result = self.get_temp_var()
-        self.program_block.append(f"({operand}, {self.semantic_stack.pop()}, {self.semantic_stack.pop()}, {result})")
+        self.program_block.append(f"({operand}, {first}, {second}, {result})")
         self.semantic_stack.append(result)
 
-    def mul(self, token):
-        self.__operation("MULT")
+    operands = {'+': 'ADD', '-': 'SUB', '*': 'MULT'}
+    def op_push(self, token):
+        self.semantic_stack.append(self.operands[token.lexeme])
 
     def add(self, token):
         self.__operation("ADD")
