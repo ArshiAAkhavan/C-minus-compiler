@@ -42,9 +42,9 @@ class CodeGen:
         self.semantic_stack.append(self.find_var(token.lexeme).address)
 
     def op_exec(self, token):
-        second=self.semantic_stack.pop()
-        operand=self.semantic_stack.pop()
-        first=self.semantic_stack.pop()
+        second = self.semantic_stack.pop()
+        operand = self.semantic_stack.pop()
+        first = self.semantic_stack.pop()
         result = self.get_temp_var()
         self.program_block.append(f"({operand}, {first}, {second}, {result})")
         self.semantic_stack.append(result)
@@ -52,12 +52,6 @@ class CodeGen:
     operands = {'+': 'ADD', '-': 'SUB', '*': 'MULT'}
     def op_push(self, token):
         self.semantic_stack.append(self.operands[token.lexeme])
-
-    def add(self, token):
-        self.__operation("ADD")
-
-    def sub(self, token):
-        self.__operation("SUB")
 
     def get_temp_var(self):
         self.temp_address += self.MLD.WORD_SIZE
