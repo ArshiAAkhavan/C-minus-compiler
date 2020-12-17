@@ -1,4 +1,8 @@
 from tables import tables
+from collections import namedtuple
+
+MidLangDefaults = namedtuple('MidLangDefaults', 'WORD_SIZE')
+MID_LANG = MidLangDefaults(4)
 
 
 class CodeGen:
@@ -7,8 +11,8 @@ class CodeGen:
         self.semantic_stack = []
         self.data_address = data_address
         self.temp_address = temp_address
-        self.routines = {"#pnum":       self.pnum,
-                         "#pid":        self.pid,
+        self.routines = {"#pnum": self.pnum,
+                         "#pid": self.pid,
                          "#declare_id": self.declare_id,
                          "#assign": self.assign,
                          }
@@ -31,8 +35,8 @@ class CodeGen:
         self.semantic_stack.append(self.find_var(token.lexeme).address)
 
     def get_temp_var(self):
-        self.temp_address += 4
-        return self.temp_address - 4
+        self.temp_address += MID_LANG.WORD_SIZE
+        return self.temp_address - MID_LANG.WORD_SIZE
 
     @staticmethod
     def find_var(id):
@@ -40,5 +44,5 @@ class CodeGen:
 
     def export(self, path):
         with open(path, "w") as f:
-            for i,l in enumerate(self.program_block):
+            for i, l in enumerate(self.program_block):
                 f.write(f"{i}\t{l}\n")
