@@ -1,10 +1,7 @@
 from scanner.default_scanner import build_scanner
 from tables import tables
-from scanner import actions
-from scanner.buffer_reader import BufferReader
-from scanner.scanner import Scanner
-from scanner.lang import DFANode, FinalStateNode, Edge
 import logging
+
 
 def main():
     number_of_tests = 17
@@ -39,10 +36,9 @@ def main():
             f"\ttokens.txt:\t\t{open('tokens.txt').read().strip() == open(f'{prefix}tokens.txt').read().strip()}")
 
         test_status = open('lexical_errors.txt').read().strip() == open(
-            f'{prefix}lexical_errors.txt').read().strip() and \
-                      open('symbol_table.txt').read().strip() == open(
-            f'{prefix}symbol_table.txt').read().strip() and \
-                      open('tokens.txt').read().strip() == open(f'{prefix}tokens.txt').read().strip()
+            f'{prefix}lexical_errors.txt').read().strip() and open('symbol_table.txt').read().strip() == open(
+            f'{prefix}symbol_table.txt').read().strip() and open('tokens.txt').read().strip() == open(
+            f'{prefix}tokens.txt').read().strip()
         test_passes = test_passes and test_status
         status += ("F", ".")[test_status]
 
