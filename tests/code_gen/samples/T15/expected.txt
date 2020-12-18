@@ -1,0 +1,4 @@
+PRINT    36
+PRINT    0
+PRINT    4
+PRINT    2

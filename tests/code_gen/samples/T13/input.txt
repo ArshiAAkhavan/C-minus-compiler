@@ -1,0 +1,67 @@
+/*nested if else*/
+void main(void){
+    int a;
+    int b;
+    int c;
+    a = 1;
+    b = 3;
+    c = 12;
+    if(a){
+        output(34);
+    }
+    else{
+        if(b){
+            output(35);
+        }
+        else{
+            output(36);
+        }
+    }
+    a = 0;
+    if(a){
+        output(34);
+    }
+    else{
+        if(b){
+            if(c == 17){
+               output(38);
+            }
+            else{
+                output(35);
+            }
+        }
+        else{
+            output(36);
+        }
+    }
+    b = 0;
+    if(a){
+        output(34);
+    }
+    else{
+        if(b){
+            output(35);
+        }
+        else{
+            output(36);
+        }
+    }
+    a = 32;
+    if(a){
+        if(b == 0){
+            b = 37;
+            output(b);
+        }
+        else{
+            b = 3;
+        }
+    }
+    else{
+        if(b){
+            output(35);
+        }
+        else{
+            output(36);
+        }
+    }
+}

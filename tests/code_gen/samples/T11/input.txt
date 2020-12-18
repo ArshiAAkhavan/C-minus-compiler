@@ -1,0 +1,15 @@
+/* same name array and int */
+void main(void){
+    int x;
+    int y;
+    int z;
+    int x[6];
+    x = 12;
+    x[3] = 6;
+    while(x < 19){
+        x[3] = x[3] + 1;
+        x = x + 1;
+    }
+    output(x[3]);
+    output(x);
+}

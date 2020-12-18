@@ -1,0 +1,15 @@
+/* function in while condition */
+void main(void){
+    int i;
+    int j;
+    int k;
+    int m;
+    i = 0;
+    j = 1;
+    k = 10;
+    m = -3;
+    while(i < j * k + m){
+        i = i + 2;
+    }
+    output(i);
+}

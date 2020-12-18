@@ -15,7 +15,7 @@ test_command = {"Linux": "chmod +x tests/code_gen/Linux.out && tests/code_gen/Li
 
 
 def main():
-    number_of_tests = 10
+    number_of_tests = 15
     test_passes = True
     status = ""
     logger = logging.getLogger()

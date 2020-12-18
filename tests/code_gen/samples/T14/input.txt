@@ -1,0 +1,23 @@
+/* empty else and non executing while */
+void main(void){
+    int a;
+    int b;
+    a = 9;
+    b = 1;
+    if(a < 76){
+        while(a < 3 * 3 * b){
+            output(10);
+        }
+        a = 36;
+        b = 3;
+        while(a < 37){
+            a = a + b;
+        }
+    }
+    else{
+    }
+    while(b < 7){
+        output(a);
+        b = b + 1;
+    }
+}

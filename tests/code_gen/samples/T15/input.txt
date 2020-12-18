@@ -1,0 +1,32 @@
+/* nested ifs and function in while at the same time */
+void main(void){
+    int a;
+    int b;
+    int c;
+    int d;
+    d = 1;
+    a = b = 2;
+    b = a * 3 * 3 * a;
+    output(b);
+    output(b < a * a * a * a);
+    while(a * a * a * a < b){
+        a = a * a;
+        output(a);
+        if(a < b){
+            c = 12;
+            if(3 * c < 36){
+                output(10);
+            }
+            else{
+                if((d * c) == c){
+                    d = 2;
+                    output(d);
+                }
+                else{
+                    output(30);
+                }
+            }
+        }
+        else{}
+    }
+}
