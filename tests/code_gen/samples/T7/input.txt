@@ -1,0 +1,25 @@
+/*== T7  ==*/
+void main( void ) 
+{
+    int n;
+    int sum;
+    int i;
+    int t;
+    int a;
+    i = 1;
+    n = 501; 
+    while(i < n)
+    {
+        t = i;
+        sum = 0;
+        while(0 < t)
+        {
+            while (0 < t) { t = t - 10; }
+            a = 10 - - t;
+            sum = sum + a * a * a;
+        }
+        if(sum == i) { output( i );} else {}
+        i = i + 1;
+    }
+
+}
