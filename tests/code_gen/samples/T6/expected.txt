@@ -1,0 +1,3 @@
+PRINT    10
+PRINT    1234
+PRINT    100

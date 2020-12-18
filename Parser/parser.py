@@ -131,6 +131,9 @@ class LL1:
             for pre, _, node in RenderTree(self.root):
                 f.write("%s%s\n" % (pre, node.name))
 
+    def export_code(self, path):
+        self.code_gen.export(path)
+
     def reformat_tree(self):
         for node in PreOrderIter(self.root):
             if node.name == "ε":

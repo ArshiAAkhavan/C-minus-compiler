@@ -52,6 +52,11 @@ class __SymbolTable:
         self.ids = []
         self.scopes.append(Scope())
 
+    def clear(self):
+        self.scopes = []
+        self.ids = []
+        self.scopes.append(Scope())
+
     def new_scope(self):
         self.scopes.append(Scope(self.scopes[-1]))
 

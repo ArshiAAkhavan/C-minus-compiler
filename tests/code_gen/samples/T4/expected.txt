@@ -1,0 +1,6 @@
+PRINT    1
+PRINT    3
+PRINT    1
+PRINT    0
+PRINT    1
+PRINT    2

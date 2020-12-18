@@ -1,0 +1,4 @@
+PRINT    1
+PRINT    64
+PRINT    125
+PRINT    216

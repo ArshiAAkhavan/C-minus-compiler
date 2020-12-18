@@ -1,7 +1,7 @@
+import platform
 from code_gen import CodeGen
 from scanner.default_scanner import build_scanner
 from tables import tables
-
 from Parser.parser import LL1
 from Parser.grammar import init_grammar
 import logging
@@ -16,18 +16,19 @@ def main():
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
     for i in range(1, number_of_tests + 1, 1):
-        prefix = f"tests/parser/samples/T{i}/"
+        prefix = f"tests/code_gen/samples/T{i}/"
 
         sc = build_scanner(f"{prefix}input.txt")
         parser = LL1(sc, grammer, CodeGen())
 
         tables.get_token_table().tokens = []
-        tables.get_symbol_table().clear()
+        tables.get_symbol_table().scopes = []
         tables.get_error_table().parse_trees = []
 
         parser.generate_parse_tree()
-        parser.export_parse_tree('parse_tree.txt')
-        parser.export_syntax_error('syntax_errors.txt')
+        parser.export_code("tests/code_gen/output.txt")
+
+
 
         logger.warning(f"test no.{i}:")
         logger.warning(
