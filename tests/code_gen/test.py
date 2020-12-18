@@ -1,3 +1,4 @@
+import os
 import platform
 from code_gen import CodeGen
 from scanner.default_scanner import build_scanner
@@ -6,7 +7,11 @@ from Parser.parser import LL1
 from Parser.grammar import init_grammar
 import logging
 
-grammer = init_grammar()
+grammar = init_grammar()
+test_command = {"Linux": "chmod +x tests/code_gen/Linux.out && tests/code_gen/Linux.out > expected.txt 2>/dev/null",
+                "Darwin": "chmod +x tests/code_gen/Mac.out && tests/code_gen/Mac.out > expected.txt 2>/dev/null",
+                "Windows": "tests/code_gen/Windows.out > expected.txt 2> NUL",
+                }
 
 
 def main():
@@ -19,26 +24,20 @@ def main():
         prefix = f"tests/code_gen/samples/T{i}/"
 
         sc = build_scanner(f"{prefix}input.txt")
-        parser = LL1(sc, grammer, CodeGen())
+        parser = LL1(sc, grammar, CodeGen())
 
         tables.get_token_table().tokens = []
-        tables.get_symbol_table().scopes = []
+        tables.get_symbol_table().clear()
         tables.get_error_table().parse_trees = []
 
         parser.generate_parse_tree()
         parser.export_code("tests/code_gen/output.txt")
-
-
-
+        os.system(test_command[platform.system()])
         logger.warning(f"test no.{i}:")
         logger.warning(
-            f"\tparse_tree.txt:\t{open('parse_tree.txt').read().strip() == open(f'{prefix}parse_tree.txt').read().strip()}")
-        logger.warning(
-            f"\tsyntax_errors.txt:\t{open('syntax_errors.txt').read().strip().lower() == open(f'{prefix}syntax_errors.txt').read().strip().lower()}")
+            f"\texpected.txt:\t{open('expected.txt').read().strip() == open(f'{prefix}expected.txt').read().strip()}")
 
-        test_status = open('parse_tree.txt').read().strip() == open(
-            f'{prefix}parse_tree.txt').read().strip() and open('syntax_errors.txt').read().strip().lower() == open(
-            f'{prefix}syntax_errors.txt').read().strip().lower()
+        test_status = open('expected.txt').read().strip() == open(f'{prefix}expected.txt').read().strip()
 
         test_passes = test_passes and test_status
         status += ("F", ".")[test_status]
