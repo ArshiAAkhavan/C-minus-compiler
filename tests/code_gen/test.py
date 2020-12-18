@@ -10,7 +10,7 @@ import logging
 grammar = init_grammar()
 test_command = {"Linux": "chmod +x tests/code_gen/Linux.out && tests/code_gen/Linux.out > expected.txt 2>/dev/null",
                 "Darwin": "chmod +x tests/code_gen/Mac.out && tests/code_gen/Mac.out > expected.txt 2>/dev/null",
-                "Windows": "tests/code_gen/Windows.out > expected.txt 2> NUL",
+                "Windows": "tests/code_gen/Windows.exe > expected.txt 2> NUL",
                 }
 
 
@@ -20,6 +20,7 @@ def main():
     status = ""
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
+    test_command["Windows"] = os.getcwd().replace('\\', '/') + '/' + test_command["Windows"]
     for i in range(1, number_of_tests + 1, 1):
         prefix = f"tests/code_gen/samples/T{i}/"
 
