@@ -18,6 +18,7 @@ class CodeGen:
         self.routines = {"#pnum": self.pnum,
                          "#pid": self.pid,
                          "#parr": self.parr,
+                         "#pzero": self.pzero,
                          "#declare_id": self.declare_id,
                          "#declare_arr": self.declare_arr,
                          "#assign": self.assign,
@@ -41,6 +42,9 @@ class CodeGen:
 
     def pnum(self, token):
         self.semantic_stack.append(f"#{token.lexeme}")
+
+    def pzero(self, token):
+        self.semantic_stack.append(f"#0")
 
     def parr(self, token=None):
         offset = self.semantic_stack.pop()

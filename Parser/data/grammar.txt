@@ -68,11 +68,11 @@ Term-zegond -> Signed-factor-zegond G
 G -> #op_push * Signed-factor #op_exec G
 G -> ε
 Signed-factor -> + Factor 
-Signed-factor -> - Factor 
+Signed-factor -> #pzero #op_push - Factor #op_exec
 Signed-factor -> Factor
 Signed-factor-prime -> Factor-prime
 Signed-factor-zegond -> + Factor 
-Signed-factor-zegond -> - Factor 
+Signed-factor-zegond -> #pzero #op_push - Factor #op_exec
 Signed-factor-zegond -> Factor-zegond
 Factor -> ( Expression )
 Factor -> #pid ID Var-call-prime
