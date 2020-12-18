@@ -31,6 +31,7 @@ class CodeGen:
                          "#decide_while": self.decide_while,
                          "#prison_break": self.prison_break,
                          "#jump_while": self.jump_while,
+                         "#output": self.output,
                          }
 
     def call(self, routine, token=None):
@@ -43,7 +44,7 @@ class CodeGen:
     def pnum(self, token):
         self.semantic_stack.append(f"#{token.lexeme}")
 
-    def pzero(self, token):
+    def pzero(self, token=None):
         self.semantic_stack.append(f"#0")
 
     def parr(self, token=None):
@@ -120,6 +121,9 @@ class CodeGen:
 
     def pop(self, token=None):
         self.semantic_stack.pop()
+
+    def output(self, token=None):
+        self.program_block.append(f"(PRINT, {self.semantic_stack.pop()}, , )")
 
     @staticmethod
     def find_var(id):
