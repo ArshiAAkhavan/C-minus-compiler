@@ -59,7 +59,8 @@ class CodeGen:
     def declare_id(self, token):
         id_record = self.find_var(token.lexeme)
         id_record.address = self.get_data_var()
-        self.program_block.append(f"(ASSIGN, #0, {id_record.address}, )")
+        # uncomment the line below for debugging
+        # self.program_block.append(f"(ASSIGN, #0, {id_record.address}, )")
 
     def assign(self, token=None):
         self.program_block.append(f"(ASSIGN, {self.semantic_stack.pop()}, {self.semantic_stack[-1]}, )")
