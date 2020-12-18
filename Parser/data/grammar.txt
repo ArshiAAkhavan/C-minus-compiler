@@ -79,7 +79,7 @@ Factor -> #pid ID Var-call-prime
 Factor -> #pnum NUM
 Var-call-prime -> ( Args )
 Var-call-prime -> Var-prime
-Var-prime -> [ Expression ]
+Var-prime -> [ Expression ] #parr
 Var-prime -> ε
 Factor-prime -> ( Args ) #output
 Factor-prime -> ε
