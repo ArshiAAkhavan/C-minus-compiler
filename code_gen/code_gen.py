@@ -41,6 +41,9 @@ class CodeGen:
         except:
             print(f"error during generating code for token {token.lexeme} and routine {routine}")
 
+    def pid(self, token):
+        self.semantic_stack.append(self.find_var(token.lexeme).address)
+
     def pnum(self, token):
         self.semantic_stack.append(f"#{token.lexeme}")
 
@@ -54,6 +57,9 @@ class CodeGen:
         self.program_block.append(f"(ADD, #{self.semantic_stack.pop()}, {temp}, {temp})")
         self.semantic_stack.append(f"@{temp}")
 
+    def pop(self, token=None):
+        self.semantic_stack.pop()
+
     def declare_arr(self, token=None):
         self.get_data_var(int(self.semantic_stack.pop()[1:]) - 1)
 
@@ -65,9 +71,6 @@ class CodeGen:
 
     def assign(self, token=None):
         self.program_block.append(f"(ASSIGN, {self.semantic_stack.pop()}, {self.semantic_stack[-1]}, )")
-
-    def pid(self, token):
-        self.semantic_stack.append(self.find_var(token.lexeme).address)
 
     def op_exec(self, token):
         second = self.semantic_stack.pop()
@@ -81,14 +84,6 @@ class CodeGen:
 
     def op_push(self, token):
         self.semantic_stack.append(self.operands[token.lexeme])
-
-    def get_temp_var(self):
-        self.temp_address += self.MLD.WORD_SIZE
-        return self.temp_address - self.MLD.WORD_SIZE
-
-    def get_data_var(self, chunk_size=1):
-        self.data_address += self.MLD.WORD_SIZE * chunk_size
-        return self.data_address - self.MLD.WORD_SIZE * chunk_size
 
     def hold(self, token=None):
         self.label()
@@ -119,11 +114,16 @@ class CodeGen:
         self.semantic_stack.append(head2)
         self.semantic_stack.append(head1)
 
-    def pop(self, token=None):
-        self.semantic_stack.pop()
-
     def output(self, token=None):
         self.program_block.append(f"(PRINT, {self.semantic_stack.pop()}, , )")
+
+    def get_temp_var(self):
+        self.temp_address += self.MLD.WORD_SIZE
+        return self.temp_address - self.MLD.WORD_SIZE
+
+    def get_data_var(self, chunk_size=1):
+        self.data_address += self.MLD.WORD_SIZE * chunk_size
+        return self.data_address - self.MLD.WORD_SIZE * chunk_size
 
     @staticmethod
     def find_var(id):
