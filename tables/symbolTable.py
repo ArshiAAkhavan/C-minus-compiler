@@ -82,9 +82,8 @@ class __SymbolTable:
         return s
 
     def export(self, path):
-        file = open(path, "w")
-        for i, e in enumerate(self.keyword + self.ids):
-            file.write(f"{i + 1}.\t{e}")
-            if i < len(self.keyword + self.ids) - 1:
-                file.write("\n")
-        file.close()
+        with open(path, "w") as file:
+            for i, e in enumerate(self.keyword + self.ids):
+                file.write(f"{i + 1}.\t{e}")
+                if i < len(self.keyword + self.ids) - 1:
+                    file.write("\n")

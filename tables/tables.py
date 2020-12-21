@@ -16,14 +16,13 @@ class __ErrorTable:
         self.lexical_errors.append(error)
 
     def export(self, path):
-        file = open(path, "w")
-        if not self.lexical_errors:
-            file.write("There is no lexical error.")
-            return
+        with open(path, "w") as file:
+            if not self.lexical_errors:
+                file.write("There is no lexical error.")
+                return
 
-        for e in self.lexical_errors:
-            file.write(f"{e.lineno}.\t({e.characters}, {e.error_type})\n")
-        file.close()
+            for e in self.lexical_errors:
+                file.write(f"{e.lineno}.\t({e.characters}, {e.error_type})\n")
 
 
 class __TokenTable:
@@ -34,19 +33,18 @@ class __TokenTable:
         self.tokens.append((line_no, token))
 
     def export(self, path):
-        file = open(path, "w")
         current_line_no = -1
-        for line_no, token in self.tokens:
-            if current_line_no != line_no:
-                if current_line_no != -1: file.write("\n")
-                current_line_no = line_no
-                file.write(f"{line_no}.\t")
-            else:
-                file.write(" ")
-            index = token.type.name.find("_")
-            token_type = (token.type.name[:index], token.type.name)[index == -1]
-            file.write(f"({token_type}, {token.lexeme})")
-        file.close()
+        with open(path, "w") as file:
+            for line_no, token in self.tokens:
+                if current_line_no != line_no:
+                    if current_line_no != -1: file.write("\n")
+                    current_line_no = line_no
+                    file.write(f"{line_no}.\t")
+                else:
+                    file.write(" ")
+                index = token.type.name.find("_")
+                token_type = (token.type.name[:index], token.type.name)[index == -1]
+                file.write(f"({token_type}, {token.lexeme})")
 
     def __str__(self):
         return "\n".join([f"{line_no}:\t\t<{token.type.name},{token.lexeme}>" for line_no, token in self.tokens])
