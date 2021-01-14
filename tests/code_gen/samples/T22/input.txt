@@ -1,0 +1,30 @@
+/* === Sample 7  ===  */
+void foo(int x){
+	switch(x){
+	case 0:
+		output(0);
+		break;
+	case 1:
+		output(1);
+	case 3:
+		output(3);
+		break;
+	case 1:
+		output(1);
+		break;
+	default:
+		output(4);
+	}
+}
+void main(void){
+	int a;
+	int b;
+	a = 10 * (0--2) + (0-+3) * (1 < 0);
+	b = (a == -5) * (0-4) + (0+-3);
+	output(a);
+	output(b);
+	foo(0);
+	foo(-1);
+	foo(2);
+	foo(3);
+}

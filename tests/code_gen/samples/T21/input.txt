@@ -1,0 +1,22 @@
+/*  ==  Sample 6 === */
+void func(int arg) {
+	if (arg < 0) {
+		output(2);
+		return;
+	} else {
+		output(20);
+	}
+	output(200);
+}
+
+void main(void) {
+	int var;
+	var = 10;
+	if (0 < var) {
+		output(1);
+		func(3 - var + -3 );
+	} else {
+		output(10);
+	}
+	output(100);
+}
