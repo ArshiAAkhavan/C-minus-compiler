@@ -6,7 +6,6 @@ class BufferReader:
         self.buffer_pointer = 0
         self.buffer = ""
         self.line_no = 1
-        import os
         self.input_file = open(path, "r")
 
         self.__refill_buffer()

@@ -10,6 +10,7 @@ class CodeGen:
     def __init__(self, mid_lang_defaults=MID_LANG):
         self.program_block = []
         self.semantic_stack = []
+        self.jail = []
 
         self.MLD = mid_lang_defaults
         self.data_address = self.MLD.DATA_ADDRESS
@@ -27,11 +28,13 @@ class CodeGen:
                          "#pop": self.pop,
                          "#hold": self.hold,
                          "#label": self.label,
-                         "#decide_if": self.decide_if,
-                         "#decide_while": self.decide_while,
+                         "#decide": self.decide,
                          "#prison_break": self.prison_break,
+                         "#prison": self.prison,
                          "#jump_while": self.jump_while,
                          "#output": self.output,
+                         "#sc_start": self.scope_start,
+                         "#sc_stop": self.scope_stop,
                          }
 
     def call(self, routine, token=None):
@@ -92,18 +95,26 @@ class CodeGen:
     def label(self, token=None):
         self.semantic_stack.append(len(self.program_block))
 
+    def prison(self, token=None):
+        self.jail.append(len(self.program_block))
+        self.program_block.append("(help me step-programmer im stuck!)")
+
     def prison_break(self, token=None):
-        prison = self.semantic_stack.pop()
         break_address = len(self.program_block)
-        self.program_block[prison] = f"(JP, {break_address}, , )"
+        prisoner = self.jail.pop()
+        while prisoner != "|":  # scope delimiter
+            self.program_block[prisoner] = f"(JP, {break_address}, , )"
+            prisoner = self.jail.pop()
 
-    def decide_if(self, token):
-        head = self.semantic_stack.pop()
-        address = self.semantic_stack.pop()
-        self.program_block[address] = f"(JPF, {self.semantic_stack.pop()}, {len(self.program_block)}, )"
-        self.semantic_stack.append(head)
+    def scope_start(self, token=None):
+        tables.get_symbol_table().new_scope()
+        self.jail.append("|")
 
-    def decide_while(self, token):
+    def scope_stop(self, token=None):
+        tables.get_symbol_table().remove_scope()
+        self.prison_break()
+
+    def decide(self, token):
         address = self.semantic_stack.pop()
         self.program_block[address] = f"(JPF, {self.semantic_stack.pop()}, {len(self.program_block)}, )"
 
