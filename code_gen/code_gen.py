@@ -143,6 +143,12 @@ class CodeGen:
         self.data_address += self.MLD.WORD_SIZE * chunk_size
         return self.data_address - self.MLD.WORD_SIZE * chunk_size
 
+    def push_temp_block(self):
+        pass
+
+    def pop_temp_block(self):
+        pass
+
     @staticmethod
     def find_var(id):
         return tables.get_symbol_table().fetch(id)
