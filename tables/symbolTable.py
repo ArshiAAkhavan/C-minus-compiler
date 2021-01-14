@@ -61,7 +61,8 @@ class __SymbolTable:
         self.scopes.append(Scope(self.scopes[-1]))
 
     def remove_scope(self):
-        self.scopes.pop()
+        pass
+        # self.scopes.pop()
 
     def get_current_scope(self):
         return self.scopes[-1]
