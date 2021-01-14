@@ -102,9 +102,7 @@ class CodeGen:
     def prison_break(self, token=None):
         break_address = len(self.program_block)
         prisoner = self.jail.pop()
-        while prisoner != "|":  # scope delimiter
-            self.program_block[prisoner] = f"(JP, {break_address}, , )"
-            prisoner = self.jail.pop()
+        self.program_block[prisoner] = f"(JP, {break_address}, , )"
 
     def scope_start(self, token=None):
         tables.get_symbol_table().new_scope()
@@ -112,7 +110,10 @@ class CodeGen:
 
     def scope_stop(self, token=None):
         tables.get_symbol_table().remove_scope()
-        self.prison_break()
+
+        while self.jail[-1] != "|":  # scope delimiter
+            self.prison_break()
+        self.jail.pop()
 
     def decide(self, token):
         address = self.semantic_stack.pop()
