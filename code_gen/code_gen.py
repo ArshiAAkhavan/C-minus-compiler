@@ -35,6 +35,7 @@ class CodeGen:
                          "#output": self.output,
                          "#sc_start": self.scope_start,
                          "#sc_stop": self.scope_stop,
+                         "#case": self.case,
                          }
 
     def call(self, routine, token=None):
@@ -118,6 +119,11 @@ class CodeGen:
     def decide(self, token):
         address = self.semantic_stack.pop()
         self.program_block[address] = f"(JPF, {self.semantic_stack.pop()}, {len(self.program_block)}, )"
+
+    def case(self, token):
+        result = self.get_temp_var()
+        self.program_block.append(f"(EQ, {self.semantic_stack.pop()}, {self.semantic_stack[-1]}, {result})")
+        self.semantic_stack.append(result)
 
     def jump_while(self, token):
         head1 = self.semantic_stack.pop()

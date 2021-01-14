@@ -29,18 +29,18 @@ Statement -> Iteration-stmt
 Statement -> Return-stmt
 Statement -> Switch-stmt
 Expression-stmt -> Expression #pop ;
-Expression-stmt -> break #register_break;
+Expression-stmt -> break #prison ;
 Expression-stmt -> ;
 Selection-stmt -> if ( Expression ) #sc_start #hold Statement  #sc_stop #prison #decide else #sc_start Statement #sc_stop #prison_break
 Iteration-stmt -> while #label ( Expression ) #sc_start #hold Statement #jump_while #decide #sc_stop
 Return-stmt -> return Return-stmt-prime
 Return-stmt-prime -> ;
 Return-stmt-prime -> Expression #pop ;
-Switch-stmt -> switch #sc_start #hold #hold ( Expression ) { Case-stmts Default-stmt #switch #sc_stop }
+Switch-stmt -> switch ( Expression ) { #sc_start Case-stmts Default-stmt #sc_stop }
 Case-stmts -> Case-stmt Case-stmts
 Case-stmts -> ε
-Case-stmt -> case #pnum NUM #hold : Statement-list #case
-Default-stmt -> default : Statement-list #jump_switch
+Case-stmt -> case #pnum NUM #case #hold : Statement-list #decide
+Default-stmt -> default : Statement-list #prison
 Default-stmt -> ε
 Expression -> Simple-expression-zegond
 Expression -> #pid ID B
