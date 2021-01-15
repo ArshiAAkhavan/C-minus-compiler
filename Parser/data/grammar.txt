@@ -1,13 +1,13 @@
 Program -> Declaration-list $
 Declaration-list -> Declaration Declaration-list
 Declaration-list -> ε
-Declaration -> Declaration-initial Declaration-prime
-Declaration-initial -> Type-specifier #declare_id ID
+Declaration -> Declaration-initial Declaration-prime #pop
+Declaration-initial -> Type-specifier #declare_id #pid ID
 Declaration-prime -> Fun-declaration-prime
 Declaration-prime -> Var-declaration-prime
 Var-declaration-prime -> ;
 Var-declaration-prime -> [ #pnum NUM ] #declare_arr ;
-Fun-declaration-prime -> ( Params ) Compound-stmt
+Fun-declaration-prime -> #declare_func ( Params ) Compound-stmt
 Type-specifier -> int
 Type-specifier -> void
 Params -> int ID Param-prime Param-list
@@ -19,7 +19,7 @@ Param-list -> ε
 Param -> Declaration-initial Param-prime
 Param-prime -> [ ]
 Param-prime -> ε
-Compound-stmt -> { Declaration-list Statement-list }
+Compound-stmt -> { #sc_start Declaration-list Statement-list #sc_stop }
 Statement-list -> Statement Statement-list
 Statement-list -> ε
 Statement -> Expression-stmt

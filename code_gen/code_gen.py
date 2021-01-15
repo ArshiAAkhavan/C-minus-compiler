@@ -1,3 +1,5 @@
+import sys
+
 from tables import tables
 from collections import namedtuple
 
@@ -15,13 +17,13 @@ class CodeGen:
         self.MLD = mid_lang_defaults
         self.data_address = self.MLD.DATA_ADDRESS
         self.temp_address = self.MLD.TEMP_ADDRESS
-
         self.routines = {"#pnum": self.pnum,
                          "#pid": self.pid,
                          "#parr": self.parr,
                          "#pzero": self.pzero,
                          "#declare_id": self.declare_id,
                          "#declare_arr": self.declare_arr,
+                         "#declare_func": self.declare_func,
                          "#assign": self.assign,
                          "#op_push": self.op_push,
                          "#op_exec": self.op_exec,
@@ -43,7 +45,7 @@ class CodeGen:
             self.routines[routine](token)
             self.export("output.txt")
         except:
-            print(f"error during generating code for token {token.lexeme} and routine {routine}")
+            sys.stderr.write(f"error during generating code for token {token.lexeme} and routine {routine}\n")
 
     def pid(self, token):
         self.semantic_stack.append(self.find_var(token.lexeme).address)
@@ -67,6 +69,9 @@ class CodeGen:
     def declare_arr(self, token=None):
         self.get_data_var(int(self.semantic_stack.pop()[1:]) - 1)
 
+    def declare_func(self, token=None):
+        self.program_block.append(f"(ASSIGN, #{len(self.program_block) + 1}, {self.semantic_stack[-1]}, )")
+
     def declare_id(self, token):
         id_record = self.find_var(token.lexeme)
         id_record.address = self.get_data_var()
@@ -76,7 +81,7 @@ class CodeGen:
     def assign(self, token=None):
         self.program_block.append(f"(ASSIGN, {self.semantic_stack.pop()}, {self.semantic_stack[-1]}, )")
 
-    def op_exec(self, token):
+    def op_exec(self, token=None):
         second = self.semantic_stack.pop()
         operand = self.semantic_stack.pop()
         first = self.semantic_stack.pop()
@@ -116,16 +121,16 @@ class CodeGen:
             self.prison_break()
         self.jail.pop()
 
-    def decide(self, token):
+    def decide(self, token=None):
         address = self.semantic_stack.pop()
         self.program_block[address] = f"(JPF, {self.semantic_stack.pop()}, {len(self.program_block)}, )"
 
-    def case(self, token):
+    def case(self, token=None):
         result = self.get_temp_var()
         self.program_block.append(f"(EQ, {self.semantic_stack.pop()}, {self.semantic_stack[-1]}, {result})")
         self.semantic_stack.append(result)
 
-    def jump_while(self, token):
+    def jump_while(self, token=None):
         head1 = self.semantic_stack.pop()
         head2 = self.semantic_stack.pop()
         self.program_block.append(f"(JP, {self.semantic_stack.pop()}, , )")
@@ -144,7 +149,8 @@ class CodeGen:
         return self.data_address - self.MLD.WORD_SIZE * chunk_size
 
     def push_temp_block(self):
-        pass
+        for t in range(self.MLD.TEMP_ADDRESS, self.temp_address):
+            self.program_block.append(f"(ASSIGN, {self.semantic_stack.pop()}, {self.semantic_stack[-1]}, )")
 
     def pop_temp_block(self):
         pass
