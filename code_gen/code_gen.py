@@ -21,23 +21,29 @@ class CodeGen:
                          "#pid": self.pid,
                          "#parr": self.parr,
                          "#pzero": self.pzero,
+                         "#op_push": self.op_push,
+                         "#pop": self.pop,
+
                          "#declare_id": self.declare_id,
                          "#declare_arr": self.declare_arr,
                          "#declare_func": self.declare_func,
+
                          "#assign": self.assign,
-                         "#op_push": self.op_push,
                          "#op_exec": self.op_exec,
-                         "#pop": self.pop,
+                         "#decide": self.decide,
+                         "#case": self.case,
+
                          "#hold": self.hold,
                          "#label": self.label,
-                         "#decide": self.decide,
+
                          "#prison_break": self.prison_break,
                          "#prison": self.prison,
                          "#jump_while": self.jump_while,
+
                          "#output": self.output,
+
                          "#sc_start": self.scope_start,
                          "#sc_stop": self.scope_stop,
-                         "#case": self.case,
                          }
 
     def call(self, routine, token=None):
