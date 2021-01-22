@@ -28,6 +28,9 @@ class CodeGen:
                          "#declare_arr": self.declare_arr,
                          "#declare_func": self.declare_func,
 
+                         # "#point": self.point,
+                         # "#zombie": self.zombie,
+
                          "#assign": self.assign,
                          "#op_exec": self.op_exec,
                          "#decide": self.decide,
@@ -66,14 +69,15 @@ class CodeGen:
         offset = self.semantic_stack.pop()
         temp = self.get_temp_var()
         self.program_block.append(f"(MULT, #4, {offset}, {temp})")
-        self.program_block.append(f"(ADD, #{self.semantic_stack.pop()}, {temp}, {temp})")
+        self.program_block.append(f"(ADD, {self.semantic_stack.pop()}, {temp}, {temp})")
         self.semantic_stack.append(f"@{temp}")
 
     def pop(self, token=None):
         self.semantic_stack.pop()
 
     def declare_arr(self, token=None):
-        self.get_data_var(int(self.semantic_stack.pop()[1:]) - 1)
+        arr = self.get_data_var(int(self.semantic_stack.pop()[1:]))
+        self.program_block.append(f"(ASSIGN, #{arr}, {self.semantic_stack[-1]}, )")
 
     def declare_func(self, token=None):
         self.program_block.append(f"(ASSIGN, #{len(self.program_block) + 1}, {self.semantic_stack[-1]}, )")
@@ -153,13 +157,6 @@ class CodeGen:
     def get_data_var(self, chunk_size=1):
         self.data_address += self.MLD.WORD_SIZE * chunk_size
         return self.data_address - self.MLD.WORD_SIZE * chunk_size
-
-    def push_temp_block(self):
-        for t in range(self.MLD.TEMP_ADDRESS, self.temp_address):
-            self.program_block.append(f"(ASSIGN, {self.semantic_stack.pop()}, {self.semantic_stack[-1]}, )")
-
-    def pop_temp_block(self):
-        pass
 
     @staticmethod
     def find_var(id):
