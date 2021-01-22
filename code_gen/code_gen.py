@@ -3,6 +3,7 @@ import sys
 from tables import tables
 from collections import namedtuple
 from code_gen.register import RegisterFile
+from code_gen.flags import Flag
 
 MidLangDefaults = namedtuple('MidLangDefaults', 'WORD_SIZE DATA_ADDRESS STACK_ADDRESS TEMP_ADDRESS')
 MID_LANG = MidLangDefaults(4, 500, 700, 1000)
@@ -20,6 +21,7 @@ class CodeGen:
         self.stack_address = self.MLD.STACK_ADDRESS
         self.temp_address = self.MLD.TEMP_ADDRESS
 
+        self.flags = Flag()
         self.rf = RegisterFile(self.get_data_var(), self.get_data_var(), self.get_data_var(), self.get_data_var())
 
         self.routines = {"#pnum": self.pnum,
@@ -33,8 +35,8 @@ class CodeGen:
                          "#declare_arr": self.declare_arr,
                          "#declare_func": self.declare_func,
 
-                         # "#point": self.point,
-                         # "#zombie": self.zombie,
+                         "#arg_init": self.arg_init,
+                         "#arg_finish": self.arg_finish,
 
                          "#assign": self.assign,
                          "#op_exec": self.op_exec,
@@ -91,6 +93,10 @@ class CodeGen:
     def declare_id(self, token):
         id_record = self.find_var(token.lexeme)
         id_record.address = self.get_data_var()
+
+        if self.flags.args:
+            self.arg_assign(id_record.address)
+
         # uncomment the line below for debugging
         # self.program_block.append(f"(ASSIGN, #0, {id_record.address}, )")
 
@@ -128,7 +134,7 @@ class CodeGen:
 
     def scope_start(self, token=None):
         tables.get_symbol_table().new_scope()
-        self.jail.append("|")
+        self.jail.append("|")  # scope delimiter
         self.stack_new_scope()
 
     def scope_stop(self, token=None):
@@ -165,6 +171,16 @@ class CodeGen:
     def get_data_var(self, chunk_size=1):
         self.data_address += self.MLD.WORD_SIZE * chunk_size
         return self.data_address - self.MLD.WORD_SIZE * chunk_size
+
+    # argument management
+    def arg_init(self, token=None):
+        self.flags.args = True
+
+    def arg_finish(self, token=None):
+        self.flags.args = False
+
+    def arg_assign(self, address):
+        self.stack_pop(address)
 
     # stack management
     def stack_push(self, value):

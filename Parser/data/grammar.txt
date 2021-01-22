@@ -7,14 +7,14 @@ Declaration-prime -> Fun-declaration-prime
 Declaration-prime -> Var-declaration-prime
 Var-declaration-prime -> ;
 Var-declaration-prime -> [ #pnum NUM ] #declare_arr ;
-Fun-declaration-prime -> #declare_func ( Params ) Compound-stmt
+Fun-declaration-prime -> #declare_func ( #arg_init Params #arg_finish ) Compound-stmt
 Type-specifier -> int
 Type-specifier -> void
-Params -> int #declare_id #pid ID Param-prime Param-list
+Params -> int #declare_id #pid ID Param-prime #pop Param-list
 Params -> void Param-list-void-abtar
 Param-list-void-abtar -> #declare_id #pid ID Param-prime Param-list
 Param-list-void-abtar -> ε
-Param-list -> , Param Param-list
+Param-list -> , Param Param-list #pop
 Param-list -> ε
 Param -> Declaration-initial Param-prime
 Param-prime -> [ ]
