@@ -52,6 +52,7 @@ class CodeGen:
     def call(self, routine, token=None):
         try:
             self.routines[routine](token)
+            # uncomment the line below for debugging , gives you a step by step view!
             self.export("output.txt")
         except:
             sys.stderr.write(f"error during generating code for token {token.lexeme} and routine {routine}\n")
