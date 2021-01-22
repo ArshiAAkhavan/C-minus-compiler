@@ -129,6 +129,7 @@ class CodeGen:
     def scope_start(self, token=None):
         tables.get_symbol_table().new_scope()
         self.jail.append("|")
+        self.stack_new_scope()
 
     def scope_stop(self, token=None):
         tables.get_symbol_table().remove_scope()
@@ -136,6 +137,7 @@ class CodeGen:
         while self.jail[-1] != "|":  # scope delimiter
             self.prison_break()
         self.jail.pop()
+        self.stack_del_scope()
 
     def decide(self, token=None):
         address = self.semantic_stack.pop()
