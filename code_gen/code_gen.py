@@ -4,8 +4,8 @@ from tables import tables
 from collections import namedtuple
 from code_gen.register import RegisterFile
 
-MidLangDefaults = namedtuple('MidLangDefaults', 'WORD_SIZE DATA_ADDRESS TEMP_ADDRESS')
-MID_LANG = MidLangDefaults(4, 500, 1000)
+MidLangDefaults = namedtuple('MidLangDefaults', 'WORD_SIZE DATA_ADDRESS STACK_ADDRESS TEMP_ADDRESS')
+MID_LANG = MidLangDefaults(4, 500, 700, 1000)
 
 
 class CodeGen:
@@ -17,10 +17,10 @@ class CodeGen:
 
         self.MLD = mid_lang_defaults
         self.data_address = self.MLD.DATA_ADDRESS
+        self.stack_address = self.MLD.STACK_ADDRESS
         self.temp_address = self.MLD.TEMP_ADDRESS
 
-        self.register_file = RegisterFile(self.get_data_var(), self.get_data_var(), self.get_data_var(),
-                                          self.get_data_var())
+        self.rf = RegisterFile(self.get_data_var(), self.get_data_var(), self.get_data_var(), self.get_data_var())
 
         self.routines = {"#pnum": self.pnum,
                          "#pid": self.pid,
@@ -163,6 +163,23 @@ class CodeGen:
     def get_data_var(self, chunk_size=1):
         self.data_address += self.MLD.WORD_SIZE * chunk_size
         return self.data_address - self.MLD.WORD_SIZE * chunk_size
+
+    # stack management
+    def stack_push(self, value):
+        self.program_block.append(f"(ASSIGN, {value}, @{self.rf.sp}, )")
+        self.program_block.append(f"(ADD, #4, {self.rf.sp}, {self.rf.sp})")
+
+    def stack_pop(self, holder):
+        self.program_block.append(f"(SUB, #4, {self.rf.sp}, {self.rf.sp})")
+        self.program_block.append(f"(ASSIGN, @{self.rf.sp}, {holder}, )")
+
+    def stack_new_scope(self):
+        self.stack_push(self.rf.fp)
+        self.program_block.append(f"(ASSIGN, {self.rf.sp}, {self.rf.fp}, )")
+
+    def stack_del_scope(self):
+        self.program_block.append(f"(ASSIGN, {self.rf.fp}, {self.rf.sp}, )")
+        self.stack_pop(self.rf.fp)
 
     @staticmethod
     def find_var(id):
