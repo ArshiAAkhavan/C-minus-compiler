@@ -10,9 +10,9 @@ Var-declaration-prime -> [ #pnum NUM ] #declare_arr ;
 Fun-declaration-prime -> #declare_func ( Params ) Compound-stmt
 Type-specifier -> int
 Type-specifier -> void
-Params -> int ID Param-prime Param-list
+Params -> int #declare_id #pid ID Param-prime Param-list
 Params -> void Param-list-void-abtar
-Param-list-void-abtar -> ID Param-prime Param-list
+Param-list-void-abtar -> #declare_id #pid ID Param-prime Param-list
 Param-list-void-abtar -> ε
 Param-list -> , Param Param-list
 Param-list -> ε
