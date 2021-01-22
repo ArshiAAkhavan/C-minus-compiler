@@ -2,6 +2,7 @@ import sys
 
 from tables import tables
 from collections import namedtuple
+from code_gen.register import RegisterFile
 
 MidLangDefaults = namedtuple('MidLangDefaults', 'WORD_SIZE DATA_ADDRESS TEMP_ADDRESS')
 MID_LANG = MidLangDefaults(4, 500, 1000)
@@ -17,6 +18,10 @@ class CodeGen:
         self.MLD = mid_lang_defaults
         self.data_address = self.MLD.DATA_ADDRESS
         self.temp_address = self.MLD.TEMP_ADDRESS
+
+        self.register_file = RegisterFile(self.get_data_var(), self.get_data_var(), self.get_data_var(),
+                                          self.get_data_var())
+
         self.routines = {"#pnum": self.pnum,
                          "#pid": self.pid,
                          "#parr": self.parr,
