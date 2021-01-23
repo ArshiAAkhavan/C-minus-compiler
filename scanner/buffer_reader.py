@@ -53,6 +53,7 @@ class BufferReader:
                 return False
 
 
+
 if __name__ == "__main__":
     b = BufferReader("input.txt", 3)
     while b.has_next():

@@ -74,7 +74,6 @@ class LL1:
             self.remove_statement(statement)
             [self.remove_statement(g) for g in self.stack]
 
-        self.code_gen.execute_from("main")
         return self.root
 
     def update_stack(self, statement, key):
