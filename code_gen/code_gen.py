@@ -24,7 +24,7 @@ class CodeGen:
 
         self.flags = Flag()
         self.rf = RegisterFile(self.get_data_var(), self.get_data_var(), self.get_data_var(), self.get_data_var())
-        self.stack = StackManager(self.program_block, self.rf)
+        self.stack = StackManager(self.program_block, self.rf,self.MLD)
 
         self.routines = {"#pnum": self.pnum,
                          "#pid": self.pid,
@@ -79,7 +79,7 @@ class CodeGen:
     def parr(self, token=None):
         offset = self.semantic_stack.pop()
         temp = self.get_temp_var()
-        self.program_block.append(f"(MULT, #4, {offset}, {temp})")
+        self.program_block.append(f"(MULT, #{self.MLD.WORD_SIZE}, {offset}, {temp})")
         self.program_block.append(f"(ADD, {self.semantic_stack.pop()}, {temp}, {temp})")
         self.semantic_stack.append(f"@{temp}")
 

@@ -1,5 +1,6 @@
 class StackManager:
-    def __init__(self, program_block, register_file):
+    def __init__(self, program_block, register_file, MLD):
+        self.MLD = MLD
         self.program_block = program_block
         self.rf = register_file
 
@@ -19,3 +20,7 @@ class StackManager:
     def del_scope(self):
         self.program_block.append(f"(ASSIGN, {self.rf.fp}, {self.rf.sp}, )")
         self.pop(self.rf.fp)
+
+    def reserve(self, chunk=1):
+        self.program_block.append(f"(ADD, #{self.MLD.WORD_SIZE * chunk}, {self.rf.sp}, {self.rf.sp})")
+
