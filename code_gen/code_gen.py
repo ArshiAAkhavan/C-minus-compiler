@@ -7,7 +7,7 @@ from code_gen.flags import Flag
 from code_gen.stack import StackManager
 
 MidLangDefaults = namedtuple('MidLangDefaults', 'WORD_SIZE DATA_ADDRESS STACK_ADDRESS TEMP_ADDRESS')
-MID_LANG = MidLangDefaults(4, 500, 700, 2000)
+MID_LANG = MidLangDefaults(4, 500, 700, 1000)
 
 
 class CodeGen:
