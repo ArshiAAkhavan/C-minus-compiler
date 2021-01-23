@@ -35,3 +35,17 @@ class StackManager:
         self.program_block.append(f"(PRINT, 504, , )")
         # todo remove debug
         # pass
+
+    def store_registers(self):
+        self.push(self.rf.sp)
+        self.push(self.rf.fp)
+        self.push(self.rf.ra)
+
+    def load_registers(self):
+        self.pop(self.rf.ra)
+        self.pop(self.rf.fp)
+        self.pop(self.rf.sp)
+
+
+
+

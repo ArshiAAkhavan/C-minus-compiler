@@ -6,7 +6,6 @@ from code_gen.register import RegisterFile
 from code_gen.flags import Flag
 from code_gen.stack import StackManager
 
-
 MidLangDefaults = namedtuple('MidLangDefaults', 'WORD_SIZE DATA_ADDRESS STACK_ADDRESS TEMP_ADDRESS')
 MID_LANG = MidLangDefaults(4, 500, 700, 1000)
 
@@ -42,6 +41,7 @@ class CodeGen:
 
                          "#arg_init": self.arg_init,
                          "#arg_finish": self.arg_finish,
+                         "#arg_pass": self.arg_pass,
 
                          "#assign": self.assign,
                          "#op_exec": self.op_exec,
@@ -102,7 +102,7 @@ class CodeGen:
         id_record = self.find_var(token.lexeme)
         id_record.address = self.get_data_var()
 
-        if self.flags.args:
+        if self.flags.arg_dec:
             self.arg_assign(id_record.address)
 
         # uncomment the line below for debugging
@@ -169,14 +169,6 @@ class CodeGen:
         self.semantic_stack.append(head2)
         self.semantic_stack.append(head1)
 
-    def function_call(self):
-        # storing data
-        for data in range(self.flags.data_pointer, self.data_address):
-            self.stack.push(data)
-        # storing temp
-        for temp in range(self.flags.temp_pointer, self.temp_address):
-            self.stack.push(temp)
-
         # passing arguments
 
     def output(self, token=None):
@@ -190,15 +182,49 @@ class CodeGen:
         self.data_address += self.MLD.WORD_SIZE * chunk_size
         return self.data_address - self.MLD.WORD_SIZE * chunk_size
 
+    def function_call(self):
+        # storing data
+        for data in range(self.flags.data_pointer, self.data_address):
+            self.stack.push(data)
+        # storing temp
+        for temp in range(self.flags.temp_pointer, self.temp_address):
+            self.stack.push(temp)
+        # storing registers
+        self.stack.store_registers()
+        # arg pass
+        for arg in range(self.flags.arg_pass, len(self.semantic_stack)):
+            self.stack.push(self.semantic_stack[arg])
+        for arg in range(self.flags.arg_pass, len(self.semantic_stack)):
+            self.semantic_stack.pop()
+        # setting registers
+        self.program_block.append(f"(ASSIGN, #{len(self.program_block) + 2}, {self.rf.ra}, )")
+        # call!
+        self.program_block.append(f"(JP, @{self.semantic_stack.pop()}, , )")
+        # collect
+        self.semantic_stack.append(self.rf.rv)
+
+        # !!!gnihtyreve gnitrever
+        # loading registers
+        self.stack.load_registers()
+        # loading temps
+        for temp in range(self.temp_address, self.flags.temp_pointer, -1):
+            self.stack.pop(temp)
+        # loading temps
+        for data in range(self.data_address, self.flags.data_pointer, -1):
+            self.stack.pop(data)
+
     # argument management
     def arg_init(self, token=None):
-        self.flags.args = True
+        self.flags.arg_dec = True
 
     def arg_finish(self, token=None):
-        self.flags.args = False
+        self.flags.arg_dec = False
 
     def arg_assign(self, address):
         self.stack.pop(address)
+
+    def arg_pass(self):
+        self.flags.arg_pass = len(self.semantic_stack)
 
     @staticmethod
     def find_var(id):
