@@ -6,6 +6,7 @@ from code_gen.register import RegisterFile
 from code_gen.flags import Flag
 from code_gen.stack import StackManager
 
+
 MidLangDefaults = namedtuple('MidLangDefaults', 'WORD_SIZE DATA_ADDRESS STACK_ADDRESS TEMP_ADDRESS')
 MID_LANG = MidLangDefaults(4, 500, 700, 1000)
 
@@ -24,7 +25,7 @@ class CodeGen:
 
         self.flags = Flag()
         self.rf = RegisterFile(self.get_data_var(), self.get_data_var(), self.get_data_var(), self.get_data_var())
-        self.stack = StackManager(self.program_block, self.rf,self.MLD)
+        self.stack = StackManager(self.program_block, self.rf, self.MLD)
 
         self.apply_template()
 
@@ -211,4 +212,3 @@ class CodeGen:
     def apply_template(self):
         self.program_block.append(f"(ASSIGN, #{self.MLD.STACK_ADDRESS}, {self.rf.sp}, )")
         self.program_block.append(f"(ASSIGN, #{self.MLD.STACK_ADDRESS}, {self.rf.fp}, )")
-
