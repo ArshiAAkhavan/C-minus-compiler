@@ -4,6 +4,7 @@ from tables import tables
 from collections import namedtuple
 from code_gen.register import RegisterFile
 from code_gen.flags import Flag
+from code_gen.stack import StackManager
 
 MidLangDefaults = namedtuple('MidLangDefaults', 'WORD_SIZE DATA_ADDRESS STACK_ADDRESS TEMP_ADDRESS')
 MID_LANG = MidLangDefaults(4, 500, 700, 1000)
@@ -23,6 +24,7 @@ class CodeGen:
 
         self.flags = Flag()
         self.rf = RegisterFile(self.get_data_var(), self.get_data_var(), self.get_data_var(), self.get_data_var())
+        self.stack = StackManager(self.program_block, self.rf)
 
         self.routines = {"#pnum": self.pnum,
                          "#pid": self.pid,
@@ -51,6 +53,7 @@ class CodeGen:
                          "#jump_while": self.jump_while,
 
                          "#output": self.output,
+                         "#call": self.function_call,
 
                          "#sc_start": self.scope_start,
                          "#sc_stop": self.scope_stop,
@@ -88,6 +91,8 @@ class CodeGen:
         self.program_block.append(f"(ASSIGN, #{arr}, {self.semantic_stack[-1]}, )")
 
     def declare_func(self, token=None):
+        self.flags.data_pointer = self.data_address
+        self.flags.temp_pointer = self.temp_address
         self.program_block.append(f"(ASSIGN, #{len(self.program_block) + 1}, {self.semantic_stack[-1]}, )")
 
     def declare_id(self, token):
@@ -135,7 +140,7 @@ class CodeGen:
     def scope_start(self, token=None):
         tables.get_symbol_table().new_scope()
         self.jail.append("|")  # scope delimiter
-        self.stack_new_scope()
+        self.stack.new_scope()
 
     def scope_stop(self, token=None):
         tables.get_symbol_table().remove_scope()
@@ -143,7 +148,7 @@ class CodeGen:
         while self.jail[-1] != "|":  # scope delimiter
             self.prison_break()
         self.jail.pop()
-        self.stack_del_scope()
+        self.stack.del_scope()
 
     def decide(self, token=None):
         address = self.semantic_stack.pop()
@@ -160,6 +165,16 @@ class CodeGen:
         self.program_block.append(f"(JP, {self.semantic_stack.pop()}, , )")
         self.semantic_stack.append(head2)
         self.semantic_stack.append(head1)
+
+    def function_call(self):
+        # storing data
+        for data in range(self.flags.data_pointer, self.data_address):
+            self.stack.push(data)
+        # storing temp
+        for temp in range(self.flags.temp_pointer, self.temp_address):
+            self.stack.push(temp)
+
+        # passing arguments
 
     def output(self, token=None):
         self.program_block.append(f"(PRINT, {self.semantic_stack.pop()}, , )")
@@ -180,24 +195,7 @@ class CodeGen:
         self.flags.args = False
 
     def arg_assign(self, address):
-        self.stack_pop(address)
-
-    # stack management
-    def stack_push(self, value):
-        self.program_block.append(f"(ASSIGN, {value}, @{self.rf.sp}, )")
-        self.program_block.append(f"(ADD, #4, {self.rf.sp}, {self.rf.sp})")
-
-    def stack_pop(self, holder):
-        self.program_block.append(f"(SUB, #4, {self.rf.sp}, {self.rf.sp})")
-        self.program_block.append(f"(ASSIGN, @{self.rf.sp}, {holder}, )")
-
-    def stack_new_scope(self):
-        self.stack_push(self.rf.fp)
-        self.program_block.append(f"(ASSIGN, {self.rf.sp}, {self.rf.fp}, )")
-
-    def stack_del_scope(self):
-        self.program_block.append(f"(ASSIGN, {self.rf.fp}, {self.rf.sp}, )")
-        self.stack_pop(self.rf.fp)
+        self.stack.pop(address)
 
     @staticmethod
     def find_var(id):
