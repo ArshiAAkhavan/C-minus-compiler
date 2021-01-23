@@ -1,7 +1,7 @@
 Program -> Declaration-list $
 Declaration-list -> Declaration Declaration-list
 Declaration-list -> ε
-Declaration -> Declaration-initial Declaration-prime #pop
+Declaration -> Declaration-initial Declaration-prime #pop #pop
 Declaration-initial -> Type-specifier #declare_id #pid ID
 Declaration-prime -> Fun-declaration-prime
 Declaration-prime -> Var-declaration-prime
@@ -81,7 +81,7 @@ Var-call-prime -> ( Args )
 Var-call-prime -> Var-prime
 Var-prime -> [ Expression ] #parr
 Var-prime -> ε
-Factor-prime -> ( #arg_pass Args ) #call
+Factor-prime -> ( #arg_pass Args ) #output
 Factor-prime -> ε
 Factor-zegond -> ( Expression )
 Factor-zegond -> #pnum NUM

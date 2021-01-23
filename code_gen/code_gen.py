@@ -103,11 +103,17 @@ class CodeGen:
     def declare_func(self, token=None):
         self.flags.data_pointer = self.data_address
         self.flags.temp_pointer = self.temp_address
-        self.program_block.append(f"(ASSIGN, #{len(self.program_block) + 1}, {self.semantic_stack[-1]}, )")
+
+        id_record = self.find_var(self.semantic_stack[-2])
+        id_record.address = len(self.program_block)
+
+        # self.program_block.append(f"(ASSIGN, #{len(self.program_block) + 1}, {self.semantic_stack[-1]}, )")
 
     def declare_id(self, token):
         id_record = self.find_var(token.lexeme)
         id_record.address = self.get_data_var()
+
+        self.semantic_stack.append(token.lexeme)
 
         if self.flags.arg_dec:
             self.arg_assign(id_record.address)
@@ -206,7 +212,7 @@ class CodeGen:
         # setting registers
         self.program_block.append(f"(ASSIGN, #{len(self.program_block) + 2}, {self.rf.ra}, )")
         # call!
-        self.program_block.append(f"(JP, @{self.semantic_stack.pop()}, , )")
+        self.program_block.append(f"(JP, {self.semantic_stack.pop()}, , )")
         # collect
         self.semantic_stack.append(self.rf.rv)
 
@@ -248,7 +254,8 @@ class CodeGen:
     def apply_template(self):
         self.program_block.append(f"(ASSIGN, #{self.MLD.STACK_ADDRESS}, {self.rf.sp}, )")
         self.program_block.append(f"(ASSIGN, #{self.MLD.STACK_ADDRESS}, {self.rf.fp}, )")
-        self.hold()
+        # self.hold()
+
 
     def patch(self):
         id_record = self.find_var("main")
