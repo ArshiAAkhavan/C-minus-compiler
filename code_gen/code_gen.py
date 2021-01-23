@@ -254,9 +254,8 @@ class CodeGen:
     def apply_template(self):
         self.program_block.append(f"(ASSIGN, #{self.MLD.STACK_ADDRESS}, {self.rf.sp}, )")
         self.program_block.append(f"(ASSIGN, #{self.MLD.STACK_ADDRESS}, {self.rf.fp}, )")
-        # self.hold()
+        self.hold()
 
-
-    def patch(self):
-        id_record = self.find_var("main")
+    def execute_from(self, func_name):
+        id_record = self.find_var(func_name)
         self.program_block[self.semantic_stack.pop()] = f"(JP, {id_record.address}, , )"
