@@ -31,8 +31,8 @@ Statement -> Switch-stmt
 Expression-stmt -> Expression #pop ;
 Expression-stmt -> break #prison ;
 Expression-stmt -> ;
-Selection-stmt -> if ( Expression ) #sc_start #hold Statement  #sc_stop #prison #decide else #sc_start Statement #sc_stop #prison_break
-Iteration-stmt -> while #label ( Expression ) #sc_start #hold Statement #jump_while #decide #sc_stop
+Selection-stmt -> if ( Expression ) #hold Statement #prison #decide else Statement #prison_break
+Iteration-stmt -> while #label ( Expression ) #hold Statement #jump_while #decide
 Return-stmt -> return Return-stmt-prime
 Return-stmt-prime -> ;
 Return-stmt-prime -> Expression #pop ;

@@ -7,7 +7,7 @@ from code_gen.flags import Flag
 from code_gen.stack import StackManager
 
 MidLangDefaults = namedtuple('MidLangDefaults', 'WORD_SIZE DATA_ADDRESS STACK_ADDRESS TEMP_ADDRESS')
-MID_LANG = MidLangDefaults(4, 500, 700, 1000)
+MID_LANG = MidLangDefaults(4, 500, 700, 2000)
 
 
 class CodeGen:
@@ -89,7 +89,7 @@ class CodeGen:
         self.semantic_stack.pop()
 
     def declare_arr(self, token=None):
-        self.program_block.append(f"(ASSIGN, #{self.rf.sp}, {self.semantic_stack[-2]}, )")
+        self.program_block.append(f"(ASSIGN, {self.rf.sp}, {self.semantic_stack[-2]}, )")
         self.stack.reserve(int(self.semantic_stack.pop()[1:]))
 
     def declare_func(self, token=None):
