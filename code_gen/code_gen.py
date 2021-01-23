@@ -227,7 +227,7 @@ class CodeGen:
             self.stack.pop(data - self.MLD.WORD_SIZE)
 
     def func_return(self, token=None):
-        self.program_block.append(f"(JP, @{self.rf.ra}, )")
+        self.program_block.append(f"(JP, @{self.rf.ra}, , )")
 
     # argument management
     def arg_init(self, token=None):
@@ -252,10 +252,13 @@ class CodeGen:
                 f.write(f"{i}\t{l}\n")
 
     def apply_template(self):
+        self.stack.pop(self.rf.rv)
+        self.program_block.append(f"(PRINT, {self.rf.rv}, , )")
+        self.program_block.append(f"(JP, @{self.rf.ra}, , )")
         self.program_block.append(f"(ASSIGN, #{self.MLD.STACK_ADDRESS}, {self.rf.sp}, )")
         self.program_block.append(f"(ASSIGN, #{self.MLD.STACK_ADDRESS}, {self.rf.fp}, )")
         self.hold()
 
     def execute_from(self, func_name):
         id_record = self.find_var(func_name)
-        self.program_block[self.semantic_stack.pop()] = f"(JP, {id_record.address}, , )"
+        # self.program_block[self.semantic_stack.pop()] = f"(JP, {id_record.address}, , )"
