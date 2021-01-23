@@ -81,7 +81,7 @@ Var-call-prime -> ( Args )
 Var-call-prime -> Var-prime
 Var-prime -> [ Expression ] #parr
 Var-prime -> ε
-Factor-prime -> ( Args ) #call #output
+Factor-prime -> ( Args ) #output
 Factor-prime -> ε
 Factor-zegond -> ( Expression )
 Factor-zegond -> #pnum NUM

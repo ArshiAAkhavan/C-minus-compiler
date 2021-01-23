@@ -26,6 +26,8 @@ class CodeGen:
         self.rf = RegisterFile(self.get_data_var(), self.get_data_var(), self.get_data_var(), self.get_data_var())
         self.stack = StackManager(self.program_block, self.rf,self.MLD)
 
+        self.apply_template()
+
         self.routines = {"#pnum": self.pnum,
                          "#pid": self.pid,
                          "#parr": self.parr,
@@ -87,8 +89,8 @@ class CodeGen:
         self.semantic_stack.pop()
 
     def declare_arr(self, token=None):
-        arr = self.get_data_var(int(self.semantic_stack.pop()[1:]))
-        self.program_block.append(f"(ASSIGN, #{arr}, {self.semantic_stack[-1]}, )")
+        self.program_block.append(f"(ASSIGN, #{self.rf.sp}, {self.semantic_stack[-2]}, )")
+        self.stack.reserve(int(self.semantic_stack.pop()[1:]))
 
     def declare_func(self, token=None):
         self.flags.data_pointer = self.data_address
@@ -205,3 +207,8 @@ class CodeGen:
         with open(path, "w") as f:
             for i, l in enumerate(self.program_block):
                 f.write(f"{i}\t{l}\n")
+
+    def apply_template(self):
+        self.program_block.append(f"(ASSIGN, #{self.MLD.STACK_ADDRESS}, {self.rf.sp}, )")
+        self.program_block.append(f"(ASSIGN, #{self.MLD.STACK_ADDRESS}, {self.rf.fp}, )")
+
