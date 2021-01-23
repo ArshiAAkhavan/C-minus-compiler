@@ -33,4 +33,5 @@ class StackManager:
     def debug(self):
         self.program_block.append(f"(PRINT, 500, , )")
         self.program_block.append(f"(PRINT, 504, , )")
-        pass
+        # todo remove debug
+        # pass
