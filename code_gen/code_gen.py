@@ -32,6 +32,7 @@ class CodeGen:
                          "#pid": self.pid,
                          "#parr": self.parr,
                          "#pzero": self.pzero,
+                         "#prv": self.prv,
                          "#op_push": self.op_push,
                          "#pop": self.pop,
 
@@ -56,7 +57,8 @@ class CodeGen:
                          "#jump_while": self.jump_while,
 
                          "#output": self.output,
-                         "#call": self.function_call,
+                         "#call": self.func_call,
+                         "#return": self.func_return,
 
                          "#sc_start": self.scope_start,
                          "#sc_stop": self.scope_stop,
@@ -64,6 +66,8 @@ class CodeGen:
 
     def call(self, routine, token=None):
         try:
+            if routine == "#call":
+                print("ali")
             self.routines[routine](token)
             # uncomment the line below for debugging , gives you a step by step view!
             self.export("output.txt")
@@ -78,6 +82,9 @@ class CodeGen:
 
     def pzero(self, token=None):
         self.semantic_stack.append(f"#0")
+
+    def prv(self, token=None):
+        self.semantic_stack.append(self.rf.rv)
 
     def parr(self, token=None):
         offset = self.semantic_stack.pop()
@@ -182,12 +189,12 @@ class CodeGen:
         self.data_address += self.MLD.WORD_SIZE * chunk_size
         return self.data_address - self.MLD.WORD_SIZE * chunk_size
 
-    def function_call(self):
+    def func_call(self, token=None):
         # storing data
-        for data in range(self.flags.data_pointer, self.data_address):
+        for data in range(self.flags.data_pointer, self.data_address, self.MLD.WORD_SIZE):
             self.stack.push(data)
         # storing temp
-        for temp in range(self.flags.temp_pointer, self.temp_address):
+        for temp in range(self.flags.temp_pointer, self.temp_address, self.MLD.WORD_SIZE):
             self.stack.push(temp)
         # storing registers
         self.stack.store_registers()
@@ -207,11 +214,14 @@ class CodeGen:
         # loading registers
         self.stack.load_registers()
         # loading temps
-        for temp in range(self.temp_address, self.flags.temp_pointer, -1):
-            self.stack.pop(temp)
+        for temp in range(self.temp_address, self.flags.temp_pointer, -self.MLD.WORD_SIZE):
+            self.stack.pop(temp - self.MLD.WORD_SIZE)
         # loading temps
-        for data in range(self.data_address, self.flags.data_pointer, -1):
-            self.stack.pop(data)
+        for data in range(self.data_address, self.flags.data_pointer, -self.MLD.WORD_SIZE):
+            self.stack.pop(data - self.MLD.WORD_SIZE)
+
+    def func_return(self, token=None):
+        self.program_block.append(f"(JP, @{self.rf.ra}, )")
 
     # argument management
     def arg_init(self, token=None):
@@ -223,7 +233,7 @@ class CodeGen:
     def arg_assign(self, address):
         self.stack.pop(address)
 
-    def arg_pass(self):
+    def arg_pass(self, token=None):
         self.flags.arg_pass = len(self.semantic_stack)
 
     @staticmethod
@@ -238,3 +248,8 @@ class CodeGen:
     def apply_template(self):
         self.program_block.append(f"(ASSIGN, #{self.MLD.STACK_ADDRESS}, {self.rf.sp}, )")
         self.program_block.append(f"(ASSIGN, #{self.MLD.STACK_ADDRESS}, {self.rf.fp}, )")
+        self.hold()
+
+    def patch(self):
+        id_record = self.find_var("main")
+        self.program_block[self.semantic_stack.pop()] = f"(JP, {id_record.address}, , )"
