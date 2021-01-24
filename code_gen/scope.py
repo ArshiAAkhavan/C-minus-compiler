@@ -31,7 +31,7 @@ class Layer:
 class ScopeManager:
     def __init__(self, assembler, stack):
         self.stack = stack
-        self.layers = {"f": Layer(assembler), "c": Layer(assembler), "i": Layer(assembler)}
+        self.layers = {"f": Layer(assembler), "c": Layer(assembler), "s": Layer(assembler)}
         self.scmod = []
 
     def push_scmod(self, mod):

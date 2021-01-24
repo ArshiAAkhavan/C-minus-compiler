@@ -61,9 +61,9 @@ class CodeGen:
                          "#call": self.func_call,
                          "#return": self.func_return,
 
-                         # "#scmod_f": self.scmod_f,
-                         # "#scmod_b": self.scmod_b,
-                         # "#scmod_c": self.scmod_c,
+                         "#scmod_f": self.scmod_f,
+                         "#scmod_c": self.scmod_c,
+                         "#scmod_s": self.scmod_s,
 
                          "#sc_start": self.scope_start,
                          "#sc_stop": self.scope_stop,
@@ -151,32 +151,10 @@ class CodeGen:
     def label(self, token=None):
         self.semantic_stack.append(len(self.assembler.program_block))
 
-    def prison(self, token=None):
-        self.jail.append(len(self.assembler.program_block))
-        self.assembler.program_block.append("(help me step-programmer im stuck!)")
-
-    def prison_break(self, token=None):
-        break_address = len(self.assembler.program_block)
-        prisoner = self.jail.pop()
-        self.assembler.program_block[prisoner] = f"(JP, {break_address}, , )"
-
-    def scope_start(self, token=None):
-        tables.get_symbol_table().new_scope()
-        self.jail.append("|")  # scope delimiter
-        # self.stack.new_scope()
-
-    def scope_stop(self, token=None):
-        tables.get_symbol_table().remove_scope()
-
-        while self.jail[-1] != "|":  # scope delimiter
-            self.prison_break()
-        self.jail.pop()
-
-        # self.stack.del_scope()
-
     def decide(self, token=None):
         address = self.semantic_stack.pop()
-        self.assembler.program_block[address] = f"(JPF, {self.semantic_stack.pop()}, {len(self.assembler.program_block)}, )"
+        self.assembler.program_block[
+            address] = f"(JPF, {self.semantic_stack.pop()}, {len(self.assembler.program_block)}, )"
 
     def case(self, token=None):
         result = self.get_temp_var()
@@ -232,14 +210,6 @@ class CodeGen:
         for data in range(self.assembler.data_address, self.assembler.data_pointer, -self.MLD.WORD_SIZE):
             self.stack.pop(data - self.MLD.WORD_SIZE)
 
-    def func_scope_start(self, token=None):
-        self.stack.new_scope()
-        pass
-
-    def func_scope_stop(self, token=None):
-        self.stack.del_scope()
-        pass
-
     def func_return(self, token=None):
         self.assembler.program_block.append(f"(JP, @{self.rf.ra}, , )")
 
@@ -255,6 +225,30 @@ class CodeGen:
 
     def arg_pass(self, token=None):
         self.assembler.arg_pass = len(self.semantic_stack)
+
+    # scope
+    def scmod_f(self, token=None):
+        self.scope.push_scmod("f")  # function
+
+    def scmod_c(self, token=None):
+        self.scope.push_scmod("c")  # container
+
+    def scmod_s(self, token=None):
+        self.scope.push_scmod("s")  # simple
+
+    def scope_start(self, token=None):
+        tables.get_symbol_table().new_scope()
+        self.scope.new_scope()
+
+    def scope_stop(self, token=None):
+        tables.get_symbol_table().remove_scope()
+        self.scope.del_scope()
+
+    def prison(self, token=None):
+        self.scope.prison()
+
+    def prison_break(self, token=None):
+        self.scope.prison_break()
 
     @staticmethod
     def find_var(id):
