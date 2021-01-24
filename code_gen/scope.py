@@ -1,37 +1,37 @@
 class Layer:
-    def __init__(self, flags):
-        self.flags = flags
+    def __init__(self, assembler):
+        self.assembler = assembler
         self.temp_stack = []
         self.data_stack = []
         self.jail = []
 
     def new_scope(self):
-        self.temp_stack.append(self.flags.temp_address)
-        self.data_stack.append(self.flags.data_address)
+        self.temp_stack.append(self.assembler.temp_address)
+        self.data_stack.append(self.assembler.data_address)
         self.jail.append("|")
 
     def del_scope(self):
-        self.flags.data_address = self.data_stack.pop()
-        self.flags.temp_address = self.temp_stack.pop()
+        self.assembler.data_address = self.data_stack.pop()
+        self.assembler.temp_address = self.temp_stack.pop()
 
         while self.jail[-1] != "|":  # scope delimiter
             self.prison_break()
         self.jail.pop()
 
     def prison_break(self):
-        break_address = len(self.flags.program_block)
+        break_address = len(self.assembler.program_block)
         prisoner = self.jail.pop()
-        self.flags.program_block[prisoner] = f"(JP, {break_address}, , )"
+        self.assembler.program_block[prisoner] = f"(JP, {break_address}, , )"
 
     def prison(self):
-        self.jail.append(len(self.flags.program_block))
-        self.flags.program_block.append("(help me step-programmer im stuck!)")
+        self.jail.append(len(self.assembler.program_block))
+        self.assembler.program_block.append("(help me step-programmer im stuck!)")
 
 
 class ScopeManager:
-    def __init__(self, flags, stack):
+    def __init__(self, assembler, stack):
         self.stack = stack
-        self.layers = {"f": Layer(flags), "c": Layer(flags), "i": Layer(flags)}
+        self.layers = {"f": Layer(assembler), "c": Layer(assembler), "i": Layer(assembler)}
         self.scmod = []
 
     def push_scmod(self, mod):
