@@ -4,3 +4,4 @@ class Flag:
         self.arg_pass = 0
         self.data_pointer = 0
         self.temp_pointer = 0
+        self.last_id = None

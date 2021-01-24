@@ -1,7 +1,7 @@
 Program -> Declaration-list $
 Declaration-list -> Declaration Declaration-list
 Declaration-list -> ε
-Declaration -> Declaration-initial Declaration-prime #pop #pop
+Declaration -> Declaration-initial Declaration-prime #pop
 Declaration-initial -> Type-specifier #declare_id #pid ID
 Declaration-prime -> Fun-declaration-prime
 Declaration-prime -> Var-declaration-prime
@@ -10,13 +10,13 @@ Var-declaration-prime -> [ #pnum NUM ] #declare_arr ;
 Fun-declaration-prime -> #declare_func ( #arg_init Params #arg_finish ) Compound-stmt #return
 Type-specifier -> int
 Type-specifier -> void
-Params -> int #declare_id #pid ID Param-prime #pop #pop Param-list
+Params -> int #declare_id #pid ID Param-prime #pop Param-list
 Params -> void Param-list-void-abtar
 Param-list-void-abtar -> #declare_id #pid ID Param-prime Param-list
 Param-list-void-abtar -> ε
-Param-list -> , Param Param-list #pop
+Param-list -> , Param Param-list
 Param-list -> ε
-Param -> Declaration-initial Param-prime #pop #pop
+Param -> Declaration-initial Param-prime #pop
 Param-prime -> [ ]
 Param-prime -> ε
 Compound-stmt -> { #sc_start Declaration-list Statement-list #sc_stop }
@@ -77,7 +77,7 @@ Signed-factor-zegond -> Factor-zegond
 Factor -> ( Expression )
 Factor -> #pid ID Var-call-prime
 Factor -> #pnum NUM
-Var-call-prime -> ( Args )
+Var-call-prime -> ( #arg_pass Args ) #call
 Var-call-prime -> Var-prime
 Var-prime -> [ Expression ] #parr
 Var-prime -> ε

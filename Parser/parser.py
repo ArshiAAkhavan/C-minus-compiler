@@ -53,9 +53,11 @@ class LL1:
                 statement = self.get_next_valid_statement()
                 statement.token = token
 
+                # if statement.name == "#return":
+                #     print("taskali")
                 # code generation
                 if statement.name.startswith("#"):
-                    self.code_gen.call(statement.name,statement.token)
+                    self.code_gen.call(statement.name, statement.token)
                     self.remove_statement(statement)
                     continue
                 if self.grammar.is_terminal(statement.name):  # terminal

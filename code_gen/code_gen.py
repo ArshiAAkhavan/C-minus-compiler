@@ -66,6 +66,8 @@ class CodeGen:
 
     def call(self, routine, token=None):
         try:
+            # if token.lexeme == "output" and routine == "#pid":
+            #     print("taskali")
             self.routines[routine](token)
             # uncomment the line below for debugging , gives you a step by step view!
             self.export("output.txt")
@@ -102,7 +104,7 @@ class CodeGen:
         self.flags.data_pointer = self.data_address
         self.flags.temp_pointer = self.temp_address
 
-        id_record = self.find_var(self.semantic_stack[-2])
+        id_record = self.find_var(self.flags.last_id.lexeme)
         id_record.address = len(self.program_block)
 
         # self.program_block.append(f"(ASSIGN, #{len(self.program_block) + 1}, {self.semantic_stack[-1]}, )")
@@ -111,7 +113,7 @@ class CodeGen:
         id_record = self.find_var(token.lexeme)
         id_record.address = self.get_data_var()
 
-        self.semantic_stack.append(token.lexeme)
+        self.flags.last_id = token
 
         if self.flags.arg_dec:
             self.arg_assign(id_record.address)
