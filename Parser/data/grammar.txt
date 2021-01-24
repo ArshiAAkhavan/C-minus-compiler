@@ -7,7 +7,7 @@ Declaration-prime -> Fun-declaration-prime
 Declaration-prime -> Var-declaration-prime
 Var-declaration-prime -> ;
 Var-declaration-prime -> [ #pnum NUM ] #declare_arr ;
-Fun-declaration-prime -> #declare_func ( #arg_init Params #arg_finish ) #fsc_start Compound-stmt #fsc_stop #return
+Fun-declaration-prime -> #declare_func ( #arg_init Params #arg_finish ) #scmod_f Compound-stmt #scmod_f #return
 Type-specifier -> int
 Type-specifier -> void
 Params -> int #declare_id #pid ID Param-prime #pop Param-list
@@ -32,7 +32,7 @@ Expression-stmt -> Expression #pop ;
 Expression-stmt -> break #prison ;
 Expression-stmt -> ;
 Selection-stmt -> if ( Expression ) #hold Statement #prison #decide else Statement #prison_break
-Iteration-stmt -> while #label ( Expression ) #hold Statement #jump_while #decide
+Iteration-stmt -> while #label ( Expression ) #hold #scmod_c Statement #scmod_c #jump_while #decide
 Return-stmt -> return Return-stmt-prime #prison
 Return-stmt-prime -> ;
 Return-stmt-prime -> #prv Expression #assign #pop ;
