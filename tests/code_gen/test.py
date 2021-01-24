@@ -2,6 +2,7 @@ import os
 import platform
 from code_gen import CodeGen
 from scanner.default_scanner import build_scanner
+from scanner.tokens import Token, TokenType
 from tables import tables
 from Parser.parser import LL1
 from Parser.grammar import init_grammar
@@ -28,10 +29,14 @@ def main():
 
         tables.get_token_table().tokens = []
         tables.get_symbol_table().clear()
+        tables.symbol_table.add_symbol(Token(TokenType.ID, "output"))
+        tables.symbol_table.fetch("output").address = 4
+
         tables.get_error_table().parse_trees = []
 
         parser.generate_parse_tree()
-        parser.export_code("tests/code_gen/output.txt")
+        parser.code_gen.execute_from("main")
+        parser.export_code("output.txt")
         os.system(test_command[platform.system()])
         logger.warning(f"test no.{i}:")
         logger.warning(

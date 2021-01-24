@@ -36,7 +36,7 @@ Iteration-stmt -> while #label ( Expression ) #hold Statement #jump_while #decid
 Return-stmt -> return Return-stmt-prime #prison
 Return-stmt-prime -> ;
 Return-stmt-prime -> #prv Expression #assign #pop ;
-Switch-stmt -> switch ( Expression ) { #sc_start Case-stmts Default-stmt #sc_stop }
+Switch-stmt -> switch ( Expression ) { #sc_start Case-stmts Default-stmt #pop #sc_stop }
 Case-stmts -> Case-stmt Case-stmts
 Case-stmts -> ε
 Case-stmt -> case #pnum NUM #case #hold : Statement-list #decide
