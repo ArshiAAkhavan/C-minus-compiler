@@ -3,7 +3,7 @@ import sys
 from tables import tables
 from collections import namedtuple
 from code_gen.register import RegisterFile
-from code_gen.flags import Flag
+from code_gen.assembler import Assembler
 from code_gen.stack import StackManager
 
 MidLangDefaults = namedtuple('MidLangDefaults', 'WORD_SIZE DATA_ADDRESS STACK_ADDRESS TEMP_ADDRESS')
@@ -18,11 +18,10 @@ class CodeGen:
         self.jail = []
 
         self.MLD = mid_lang_defaults
-        self.flags = Flag()
-        self.flags.data_address = self.MLD.DATA_ADDRESS
-        self.flags.stack_address = self.MLD.STACK_ADDRESS
-        self.flags.temp_address = self.MLD.TEMP_ADDRESS
-
+        self.assembler = Assembler()
+        self.assembler.data_address = self.MLD.DATA_ADDRESS
+        self.assembler.stack_address = self.MLD.STACK_ADDRESS
+        self.assembler.temp_address = self.MLD.TEMP_ADDRESS
 
         self.rf = RegisterFile(self.get_data_var(), self.get_data_var(), self.get_data_var(), self.get_data_var())
         self.stack = StackManager(self.program_block, self.rf, self.MLD)
@@ -109,10 +108,10 @@ class CodeGen:
         self.stack.reserve(int(self.semantic_stack.pop()[1:]))
 
     def declare_func(self, token=None):
-        self.flags.data_pointer = self.flags.data_address
-        self.flags.temp_pointer = self.flags.temp_address
+        self.assembler.data_pointer = self.assembler.data_address
+        self.assembler.temp_pointer = self.assembler.temp_address
 
-        id_record = self.find_var(self.flags.last_id.lexeme)
+        id_record = self.find_var(self.assembler.last_id.lexeme)
         id_record.address = len(self.program_block)
 
         # self.program_block.append(f"(ASSIGN, #{len(self.program_block) + 1}, {self.semantic_stack[-1]}, )")
@@ -121,9 +120,9 @@ class CodeGen:
         id_record = self.find_var(token.lexeme)
         id_record.address = self.get_data_var()
 
-        self.flags.last_id = token
+        self.assembler.last_id = token
 
-        if self.flags.arg_dec:
+        if self.assembler.arg_dec:
             self.arg_assign(id_record.address)
         else:
             self.program_block.append(f"(ASSIGN, #0, {id_record.address}, )")
@@ -196,26 +195,26 @@ class CodeGen:
         self.program_block.append(f"(PRINT, {self.semantic_stack.pop()}, , )")
 
     def get_temp_var(self):
-        self.flags.temp_address += self.MLD.WORD_SIZE
-        return self.flags.temp_address - self.MLD.WORD_SIZE
+        self.assembler.temp_address += self.MLD.WORD_SIZE
+        return self.assembler.temp_address - self.MLD.WORD_SIZE
 
     def get_data_var(self, chunk_size=1):
-        self.flags.data_address += self.MLD.WORD_SIZE * chunk_size
-        return self.flags.data_address - self.MLD.WORD_SIZE * chunk_size
+        self.assembler.data_address += self.MLD.WORD_SIZE * chunk_size
+        return self.assembler.data_address - self.MLD.WORD_SIZE * chunk_size
 
     def func_call(self, token=None):
         # storing data
-        for data in range(self.flags.data_pointer, self.flags.data_address, self.MLD.WORD_SIZE):
+        for data in range(self.assembler.data_pointer, self.assembler.data_address, self.MLD.WORD_SIZE):
             self.stack.push(data)
         # storing temp
-        for temp in range(self.flags.temp_pointer, self.flags.temp_address, self.MLD.WORD_SIZE):
+        for temp in range(self.assembler.temp_pointer, self.assembler.temp_address, self.MLD.WORD_SIZE):
             self.stack.push(temp)
         # storing registers
         self.stack.store_registers()
         # arg pass
-        for arg in range(self.flags.arg_pass, len(self.semantic_stack)):
+        for arg in range(self.assembler.arg_pass, len(self.semantic_stack)):
             self.stack.push(self.semantic_stack[arg])
-        for arg in range(self.flags.arg_pass, len(self.semantic_stack)):
+        for arg in range(self.assembler.arg_pass, len(self.semantic_stack)):
             self.semantic_stack.pop()
         # setting registers
         self.program_block.append(f"(ASSIGN, #{len(self.program_block) + 2}, {self.rf.ra}, )")
@@ -228,10 +227,10 @@ class CodeGen:
         # loading registers
         self.stack.load_registers()
         # loading temps
-        for temp in range(self.flags.temp_address, self.flags.temp_pointer, -self.MLD.WORD_SIZE):
+        for temp in range(self.assembler.temp_address, self.assembler.temp_pointer, -self.MLD.WORD_SIZE):
             self.stack.pop(temp - self.MLD.WORD_SIZE)
         # loading temps
-        for data in range(self.flags.data_address, self.flags.data_pointer, -self.MLD.WORD_SIZE):
+        for data in range(self.assembler.data_address, self.assembler.data_pointer, -self.MLD.WORD_SIZE):
             self.stack.pop(data - self.MLD.WORD_SIZE)
 
     def func_scope_start(self, token=None):
@@ -247,16 +246,16 @@ class CodeGen:
 
     # argument management
     def arg_init(self, token=None):
-        self.flags.arg_dec = True
+        self.assembler.arg_dec = True
 
     def arg_finish(self, token=None):
-        self.flags.arg_dec = False
+        self.assembler.arg_dec = False
 
     def arg_assign(self, address):
         self.stack.pop(address)
 
     def arg_pass(self, token=None):
-        self.flags.arg_pass = len(self.semantic_stack)
+        self.assembler.arg_pass = len(self.semantic_stack)
 
     @staticmethod
     def find_var(id):

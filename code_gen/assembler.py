@@ -1,4 +1,4 @@
-class Flag:
+class Assembler:
     def __init__(self):
         self.arg_dec = False
         self.arg_pass = 0
