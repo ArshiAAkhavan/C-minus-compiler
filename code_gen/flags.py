@@ -5,3 +5,6 @@ class Flag:
         self.data_pointer = 0
         self.temp_pointer = 0
         self.last_id = None
+        self.temp_address = 0
+        self.data_address = 0
+        self.stack_address = 0

@@ -18,11 +18,12 @@ class CodeGen:
         self.jail = []
 
         self.MLD = mid_lang_defaults
-        self.data_address = self.MLD.DATA_ADDRESS
-        self.stack_address = self.MLD.STACK_ADDRESS
-        self.temp_address = self.MLD.TEMP_ADDRESS
-
         self.flags = Flag()
+        self.flags.data_address = self.MLD.DATA_ADDRESS
+        self.flags.stack_address = self.MLD.STACK_ADDRESS
+        self.flags.temp_address = self.MLD.TEMP_ADDRESS
+
+
         self.rf = RegisterFile(self.get_data_var(), self.get_data_var(), self.get_data_var(), self.get_data_var())
         self.stack = StackManager(self.program_block, self.rf, self.MLD)
 
@@ -60,9 +61,9 @@ class CodeGen:
                          "#call": self.func_call,
                          "#return": self.func_return,
 
-                         "#scmod_f": self.scmod_f,
-                         "#scmod_b": self.scmod_b,
-                         "#scmod_c": self.scmod_c,
+                         # "#scmod_f": self.scmod_f,
+                         # "#scmod_b": self.scmod_b,
+                         # "#scmod_c": self.scmod_c,
 
                          "#sc_start": self.scope_start,
                          "#sc_stop": self.scope_stop,
@@ -108,8 +109,8 @@ class CodeGen:
         self.stack.reserve(int(self.semantic_stack.pop()[1:]))
 
     def declare_func(self, token=None):
-        self.flags.data_pointer = self.data_address
-        self.flags.temp_pointer = self.temp_address
+        self.flags.data_pointer = self.flags.data_address
+        self.flags.temp_pointer = self.flags.temp_address
 
         id_record = self.find_var(self.flags.last_id.lexeme)
         id_record.address = len(self.program_block)
@@ -195,19 +196,19 @@ class CodeGen:
         self.program_block.append(f"(PRINT, {self.semantic_stack.pop()}, , )")
 
     def get_temp_var(self):
-        self.temp_address += self.MLD.WORD_SIZE
-        return self.temp_address - self.MLD.WORD_SIZE
+        self.flags.temp_address += self.MLD.WORD_SIZE
+        return self.flags.temp_address - self.MLD.WORD_SIZE
 
     def get_data_var(self, chunk_size=1):
-        self.data_address += self.MLD.WORD_SIZE * chunk_size
-        return self.data_address - self.MLD.WORD_SIZE * chunk_size
+        self.flags.data_address += self.MLD.WORD_SIZE * chunk_size
+        return self.flags.data_address - self.MLD.WORD_SIZE * chunk_size
 
     def func_call(self, token=None):
         # storing data
-        for data in range(self.flags.data_pointer, self.data_address, self.MLD.WORD_SIZE):
+        for data in range(self.flags.data_pointer, self.flags.data_address, self.MLD.WORD_SIZE):
             self.stack.push(data)
         # storing temp
-        for temp in range(self.flags.temp_pointer, self.temp_address, self.MLD.WORD_SIZE):
+        for temp in range(self.flags.temp_pointer, self.flags.temp_address, self.MLD.WORD_SIZE):
             self.stack.push(temp)
         # storing registers
         self.stack.store_registers()
@@ -227,10 +228,10 @@ class CodeGen:
         # loading registers
         self.stack.load_registers()
         # loading temps
-        for temp in range(self.temp_address, self.flags.temp_pointer, -self.MLD.WORD_SIZE):
+        for temp in range(self.flags.temp_address, self.flags.temp_pointer, -self.MLD.WORD_SIZE):
             self.stack.pop(temp - self.MLD.WORD_SIZE)
         # loading temps
-        for data in range(self.data_address, self.flags.data_pointer, -self.MLD.WORD_SIZE):
+        for data in range(self.flags.data_address, self.flags.data_pointer, -self.MLD.WORD_SIZE):
             self.stack.pop(data - self.MLD.WORD_SIZE)
 
     def func_scope_start(self, token=None):
