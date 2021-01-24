@@ -66,8 +66,6 @@ class CodeGen:
 
     def call(self, routine, token=None):
         try:
-            if routine == "#call":
-                print("ali")
             self.routines[routine](token)
             # uncomment the line below for debugging , gives you a step by step view!
             self.export("output.txt")
@@ -119,7 +117,7 @@ class CodeGen:
             self.arg_assign(id_record.address)
 
         # uncomment the line below for debugging
-        # self.program_block.append(f"(ASSIGN, #0, {id_record.address}, )")
+        self.program_block.append(f"(ASSIGN, #0, {id_record.address}, )")
 
     def assign(self, token=None):
         self.program_block.append(f"(ASSIGN, {self.semantic_stack.pop()}, {self.semantic_stack[-1]}, )")
@@ -252,13 +250,13 @@ class CodeGen:
                 f.write(f"{i}\t{l}\n")
 
     def apply_template(self):
-        self.stack.pop(self.rf.rv)
-        self.program_block.append(f"(PRINT, {self.rf.rv}, , )")
-        self.program_block.append(f"(JP, @{self.rf.ra}, , )")
         self.program_block.append(f"(ASSIGN, #{self.MLD.STACK_ADDRESS}, {self.rf.sp}, )")
         self.program_block.append(f"(ASSIGN, #{self.MLD.STACK_ADDRESS}, {self.rf.fp}, )")
         self.hold()
+        self.stack.pop(self.rf.rv)
+        self.program_block.append(f"(PRINT, {self.rf.rv}, , )")
+        self.program_block.append(f"(JP, @{self.rf.ra}, , )")
 
     def execute_from(self, func_name):
         id_record = self.find_var(func_name)
-        # self.program_block[self.semantic_stack.pop()] = f"(JP, {id_record.address}, , )"
+        self.program_block[self.semantic_stack.pop()] = f"(JP, {id_record.address}, , )"

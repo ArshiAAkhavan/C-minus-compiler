@@ -4,10 +4,8 @@ from code_gen import CodeGen
 from scanner.default_scanner import build_scanner
 from tables import tables
 
-
 # Arshia Akhavan 97110422
 # Ghazal Shenavar 97101897
-
 
 
 parser = LL1(build_scanner("input.txt"), init_grammar(), CodeGen())

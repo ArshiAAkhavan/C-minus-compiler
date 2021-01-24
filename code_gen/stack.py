@@ -11,21 +11,23 @@ class StackManager:
         # self.debug()
 
     def pop(self, holder):
-        # self.debug()
+        self.debug()
         self.program_block.append(f"(SUB, {self.rf.sp}, #{self.MLD.WORD_SIZE}, {self.rf.sp})")
-        # self.debug()
+        self.debug()
         self.program_block.append(f"(ASSIGN, @{self.rf.sp}, {holder}, )")
-        # self.debug()
+        self.debug()
 
     def new_scope(self):
+        self.program_block.append("")
         self.push(self.rf.fp)
         self.program_block.append(f"(ASSIGN, {self.rf.sp}, {self.rf.fp}, )")
-        # self.debug()
+        self.debug()
 
     def del_scope(self):
         self.program_block.append(f"(ASSIGN, {self.rf.fp}, {self.rf.sp}, )")
         self.pop(self.rf.fp)
-        # self.debug()
+        self.program_block.append("")
+        self.debug()
 
     def reserve(self, chunk=1):
         self.program_block.append(f"(ADD, #{self.MLD.WORD_SIZE * chunk}, {self.rf.sp}, {self.rf.sp})")
