@@ -1,5 +1,6 @@
 import sys
 
+from code_gen.scope import ScopeManager
 from tables import tables
 from collections import namedtuple
 from code_gen.register import RegisterFile
@@ -13,7 +14,6 @@ MID_LANG = MidLangDefaults(4, 500, 700, 1000)
 class CodeGen:
 
     def __init__(self, mid_lang_defaults=MID_LANG):
-        self.program_block = []
         self.semantic_stack = []
         self.jail = []
 
@@ -24,7 +24,8 @@ class CodeGen:
         self.assembler.temp_address = self.MLD.TEMP_ADDRESS
 
         self.rf = RegisterFile(self.get_data_var(), self.get_data_var(), self.get_data_var(), self.get_data_var())
-        self.stack = StackManager(self.program_block, self.rf, self.MLD)
+        self.stack = StackManager(self.assembler.program_block, self.rf, self.MLD)
+        self.scope = ScopeManager(self.assembler, self.stack)
 
         self.apply_template()
 
@@ -96,15 +97,15 @@ class CodeGen:
     def parr(self, token=None):
         offset = self.semantic_stack.pop()
         temp = self.get_temp_var()
-        self.program_block.append(f"(MULT, #{self.MLD.WORD_SIZE}, {offset}, {temp})")
-        self.program_block.append(f"(ADD, {self.semantic_stack.pop()}, {temp}, {temp})")
+        self.assembler.program_block.append(f"(MULT, #{self.MLD.WORD_SIZE}, {offset}, {temp})")
+        self.assembler.program_block.append(f"(ADD, {self.semantic_stack.pop()}, {temp}, {temp})")
         self.semantic_stack.append(f"@{temp}")
 
     def pop(self, token=None):
         self.semantic_stack.pop()
 
     def declare_arr(self, token=None):
-        self.program_block.append(f"(ASSIGN, {self.rf.sp}, {self.semantic_stack[-2]}, )")
+        self.assembler.program_block.append(f"(ASSIGN, {self.rf.sp}, {self.semantic_stack[-2]}, )")
         self.stack.reserve(int(self.semantic_stack.pop()[1:]))
 
     def declare_func(self, token=None):
@@ -112,9 +113,9 @@ class CodeGen:
         self.assembler.temp_pointer = self.assembler.temp_address
 
         id_record = self.find_var(self.assembler.last_id.lexeme)
-        id_record.address = len(self.program_block)
+        id_record.address = len(self.assembler.program_block)
 
-        # self.program_block.append(f"(ASSIGN, #{len(self.program_block) + 1}, {self.semantic_stack[-1]}, )")
+        # self.assembler.program_block.append(f"(ASSIGN, #{len(self.assembler.program_block) + 1}, {self.semantic_stack[-1]}, )")
 
     def declare_id(self, token):
         id_record = self.find_var(token.lexeme)
@@ -125,17 +126,17 @@ class CodeGen:
         if self.assembler.arg_dec:
             self.arg_assign(id_record.address)
         else:
-            self.program_block.append(f"(ASSIGN, #0, {id_record.address}, )")
+            self.assembler.program_block.append(f"(ASSIGN, #0, {id_record.address}, )")
 
     def assign(self, token=None):
-        self.program_block.append(f"(ASSIGN, {self.semantic_stack.pop()}, {self.semantic_stack[-1]}, )")
+        self.assembler.program_block.append(f"(ASSIGN, {self.semantic_stack.pop()}, {self.semantic_stack[-1]}, )")
 
     def op_exec(self, token=None):
         second = self.semantic_stack.pop()
         operand = self.semantic_stack.pop()
         first = self.semantic_stack.pop()
         result = self.get_temp_var()
-        self.program_block.append(f"({operand}, {first}, {second}, {result})")
+        self.assembler.program_block.append(f"({operand}, {first}, {second}, {result})")
         self.semantic_stack.append(result)
 
     operands = {'+': 'ADD', '-': 'SUB', '*': 'MULT', '<': 'LT', '==': 'EQ'}
@@ -145,19 +146,19 @@ class CodeGen:
 
     def hold(self, token=None):
         self.label()
-        self.program_block.append("(new you see me!)")
+        self.assembler.program_block.append("(new you see me!)")
 
     def label(self, token=None):
-        self.semantic_stack.append(len(self.program_block))
+        self.semantic_stack.append(len(self.assembler.program_block))
 
     def prison(self, token=None):
-        self.jail.append(len(self.program_block))
-        self.program_block.append("(help me step-programmer im stuck!)")
+        self.jail.append(len(self.assembler.program_block))
+        self.assembler.program_block.append("(help me step-programmer im stuck!)")
 
     def prison_break(self, token=None):
-        break_address = len(self.program_block)
+        break_address = len(self.assembler.program_block)
         prisoner = self.jail.pop()
-        self.program_block[prisoner] = f"(JP, {break_address}, , )"
+        self.assembler.program_block[prisoner] = f"(JP, {break_address}, , )"
 
     def scope_start(self, token=None):
         tables.get_symbol_table().new_scope()
@@ -175,24 +176,22 @@ class CodeGen:
 
     def decide(self, token=None):
         address = self.semantic_stack.pop()
-        self.program_block[address] = f"(JPF, {self.semantic_stack.pop()}, {len(self.program_block)}, )"
+        self.assembler.program_block[address] = f"(JPF, {self.semantic_stack.pop()}, {len(self.assembler.program_block)}, )"
 
     def case(self, token=None):
         result = self.get_temp_var()
-        self.program_block.append(f"(EQ, {self.semantic_stack.pop()}, {self.semantic_stack[-1]}, {result})")
+        self.assembler.program_block.append(f"(EQ, {self.semantic_stack.pop()}, {self.semantic_stack[-1]}, {result})")
         self.semantic_stack.append(result)
 
     def jump_while(self, token=None):
         head1 = self.semantic_stack.pop()
         head2 = self.semantic_stack.pop()
-        self.program_block.append(f"(JP, {self.semantic_stack.pop()}, , )")
+        self.assembler.program_block.append(f"(JP, {self.semantic_stack.pop()}, , )")
         self.semantic_stack.append(head2)
         self.semantic_stack.append(head1)
 
-        # passing arguments
-
     def output(self, token=None):
-        self.program_block.append(f"(PRINT, {self.semantic_stack.pop()}, , )")
+        self.assembler.program_block.append(f"(PRINT, {self.semantic_stack.pop()}, , )")
 
     def get_temp_var(self):
         self.assembler.temp_address += self.MLD.WORD_SIZE
@@ -217,9 +216,9 @@ class CodeGen:
         for arg in range(self.assembler.arg_pass, len(self.semantic_stack)):
             self.semantic_stack.pop()
         # setting registers
-        self.program_block.append(f"(ASSIGN, #{len(self.program_block) + 2}, {self.rf.ra}, )")
+        self.assembler.program_block.append(f"(ASSIGN, #{len(self.assembler.program_block) + 2}, {self.rf.ra}, )")
         # call!
-        self.program_block.append(f"(JP, {self.semantic_stack.pop()}, , )")
+        self.assembler.program_block.append(f"(JP, {self.semantic_stack.pop()}, , )")
         # collect
         self.semantic_stack.append(self.rf.rv)
 
@@ -242,7 +241,7 @@ class CodeGen:
         pass
 
     def func_return(self, token=None):
-        self.program_block.append(f"(JP, @{self.rf.ra}, , )")
+        self.assembler.program_block.append(f"(JP, @{self.rf.ra}, , )")
 
     # argument management
     def arg_init(self, token=None):
@@ -263,22 +262,22 @@ class CodeGen:
 
     def export(self, path):
         with open(path, "w") as f:
-            for i, l in enumerate(self.program_block):
+            for i, l in enumerate(self.assembler.program_block):
                 f.write(f"{i}\t{l}\n")
 
     def apply_template(self):
-        self.program_block.append(f"(ASSIGN, #{self.MLD.STACK_ADDRESS}, {self.rf.sp}, )")
-        self.program_block.append(f"(ASSIGN, #{self.MLD.STACK_ADDRESS}, {self.rf.fp}, )")
-        # self.program_block.append(f"(ASSIGN, #-1, 1012, )")
+        self.assembler.program_block.append(f"(ASSIGN, #{self.MLD.STACK_ADDRESS}, {self.rf.sp}, )")
+        self.assembler.program_block.append(f"(ASSIGN, #{self.MLD.STACK_ADDRESS}, {self.rf.fp}, )")
+        # self.assembler.program_block.append(f"(ASSIGN, #-1, 1012, )")
 
-        self.program_block.append(f"(ASSIGN, #1000, {self.rf.ra}, )")
+        self.assembler.program_block.append(f"(ASSIGN, #1000, {self.rf.ra}, )")
         self.hold()
 
         self.stack.pop(self.rf.rv)
-        self.program_block.append(f"(PRINT, {self.rf.rv}, , )")
-        self.program_block.append(f"(JP, @{self.rf.ra}, , )")
+        self.assembler.program_block.append(f"(PRINT, {self.rf.rv}, , )")
+        self.assembler.program_block.append(f"(JP, @{self.rf.ra}, , )")
         self.get_data_var()
 
     def execute_from(self, func_name):
         id_record = self.find_var(func_name)
-        self.program_block[self.semantic_stack.pop()] = f"(JP, {id_record.address}, , )"
+        self.assembler.program_block[self.semantic_stack.pop()] = f"(JP, {id_record.address}, , )"
