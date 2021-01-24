@@ -11,7 +11,6 @@ from tables import tables
 
 
 parser = LL1(build_scanner("input.txt"), init_grammar(), CodeGen())
-parser.token_generator.
 
 parser.generate_parse_tree()
 parser.export_parse_tree("parse_tree.txt")
