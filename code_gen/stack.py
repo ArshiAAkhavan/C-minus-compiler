@@ -33,10 +33,10 @@ class StackManager:
         self.program_block.append(f"(ADD, #{self.MLD.WORD_SIZE * chunk}, {self.rf.sp}, {self.rf.sp})")
 
     def debug(self):
-        self.program_block.append(f"(PRINT, 500, , )")
-        self.program_block.append(f"(PRINT, 504, , )")
+        # self.program_block.append(f"(PRINT, 500, , )")
+        # self.program_block.append(f"(PRINT, 504, , )")
         # todo remove debug
-        # pass
+        pass
 
     def store_registers(self):
         self.push(self.rf.sp)

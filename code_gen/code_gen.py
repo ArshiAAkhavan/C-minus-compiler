@@ -115,9 +115,8 @@ class CodeGen:
 
         if self.flags.arg_dec:
             self.arg_assign(id_record.address)
-
-        # uncomment the line below for debugging
-        self.program_block.append(f"(ASSIGN, #0, {id_record.address}, )")
+        else:
+            self.program_block.append(f"(ASSIGN, #0, {id_record.address}, )")
 
     def assign(self, token=None):
         self.program_block.append(f"(ASSIGN, {self.semantic_stack.pop()}, {self.semantic_stack[-1]}, )")
@@ -252,10 +251,13 @@ class CodeGen:
     def apply_template(self):
         self.program_block.append(f"(ASSIGN, #{self.MLD.STACK_ADDRESS}, {self.rf.sp}, )")
         self.program_block.append(f"(ASSIGN, #{self.MLD.STACK_ADDRESS}, {self.rf.fp}, )")
+        self.program_block.append(f"(ASSIGN, #100000, {self.rf.ra}, )")
         self.hold()
+
         self.stack.pop(self.rf.rv)
         self.program_block.append(f"(PRINT, {self.rf.rv}, , )")
         self.program_block.append(f"(JP, @{self.rf.ra}, , )")
+        self.get_data_var()
 
     def execute_from(self, func_name):
         id_record = self.find_var(func_name)
