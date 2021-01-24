@@ -60,8 +60,15 @@ class CodeGen:
                          "#call": self.func_call,
                          "#return": self.func_return,
 
+                         "#scmod_f": self.scmod_f,
+                         "#scmod_b": self.scmod_b,
+                         "#scmod_c": self.scmod_c,
+
                          "#sc_start": self.scope_start,
                          "#sc_stop": self.scope_stop,
+
+                         "#fsc_start": self.func_scope_start,
+                         "#fsc_stop": self.func_scope_stop,
                          }
 
     def call(self, routine, token=None):
@@ -155,7 +162,7 @@ class CodeGen:
     def scope_start(self, token=None):
         tables.get_symbol_table().new_scope()
         self.jail.append("|")  # scope delimiter
-        self.stack.new_scope()
+        # self.stack.new_scope()
 
     def scope_stop(self, token=None):
         tables.get_symbol_table().remove_scope()
@@ -163,7 +170,8 @@ class CodeGen:
         while self.jail[-1] != "|":  # scope delimiter
             self.prison_break()
         self.jail.pop()
-        self.stack.del_scope()
+
+        # self.stack.del_scope()
 
     def decide(self, token=None):
         address = self.semantic_stack.pop()
@@ -225,6 +233,14 @@ class CodeGen:
         for data in range(self.data_address, self.flags.data_pointer, -self.MLD.WORD_SIZE):
             self.stack.pop(data - self.MLD.WORD_SIZE)
 
+    def func_scope_start(self, token=None):
+        self.stack.new_scope()
+        pass
+
+    def func_scope_stop(self, token=None):
+        self.stack.del_scope()
+        pass
+
     def func_return(self, token=None):
         self.program_block.append(f"(JP, @{self.rf.ra}, , )")
 
@@ -253,7 +269,9 @@ class CodeGen:
     def apply_template(self):
         self.program_block.append(f"(ASSIGN, #{self.MLD.STACK_ADDRESS}, {self.rf.sp}, )")
         self.program_block.append(f"(ASSIGN, #{self.MLD.STACK_ADDRESS}, {self.rf.fp}, )")
-        self.program_block.append(f"(ASSIGN, #100000, {self.rf.ra}, )")
+        # self.program_block.append(f"(ASSIGN, #-1, 1012, )")
+
+        self.program_block.append(f"(ASSIGN, #1000, {self.rf.ra}, )")
         self.hold()
 
         self.stack.pop(self.rf.rv)

@@ -8,7 +8,7 @@ class StackManager:
     def push(self, value):
         self.program_block.append(f"(ASSIGN, {value}, @{self.rf.sp}, )")
         self.program_block.append(f"(ADD, {self.rf.sp}, #{self.MLD.WORD_SIZE}, {self.rf.sp})")
-        # self.debug()
+        self.debug()
 
     def pop(self, holder):
         self.debug()
@@ -30,11 +30,15 @@ class StackManager:
         self.debug()
 
     def reserve(self, chunk=1):
-        self.program_block.append(f"(ADD, #{self.MLD.WORD_SIZE * chunk}, {self.rf.sp}, {self.rf.sp})")
+        for res in range(chunk):
+            self.push("#0")
+        # self.program_block.append(f"(ADD, #{self.MLD.WORD_SIZE * chunk}, {self.rf.sp}, {self.rf.sp})")
 
     def debug(self):
         # self.program_block.append(f"(PRINT, 500, , )")
         # self.program_block.append(f"(PRINT, 504, , )")
+        # self.program_block.append(f"(PRINT, 1012, , )")
+
         # todo remove debug
         pass
 
