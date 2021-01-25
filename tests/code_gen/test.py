@@ -30,7 +30,7 @@ def main():
         tables.get_token_table().tokens = []
         tables.get_symbol_table().clear()
         tables.symbol_table.add_symbol(Token(TokenType.ID, "output"))
-        tables.symbol_table.fetch("output").address = 4
+        tables.symbol_table.fetch("output").address = 5
 
         tables.get_error_table().parse_trees = []
 

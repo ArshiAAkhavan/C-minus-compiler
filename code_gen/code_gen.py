@@ -115,11 +115,12 @@ class CodeGen:
         self.assembler.data_pointer = self.assembler.data_address
         self.assembler.temp_pointer = self.assembler.temp_address
 
+        # only when zero init is activated
+        self.assembler.program_block[-1]=""
+
         id_record = self.find_var(self.assembler.last_id.lexeme)
         id_record.address = len(self.assembler.program_block)
 
-        # only when zero init is activated
-        self.assembler.program_block.pop()
         # self.assembler.program_block.append(f"(ASSIGN, #{len(self.assembler.program_block) + 1}, {self.semantic_stack[-1]}, )")
 
     def declare_id(self, token):
@@ -274,11 +275,12 @@ class CodeGen:
     def apply_template(self):
         self.assembler.program_block.append(f"(ASSIGN, #{self.MLD.STACK_ADDRESS}, {self.rf.sp}, )")
         self.assembler.program_block.append(f"(ASSIGN, #{self.MLD.STACK_ADDRESS}, {self.rf.fp}, )")
-        # self.assembler.program_block.append(f"(ASSIGN, #-1, 1012, )")
 
         self.assembler.program_block.append(f"(ASSIGN, #9999, {self.rf.ra}, )")
+        self.assembler.program_block.append(f"(ASSIGN, #9999, {self.rf.rv}, )")
+
         # self.hold()
-        self.assembler.program_block.append(f"(JP, 8, , )")
+        self.assembler.program_block.append(f"(JP, 9, , )")
         self.stack.pop(self.rf.rv)
         self.assembler.program_block.append(f"(PRINT, {self.rf.rv}, , )")
         self.assembler.program_block.append(f"(JP, @{self.rf.ra}, , )")
@@ -288,6 +290,7 @@ class CodeGen:
         if not self.assembler.set_exec:
             self.assembler.set_exec = True
             func = self.semantic_stack.pop()
+            self.assembler.program_block.pop()
             self.hold()
             self.semantic_stack.append(func)
 

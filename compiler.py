@@ -10,7 +10,7 @@ from tables import tables
 
 
 tables.symbol_table.add_symbol(Token(TokenType.ID, "output"))
-tables.symbol_table.fetch("output").address = 4
+tables.symbol_table.fetch("output").address = 5
 parser = LL1(build_scanner("input.txt"), init_grammar(), CodeGen())
 parser.generate_parse_tree()
 parser.export_parse_tree("parse_tree.txt")
