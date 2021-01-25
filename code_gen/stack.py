@@ -32,7 +32,7 @@ class StackManager:
     def reserve(self, chunk=1):
         for res in range(chunk):
             self.push("#0")
-        # self.program_block.append(f"(ADD, #{self.MLD.WORD_SIZE * chunk}, {self.rf.sp}, {self.rf.sp})")
+        self.program_block.append(f"(ADD, #{self.MLD.WORD_SIZE * chunk}, {self.rf.sp}, {self.rf.sp})")
 
     def debug(self):
         # self.program_block.append(f"(PRINT, 500, , )")

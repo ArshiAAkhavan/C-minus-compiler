@@ -196,10 +196,10 @@ class CodeGen:
         # storing registers
         self.stack.store_registers()
         # arg pass
+        # for arg in range(self.assembler.arg_pass, len(self.semantic_stack)):
+            # self.stack.push(self.semantic_stack[arg])
         for arg in range(self.assembler.arg_pass, len(self.semantic_stack)):
-            self.stack.push(self.semantic_stack[arg])
-        for arg in range(self.assembler.arg_pass, len(self.semantic_stack)):
-            self.semantic_stack.pop()
+            self.stack.push(self.semantic_stack.pop())
         # setting registers
         self.assembler.program_block.append(f"(ASSIGN, #{len(self.assembler.program_block) + 2}, {self.rf.ra}, )")
         # call!
