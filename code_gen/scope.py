@@ -32,14 +32,13 @@ class ScopeManager:
     def __init__(self, assembler, stack):
         self.should_delete_scope = False
         self.stack = stack
-        self.layers = {"f": Layer(assembler), "c": Layer(assembler), "s": Layer(assembler)}
+        self.layers = {"t": Layer(assembler), "f": Layer(assembler), "c": Layer(assembler), "s": Layer(assembler)}
         self.scmod = []
 
     def push_scmod(self, mod):
+        self.scmod.append(mod)
         if self.should_delete_scope:
             self.__del_scope()
-        else:
-            self.scmod.append(mod)
 
     def prison(self):
         self.layers[self.scmod.pop()].prison()
@@ -54,9 +53,10 @@ class ScopeManager:
             self.stack.new_scope()
 
     def del_scope(self):
-        self.should_delete_scope=True
+        self.should_delete_scope = True
 
     def __del_scope(self):
+        self.should_delete_scope = False
         scmod = self.scmod.pop()
         self.layers[scmod].del_scope()
         if scmod == "f":

@@ -64,12 +64,13 @@ class CodeGen:
                          "#scmod_f": self.scmod_f,
                          "#scmod_c": self.scmod_c,
                          "#scmod_s": self.scmod_s,
+                         "#scmod_t": self.scmod_t,
 
                          "#sc_start": self.scope_start,
                          "#sc_stop": self.scope_stop,
 
-                         "#fsc_start": self.func_scope_start,
-                         "#fsc_stop": self.func_scope_stop,
+                         # "#fsc_start": self.func_scope_start,
+                         # "#fsc_stop": self.func_scope_stop,
                          }
 
     def call(self, routine, token=None):
@@ -127,6 +128,7 @@ class CodeGen:
             self.arg_assign(id_record.address)
         else:
             self.assembler.program_block.append(f"(ASSIGN, #0, {id_record.address}, )")
+            pass
 
     def assign(self, token=None):
         self.assembler.program_block.append(f"(ASSIGN, {self.semantic_stack.pop()}, {self.semantic_stack[-1]}, )")
@@ -197,8 +199,6 @@ class CodeGen:
         self.assembler.program_block.append(f"(ASSIGN, #{len(self.assembler.program_block) + 2}, {self.rf.ra}, )")
         # call!
         self.assembler.program_block.append(f"(JP, {self.semantic_stack.pop()}, , )")
-        # collect
-        self.semantic_stack.append(self.rf.rv)
 
         # !!!gnihtyreve gnitrever
         # loading registers
@@ -206,9 +206,14 @@ class CodeGen:
         # loading temps
         for temp in range(self.assembler.temp_address, self.assembler.temp_pointer, -self.MLD.WORD_SIZE):
             self.stack.pop(temp - self.MLD.WORD_SIZE)
-        # loading temps
+        # loading data
         for data in range(self.assembler.data_address, self.assembler.data_pointer, -self.MLD.WORD_SIZE):
             self.stack.pop(data - self.MLD.WORD_SIZE)
+
+        # collect
+        result = self.get_temp_var()
+        self.assembler.program_block.append(f"(ASSIGN, {self.rf.rv}, {result}, )")
+        self.semantic_stack.append(result)
 
     def func_return(self, token=None):
         self.assembler.program_block.append(f"(JP, @{self.rf.ra}, , )")
@@ -235,6 +240,9 @@ class CodeGen:
 
     def scmod_s(self, token=None):
         self.scope.push_scmod("s")  # simple
+
+    def scmod_t(self, token=None):
+        self.scope.push_scmod("t")  # temporary
 
     def scope_start(self, token=None):
         tables.get_symbol_table().new_scope()
@@ -264,7 +272,7 @@ class CodeGen:
         self.assembler.program_block.append(f"(ASSIGN, #{self.MLD.STACK_ADDRESS}, {self.rf.fp}, )")
         # self.assembler.program_block.append(f"(ASSIGN, #-1, 1012, )")
 
-        self.assembler.program_block.append(f"(ASSIGN, #1000, {self.rf.ra}, )")
+        self.assembler.program_block.append(f"(ASSIGN, #9999, {self.rf.ra}, )")
         self.hold()
 
         self.stack.pop(self.rf.rv)
