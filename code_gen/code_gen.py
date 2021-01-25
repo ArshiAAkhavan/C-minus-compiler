@@ -69,6 +69,8 @@ class CodeGen:
                          "#sc_start": self.scope_start,
                          "#sc_stop": self.scope_stop,
 
+                         "#set_exec": self.set_exec,
+
                          # "#fsc_start": self.func_scope_start,
                          # "#fsc_stop": self.func_scope_stop,
                          }
@@ -116,6 +118,8 @@ class CodeGen:
         id_record = self.find_var(self.assembler.last_id.lexeme)
         id_record.address = len(self.assembler.program_block)
 
+        # only when zero init is activated
+        self.assembler.program_block.pop()
         # self.assembler.program_block.append(f"(ASSIGN, #{len(self.assembler.program_block) + 1}, {self.semantic_stack[-1]}, )")
 
     def declare_id(self, token):
@@ -273,12 +277,19 @@ class CodeGen:
         # self.assembler.program_block.append(f"(ASSIGN, #-1, 1012, )")
 
         self.assembler.program_block.append(f"(ASSIGN, #9999, {self.rf.ra}, )")
-        self.hold()
-
+        # self.hold()
+        self.assembler.program_block.append(f"(JP, 8, , )")
         self.stack.pop(self.rf.rv)
         self.assembler.program_block.append(f"(PRINT, {self.rf.rv}, , )")
         self.assembler.program_block.append(f"(JP, @{self.rf.ra}, , )")
         self.get_data_var()
+
+    def set_exec(self, token=None):
+        if not self.assembler.set_exec:
+            self.assembler.set_exec = True
+            func = self.semantic_stack.pop()
+            self.hold()
+            self.semantic_stack.append(func)
 
     def execute_from(self, func_name):
         id_record = self.find_var(func_name)
