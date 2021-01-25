@@ -15,6 +15,9 @@ class IDRecord:
         self.scope = scope
         self.address = address
 
+    def __str__(self):
+        return f"{self.token.lexeme}:{self.address}"
+
 
 class Scope:
     def __init__(self, parent=None):
@@ -43,6 +46,11 @@ class Scope:
             return self.parent.get_IDrecord(lexeme)
         return None
 
+    def __str__(self):
+        to_string = ""
+        for record in self.stack:
+            to_string += record
+
 
 class __SymbolTable:
     keyword = ["if", "else", "void", "int", "while", "break", "switch", "default", "case", "return"]
@@ -61,8 +69,7 @@ class __SymbolTable:
         self.scopes.append(Scope(self.scopes[-1]))
 
     def remove_scope(self):
-        pass
-        # self.scopes.pop()
+        self.scopes.pop()
 
     def get_current_scope(self):
         return self.scopes[-1]

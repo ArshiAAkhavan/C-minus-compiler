@@ -1,7 +1,7 @@
 /* == T8 == */
 void main(void)
 {
-    int a[20];
+    int a[21];
     int i;
     int j;
     int k;
@@ -13,7 +13,7 @@ void main(void)
        a[i] = 10 * i ;
        i = i + 1;
      }
-    while( i < 20)
+    while( i < 21)
     {
         a[i] = 100 - 5 * i;
         i = i + 1;
