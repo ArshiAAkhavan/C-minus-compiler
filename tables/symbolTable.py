@@ -56,6 +56,7 @@ class __SymbolTable:
     keyword = ["if", "else", "void", "int", "while", "break", "switch", "default", "case", "return"]
 
     def __init__(self):
+        self.is_declaration = False
         self.scopes = []
         self.ids = []
         self.scopes.append(Scope())
@@ -74,14 +75,18 @@ class __SymbolTable:
     def get_current_scope(self):
         return self.scopes[-1]
 
-    def add_symbol(self, token, is_declaration=False):
+    def add_symbol(self, token):
         if token.lexeme in self.keyword:
             return Token(TokenType.KEYWORD, token.lexeme)
-        self.get_current_scope().append(token, is_declaration)
+        self.get_current_scope().append(token, self.is_declaration)
+        self.set_declaration(False)
         return token
 
     def fetch(self, lexeme):
         return self.get_current_scope().get_IDrecord(lexeme)
+
+    def set_declaration(self, state):
+        self.is_declaration = state
 
     def __str__(self):
         s = ""

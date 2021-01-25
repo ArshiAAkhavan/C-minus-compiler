@@ -1,7 +1,7 @@
 Program -> Declaration-list $
 Declaration-list -> Declaration Declaration-list
 Declaration-list -> ε
-Declaration -> Declaration-initial Declaration-prime #pop
+Declaration -> #declare Declaration-initial Declaration-prime #pop
 Declaration-initial -> Type-specifier #declare_id #pid ID
 Declaration-prime -> Fun-declaration-prime
 Declaration-prime -> Var-declaration-prime

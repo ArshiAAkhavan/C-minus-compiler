@@ -37,6 +37,7 @@ class CodeGen:
                          "#op_push": self.op_push,
                          "#pop": self.pop,
 
+                         "#declare": self.declare,
                          "#declare_id": self.declare_id,
                          "#declare_arr": self.declare_arr,
                          "#declare_func": self.declare_func,
@@ -135,6 +136,10 @@ class CodeGen:
             self.assembler.program_block.append(f"(ASSIGN, #0, {id_record.address}, )")
             pass
 
+    @staticmethod
+    def declare(Token=None):
+        tables.get_symbol_table().set_declaration(True)
+
     def assign(self, token=None):
         self.assembler.program_block.append(f"(ASSIGN, {self.semantic_stack.pop()}, {self.semantic_stack[-1]}, )")
 
@@ -196,7 +201,7 @@ class CodeGen:
         # storing registers
         self.stack.store_registers()
         # arg pass
-        for arg in range(self.assembler.arg_pass, len(self.semantic_stack)):
+        for arg in range(self.assembler.arg_pointer.pop(), len(self.semantic_stack)):
             self.stack.push(self.semantic_stack.pop())
         # setting registers
         self.assembler.program_block.append(f"(ASSIGN, #{len(self.assembler.program_block) + 2}, {self.rf.ra}, )")
@@ -232,7 +237,7 @@ class CodeGen:
         self.stack.pop(address)
 
     def arg_pass(self, token=None):
-        self.assembler.arg_pass = len(self.semantic_stack)
+        self.assembler.arg_pointer.append(len(self.semantic_stack))
 
     # scope
     def scmod_f(self, token=None):
