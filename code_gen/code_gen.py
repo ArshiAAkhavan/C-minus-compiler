@@ -77,7 +77,7 @@ class CodeGen:
 
     def call(self, routine, token=None):
         try:
-            # if token.lexeme == "output" and routine == "#pid":
+            # if token.lexeme == "x":
             #     print("taskali")
             self.routines[routine](token)
             # uncomment the line below for debugging , gives you a step by step view!
