@@ -117,12 +117,10 @@ class CodeGen:
         self.assembler.temp_pointer = self.assembler.temp_address
 
         # only when zero init is activated
-        self.assembler.program_block[-1]=""
+        self.assembler.program_block[-1] = ""
 
         id_record = self.find_var(self.assembler.last_id.lexeme)
         id_record.address = len(self.assembler.program_block)
-
-        # self.assembler.program_block.append(f"(ASSIGN, #{len(self.assembler.program_block) + 1}, {self.semantic_stack[-1]}, )")
 
     def declare_id(self, token):
         id_record = self.find_var(token.lexeme)
