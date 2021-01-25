@@ -37,7 +37,7 @@ Return-stmt -> return Return-stmt-prime #scmod_f #prison
 Return-stmt-prime -> ;
 Return-stmt-prime -> #prv Expression #assign #pop ;
 Switch-stmt -> switch ( Expression ) { #scmod_c #sc_start Case-stmts Default-stmt #pop #sc_stop #scmod_c }
-Case-stmts -> Case-stmt Case-stmts
+Case-stmts -> #scmod_s #sc_start Case-stmt #sc_stop #scmod_s Case-stmts
 Case-stmts -> ε
 Case-stmt -> case #pnum NUM #case #hold : Statement-list #decide
 Default-stmt -> default : Statement-list #scmod_c #prison
