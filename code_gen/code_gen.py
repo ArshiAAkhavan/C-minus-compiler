@@ -293,5 +293,8 @@ class CodeGen:
             self.semantic_stack.append(func)
 
     def execute_from(self, func_name):
-        id_record = self.find_var(func_name)
-        self.assembler.program_block[self.semantic_stack.pop()] = f"(JP, {id_record.address}, , )"
+        try:
+            id_record = self.find_var(func_name)
+            self.assembler.program_block[self.semantic_stack.pop()] = f"(JP, {id_record.address}, , )"
+        except:
+            sys.stderr.write(f"couldn't set the executable path")
