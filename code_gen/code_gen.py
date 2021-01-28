@@ -71,18 +71,13 @@ class CodeGen:
                          "#sc_stop": self.scope_stop,
 
                          "#set_exec": self.set_exec,
-
-                         # "#fsc_start": self.func_scope_start,
-                         # "#fsc_stop": self.func_scope_stop,
                          }
 
     def call(self, routine, token=None):
         try:
-            # if token.lexeme == "x":
-            #     print("taskali")
             self.routines[routine](token)
             # uncomment the line below for debugging , gives you a step by step view!
-            self.export("output.txt")
+            # self.export("output.txt")
         except:
             sys.stderr.write(f"error during generating code for token {token.lexeme} and routine {routine}\n")
 
@@ -189,7 +184,7 @@ class CodeGen:
         self.assembler.data_address += self.MLD.WORD_SIZE * chunk_size
         return self.assembler.data_address - self.MLD.WORD_SIZE * chunk_size
 
-    def func_call(self, token=None):
+    def store(self):
         # storing data
         for data in range(self.assembler.data_pointer, self.assembler.data_address, self.MLD.WORD_SIZE):
             self.stack.push(data)
@@ -198,15 +193,8 @@ class CodeGen:
             self.stack.push(temp)
         # storing registers
         self.stack.store_registers()
-        # arg pass
-        for arg in range(self.assembler.arg_pointer.pop(), len(self.semantic_stack)):
-            self.stack.push(self.semantic_stack.pop())
-        # setting registers
-        self.assembler.program_block.append(f"(ASSIGN, #{len(self.assembler.program_block) + 2}, {self.rf.ra}, )")
-        # call!
-        self.assembler.program_block.append(f"(JP, {self.semantic_stack.pop()}, , )")
 
-        # !!!gnihtyreve gnitrever
+    def restore(self):
         # loading registers
         self.stack.load_registers()
         # loading temps
@@ -216,10 +204,26 @@ class CodeGen:
         for data in range(self.assembler.data_address, self.assembler.data_pointer, -self.MLD.WORD_SIZE):
             self.stack.pop(data - self.MLD.WORD_SIZE)
 
+    def collect(self):
         # collect
         result = self.get_temp_var()
         self.assembler.program_block.append(f"(ASSIGN, {self.rf.rv}, {result}, )")
         self.semantic_stack.append(result)
+
+    def push_args(self):
+        # arg pass
+        for arg in range(self.assembler.arg_pointer.pop(), len(self.semantic_stack)):
+            self.stack.push(self.semantic_stack.pop())
+
+    def func_call(self, token=None):
+        self.store()
+        self.push_args()
+        # setting registers
+        self.assembler.program_block.append(f"(ASSIGN, #{len(self.assembler.program_block) + 2}, {self.rf.ra}, )")
+        # call!
+        self.assembler.program_block.append(f"(JP, {self.semantic_stack.pop()}, , )")
+        self.restore()
+        self.collect()
 
     def func_return(self, token=None):
         self.assembler.program_block.append(f"(JP, @{self.rf.ra}, , )")
@@ -280,7 +284,6 @@ class CodeGen:
         self.assembler.program_block.append(f"(ASSIGN, #9999, {self.rf.ra}, )")
         self.assembler.program_block.append(f"(ASSIGN, #9999, {self.rf.rv}, )")
 
-        # self.hold()
         self.assembler.program_block.append(f"(JP, 9, , )")
         self.stack.pop(self.rf.rv)
         self.assembler.program_block.append(f"(PRINT, {self.rf.rv}, , )")

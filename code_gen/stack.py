@@ -28,7 +28,6 @@ class StackManager:
     def debug(self):
         self.program_block.append(f"(PRINT, 500, , )")
         self.program_block.append(f"(PRINT, 504, , )")
-        self.program_block.append(f"(PRINT, 1012, , )")
 
     def store_registers(self):
         self.push(self.rf.sp)
