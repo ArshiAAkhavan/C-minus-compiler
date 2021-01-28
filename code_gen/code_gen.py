@@ -7,8 +7,8 @@ from code_gen.register import RegisterFile
 from code_gen.assembler import Assembler
 from code_gen.stack import StackManager
 
-MidLangDefaults = namedtuple('MidLangDefaults', 'WORD_SIZE DATA_ADDRESS STACK_ADDRESS TEMP_ADDRESS')
-MID_LANG = MidLangDefaults(4, 500, 700, 1000)
+MidLangDefaults = namedtuple('MidLangDefaults', 'WORD_SIZE DATA_ADDRESS TEMP_ADDRESS STACK_ADDRESS')
+MID_LANG = MidLangDefaults(4, 500, 900, 1000)
 
 
 class CodeGen:
