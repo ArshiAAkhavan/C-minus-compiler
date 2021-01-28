@@ -25,7 +25,7 @@ class Layer:
 
     def prison(self):
         self.jail.append(len(self.assembler.program_block))
-        self.assembler.program_block.append("(help me step-programmer im stuck!)")
+        self.assembler.program_block.append("(help step-programmer im stuck!)")
 
 
 class ScopeManager:
