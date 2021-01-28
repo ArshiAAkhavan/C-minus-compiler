@@ -179,3 +179,4 @@ dmypy.json
 *.txt
 !tests/**/*.txt
 !Parser/**/*.txt
+Linux.out
