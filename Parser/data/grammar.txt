@@ -7,7 +7,7 @@ Declaration-prime -> Fun-declaration-prime
 Declaration-prime -> Var-declaration-prime
 Var-declaration-prime -> ;
 Var-declaration-prime -> [ #pnum NUM ] #declare_arr ;
-Fun-declaration-prime -> #declare_func #set_exec #scmod_t #sc_start ( #arg_init Params #arg_finish ) #scmod_f Compound-stmt #scmod_f #sc_stop #scmod_t #return
+Fun-declaration-prime -> #declare_func #set_exec #scmod_t #sc_start ( #arg_init Params #arg_finish ) #scmod_f #sc_start Compound-stmt #sc_stop #scmod_f #sc_stop #scmod_t #return
 Type-specifier -> int
 Type-specifier -> void
 Params -> #declare int #declare_id #pid ID Param-prime #pop Param-list
@@ -19,7 +19,7 @@ Param-list -> ε
 Param -> #declare Declaration-initial Param-prime #pop
 Param-prime -> [ ]
 Param-prime -> ε
-Compound-stmt -> { #sc_start Declaration-list Statement-list #sc_stop }
+Compound-stmt -> { Declaration-list Statement-list }
 Statement-list -> Statement Statement-list
 Statement-list -> ε
 Statement -> Expression-stmt
@@ -31,8 +31,8 @@ Statement -> Switch-stmt
 Expression-stmt -> Expression #pop ;
 Expression-stmt -> break #scmod_c #prison ;
 Expression-stmt -> ;
-Selection-stmt -> if ( Expression ) #hold #scmod_s Statement #scmod_s #scmod_t #prison #decide else #scmod_s Statement #scmod_s #scmod_t #prison_break
-Iteration-stmt -> while #label ( Expression ) #hold #scmod_c Statement #jump_while #scmod_c #decide
+Selection-stmt -> if ( Expression ) #hold #scmod_s #sc_start Statement #sc_stop #scmod_s #scmod_t #prison #decide else #scmod_s #sc_start Statement #sc_stop #scmod_s #scmod_t #prison_break
+Iteration-stmt -> while #label ( Expression ) #hold #scmod_c #sc_start Statement #jump_while #sc_stop #scmod_c #decide
 Return-stmt -> return Return-stmt-prime #scmod_f #prison
 Return-stmt-prime -> ;
 Return-stmt-prime -> #prv Expression #assign #pop ;
